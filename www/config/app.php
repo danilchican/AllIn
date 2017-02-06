@@ -176,7 +176,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+		
+		/*
+		 * Own providers
+		 */
+		SocialiteProviders\Manager\ServiceProvider::class,
     ],
 
     /*
