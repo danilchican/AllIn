@@ -9,12 +9,13 @@
         "barryvdh/laravel-cors": "^0.8.5",
         "barryvdh/laravel-debugbar": "^2.3",
         "barryvdh/laravel-ide-helper": "^2.2",
+        "bugsnag/bugsnag-laravel": "^2.0",
+        "dingo/api": "1.0.*@dev",
         "fzaninotto/faker": "^1.6",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "socialiteproviders/vkontakte": "^3.0",
-        "tymon/jwt-auth": "^0.5.10",
-        "dingo/api": "1.0.*@dev"
+        "tymon/jwt-auth": "^0.5.10"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
