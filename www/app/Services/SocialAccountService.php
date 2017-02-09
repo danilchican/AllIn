@@ -17,7 +17,7 @@ class SocialAccountService
      */
     public function createOrGetUser($providerObj, $providerName)
     {
-        $providerUser = $providerObj->stateless()->user();
+        $providerUser = $providerObj->user();
 
         $account = UserSocialAccount::whereProvider($providerName)
             ->whereProviderUserId($providerUser->getId())
