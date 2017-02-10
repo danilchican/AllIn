@@ -18,9 +18,11 @@ class SocialController extends Controller
     public function login($provider)
     {
         $scopes = [];
+
         if(!strcmp($provider, 'vkontakte')) {
             $scopes = ['photos', 'wall', 'offline', 'groups', 'stats', 'docs'];
         }
+
         return Socialite::with($provider)->scopes($scopes)->redirect();
     }
 
