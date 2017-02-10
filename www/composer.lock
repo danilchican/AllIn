@@ -4,8 +4,13 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "hash": "6d99306155f06a55350b75c2a8fbbbcc",
     "content-hash": "bbe1b5b24df4136e692430d4f0ea271b",
+=======
+    "hash": "9a425305d0eb925aaf6183cedd20110b",
+    "content-hash": "4fe3ffc40bc113136636a50406221b75",
+>>>>>>> dev
     "packages": [
         {
             "name": "barryvdh/laravel-cors",
@@ -230,6 +235,7 @@
             "time": "2016-06-13 19:28:20"
         },
         {
+<<<<<<< HEAD
             "name": "bugsnag/bugsnag",
             "version": "v3.4.0",
             "source": {
@@ -462,6 +468,8 @@
             "time": "2016-11-02 18:11:27"
         },
         {
+=======
+>>>>>>> dev
             "name": "dingo/api",
             "version": "v1.0.0-beta3",
             "source": {
@@ -760,6 +768,133 @@
                 "string"
             ],
             "time": "2015-11-06 14:35:42"
+        },
+        {
+<<<<<<< HEAD
+            "name": "doctrine/lexer",
+            "version": "v1.0.1",
+=======
+            "name": "doctrine/annotations",
+            "version": "v1.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/annotations.git",
+                "reference": "f25c8aab83e0c3e976fd7d19875f198ccf2f7535"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/f25c8aab83e0c3e976fd7d19875f198ccf2f7535",
+                "reference": "f25c8aab83e0c3e976fd7d19875f198ccf2f7535",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/lexer": "1.*",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "doctrine/cache": "1.*",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\Common\\Annotations\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Docblock Annotations Parser",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "annotations",
+                "docblock",
+                "parser"
+            ],
+            "time": "2015-08-31 12:32:49"
+        },
+        {
+            "name": "doctrine/inflector",
+            "version": "v1.1.0",
+>>>>>>> dev
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/lexer.git",
+                "reference": "83893c552fd2045dd78aef794c31e694c37c0b8c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/83893c552fd2045dd78aef794c31e694c37c0b8c",
+                "reference": "83893c552fd2045dd78aef794c31e694c37c0b8c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\Common\\Lexer\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Base library for a lexer that can be used in Top-Down, Recursive Descent Parsers.",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "lexer",
+                "parser"
+            ],
+            "time": "2014-09-09 13:34:57"
         },
         {
             "name": "doctrine/lexer",
@@ -1165,16 +1300,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.4.9",
+            "version": "v5.4.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "600330ae1d218919b3b307e0578461a2df248663"
+                "reference": "4c8837046c998925972c8010bfac435c4be5facc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/600330ae1d218919b3b307e0578461a2df248663",
-                "reference": "600330ae1d218919b3b307e0578461a2df248663",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/4c8837046c998925972c8010bfac435c4be5facc",
+                "reference": "4c8837046c998925972c8010bfac435c4be5facc",
                 "shasum": ""
             },
             "require": {
@@ -1290,7 +1425,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-02-03 19:47:35"
+            "time": "2017-02-08 15:01:52"
         },
         {
             "name": "laravel/socialite",
@@ -1406,16 +1541,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.34",
+            "version": "1.0.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "469ad53c13ea19a0e54e3e5d70f61227ddcc0299"
+                "reference": "dda7f3ab94158a002d9846a97dc18ebfb7acc062"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/469ad53c13ea19a0e54e3e5d70f61227ddcc0299",
-                "reference": "469ad53c13ea19a0e54e3e5d70f61227ddcc0299",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/dda7f3ab94158a002d9846a97dc18ebfb7acc062",
+                "reference": "dda7f3ab94158a002d9846a97dc18ebfb7acc062",
                 "shasum": ""
             },
             "require": {
@@ -1485,7 +1620,70 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2017-01-30 17:41:17"
+            "time": "2017-02-09 11:33:58"
+        },
+        {
+            "name": "league/fractal",
+            "version": "0.15.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/fractal.git",
+                "reference": "0546bd5c2aba414ba50c6ac676f507d42c6150a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/0546bd5c2aba414ba50c6ac676f507d42c6150a5",
+                "reference": "0546bd5c2aba414ba50c6ac676f507d42c6150a5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "illuminate/contracts": "~5.0",
+                "mockery/mockery": "~0.9",
+                "pagerfanta/pagerfanta": "~1.0.0",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~1.5",
+                "zendframework/zend-paginator": "~2.3"
+            },
+            "suggest": {
+                "illuminate/pagination": "The Illuminate Pagination component.",
+                "pagerfanta/pagerfanta": "Pagerfanta Paginator",
+                "zendframework/zend-paginator": "Zend Framework Paginator"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.13-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Fractal\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phil Sturgeon",
+                    "email": "me@philsturgeon.uk",
+                    "homepage": "http://philsturgeon.uk/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Handle the output of complex data structures ready for API output.",
+            "homepage": "http://fractal.thephpleague.com/",
+            "keywords": [
+                "api",
+                "json",
+                "league",
+                "rest"
+            ],
+            "time": "2016-12-28 01:30:30"
         },
         {
             "name": "league/fractal",
@@ -3990,16 +4188,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.11",
+            "version": "5.7.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a6ad2472daba76b0689042b7709f86d4f06bcaab"
+                "reference": "944600e244f80a5252679878553b95c63dbf978b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a6ad2472daba76b0689042b7709f86d4f06bcaab",
-                "reference": "a6ad2472daba76b0689042b7709f86d4f06bcaab",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/944600e244f80a5252679878553b95c63dbf978b",
+                "reference": "944600e244f80a5252679878553b95c63dbf978b",
                 "shasum": ""
             },
             "require": {
@@ -4068,7 +4266,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-02-05 15:31:31"
+            "time": "2017-02-08 05:54:05"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
