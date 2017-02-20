@@ -25,18 +25,18 @@ class AuthController extends Controller
      * @param Request $request
      * @return mixed|json
      */
-        public function login(Request $request)
-        {
-            $credentials = $request->only(['email', 'password']);
+    public function login(Request $request)
+    {
+        $credentials = $request->only(['email', 'password']);
 
-            try {
-                if (! $token = JWTAuth::attempt($credentials)) {
-                    return Response::json(['error' => 'User credentials are not correct!'], 401);
-                }
-            } catch (JWTException $e) {
-                return Response::json(['error' => 'Something went wrong!'], 500);
+        try {
+            if (! $token = JWTAuth::attempt($credentials)) {
+                return Response::json(['error' => 'User credentials are not correct!'], 401);
             }
-
-            return Response::json(compact('token'));
+        } catch (JWTException $e) {
+            return Response::json(['error' => 'Something went wrong!'], 500);
         }
+
+        return Response::json(compact('token'));
+    }
 }
