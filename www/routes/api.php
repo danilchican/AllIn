@@ -12,3 +12,11 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+$api = app(Dingo\Api\Routing\Router::class);
+
+$api->version('v1', function ($api) {
+
+    $api->post('authenticate', 'App\Http\Controllers\Api\Auth\AuthController@login');
+
+});
