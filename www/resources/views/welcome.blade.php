@@ -61,9 +61,8 @@
                 У вас много аккаунтов в социальных сетях?<br>
                 Тогда наш сервис поможет решить все эти вопросы<br>
 
-                <br><br>
-                <strong>Здесь должна быть красивая картинка и/или лого<br>
-                    Их нет, но вы там держитесь, хорошего настроения, здоровья...</strong>
+                <br>
+                <img src="/image/bkg.png" alt="hahah" style="height: auto; width: 300px"/>
             </p>
 
             <a href="/register" class="btn btn-default btn-lg btn-block start-button" role="button">Start now!</a>

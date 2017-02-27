@@ -2,6 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <h3>Calendar page</h3>
+
         </div>
     </div>
 </template>
