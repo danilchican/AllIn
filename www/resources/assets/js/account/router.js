@@ -1,4 +1,8 @@
 import Home         from './components/Home.vue'
+import Posting      from './components/Posting.vue'
+import Calendar     from './components/Calendar.vue'
+import Statistic    from './components/Statistic.vue'
+import Settings     from './components/Settings.vue'
 
 import VueRouter    from 'vue-router'
 import Vue          from 'vue'
@@ -13,6 +17,10 @@ export default new VueRouter({
     base: __dirname,
     linkActiveClass: 'active',
     routes: [
-        { path: '/home', component: Home },
+        { path: '/home',            component: Home },
+        { path: '/home/post',       component: Posting },
+        { path: '/home/calendar',   component: Calendar },
+        { path: '/home/statistics', component: Statistic },
+        { path: '/home/settings',   component: Settings }
     ]
 });

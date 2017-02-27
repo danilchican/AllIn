@@ -1,95 +1,113 @@
-<!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
+@section('styles')
+    <style>
+        .welcome-page {
+            text-align: center;
+        }
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        .container-basic {
+            padding-top: 25px;
+            padding-bottom: 25px;
+            background-color: #127cd0;
+            color: #fff;
+        }
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+        .container-additional {
+            padding-top: 25px;
+            padding-bottom: 25px;
+            background-color: #fff;
+            color: inherit;
+        }
 
-            .full-height {
-                height: 100vh;
-            }
+        .container-third {
+            padding-top: 25px;
+            padding-bottom: 150px;
+            background-color: inherit;
+            color: inherit;
+        }
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+        .container-boarder {
+            height: 100px;
+            padding-top: 25px;
+            padding-bottom: 25px;
+            background-color: inherit;
+        }
 
-            .position-ref {
-                position: relative;
-            }
+        .start-button, .start-button:hover, .start-button:focus, .start-button:enabled {
+            color: black !important;
+            background-color: yellow !important;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            height: 50px;
+            width: 300px;
+            border-radius: 25px;
+            box-shadow: 0 0 13px rgba(0,0,0,0.5) !important;
+        }
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+    </style>
+@endsection
 
-            .content {
-                text-align: center;
-            }
+@section('content')
+    <div class="welcome-page">
+        <div class="container-basic">
+            <h1>Welcome</h1>
+            <p class="lead"><br>
+                Вам надоело тратить время в социальных сетях на размещение рекламы? <br>
+                Или на поддержание своего статуса?<br>
+                У вас много аккаунтов в социальных сетях?<br>
+                Тогда наш сервис поможет решить все эти вопросы<br>
 
-            .title {
-                font-size: 84px;
-            }
+                <br><br>
+                <strong>Здесь должна быть красивая картинка и/или лого<br>
+                    Их нет, но вы там держитесь, хорошего настроения, здоровья...</strong>
+            </p>
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
+            <a href="/register" class="btn btn-default btn-lg btn-block start-button" role="button">Start now!</a>
         </div>
-    </body>
-</html>
+
+        <div class="container-boarder">
+
+        </div>
+
+        <div class="container-additional">
+            <h1>Additional information here</h1>
+            <p class="lead">Text here<br>
+                <br>Info
+                <br>Info
+                <br>Info
+                <br>Info
+                <br>Info
+                <br>Info
+                <br>Info
+                <br>Info
+            </p>
+        </div>
+
+        <div class="container-third">
+            <h1>Third information here</h1>
+            <p class="lead">Text here
+                <br>Info
+                <br>Info
+                <br>Info
+                <br>Info
+                <br>Info
+                <br>Info
+                <br>Info
+                <br>Info
+            </p>
+        </div>
+    </div>
+@endsection
+
+@section('footer')
+    @include('layouts.footer')
+@endsection
+
+@section('scripts')
+    <script src="/js/app.js"></script>
+@endsection
+
