@@ -28,3 +28,27 @@ Returns json data about a single user.
   * Content: `{"error":"Something went wrong!"}`
 
 
+
+##Logout user
+Returns json success message.
+* URL:
+
+  `/api/logout`
+* Method:
+  
+  `POST`
+* Data Params: none
+  
+* Success Response:
+  * Code: 200
+  * Content: `{"success": "User is logged off."}`
+  
+* Error Response
+  * Code: 401 Unauthorized
+  * Content: `{"error":"Can't logout from server!"}`
+  
+  OR
+  
+  * Code: 500
+  * Content: `{"error":"Something went wrong!"}`
+
