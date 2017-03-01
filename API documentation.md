@@ -38,6 +38,9 @@ Returns json success message.
   
   `POST`
 * Data Params: none
+
+* Headers:
+  * Authorization: `Bearer <token>`
   
 * Success Response:
   * Code: 200
