@@ -39,4 +39,25 @@ class AuthController extends Controller
 
         return Response::json(compact('token'));
     }
+
+    /**
+     * Logout user from system.
+     *
+     * @return mixed|json
+     */
+    public function logout() {
+        $token = JWTAuth::getToken();
+
+        try {
+            if (! JWTAuth::invalidate($token)) {
+                return Response::json(['error' => 'Can\'t logout from server!'], 401);
+            }
+        } catch (JWTException $e) {
+            return Response::json(['error' => 'Something went wrong!'], 500);
+        }
+
+        return Response::json([
+            'success' => 'User is logged off.'
+        ]);
+    }
 }

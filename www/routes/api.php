@@ -16,18 +16,10 @@ use Illuminate\Http\Request;
 $api = app(Dingo\Api\Routing\Router::class);
 
 $api->version('v1', function ($api) {
-
-    /**
-     * Authenticate user in system.
-     *
-     * type: POST
-     * url: allinco.ru/api/authenticate
-     * data: email, password
-     */
     $api->post('authenticate', 'App\Http\Controllers\Api\Auth\AuthController@login');
 
 });
 
 $api->version('v1', ['middleware' => 'jwt.auth'], function($api) {
-    //..
+    $api->post('logout', 'App\Http\Controllers\Api\Auth\AuthController@logout');
 });
