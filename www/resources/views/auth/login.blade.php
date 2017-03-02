@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('styles')
+<style>
+    .panel-default {
+        margin-top: 75px;
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">

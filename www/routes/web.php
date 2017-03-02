@@ -15,9 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/about', [
+    'as' => 'about',
+    'uses' => 'AboutPageController@index'
+]);
+
 Auth::routes();
 
 Route::get('/auth/{provider}', 'SocialController@login')->name('auth.provider');
 Route::get('/auth/{provider}/callback', 'SocialController@callback');
 
-Route::get('/{account?}', 'Account\AccountController@index')->name('account.index');
+Route::get('/home/{account?}', 'Account\AccountController@index')->name('account.index');
