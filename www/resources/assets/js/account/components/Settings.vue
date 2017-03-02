@@ -2,25 +2,27 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <h3>Settings page</h3>
+
             <div class="input-group">
-                <span class="input-group-addon">Email</span>
+                <span class="input-group-addon">Email    </span>
                 <input type="text" class="form-control" placeholder="Email">
             </div>
             <br>
             <div class="input-group">
                 <span class="input-group-addon">Password</span>
-                <input type="text" class="form-control" placeholder="Password">
+                <input type="text" class="form-control" placeholder="New password">
             </div>
             <br>
             <div class="input-group">
-                <span class="input-group-addon">New password</span>
-                <input type="text" class="form-control" placeholder="Password">
+                <span class="input-group-addon">Confirmation</span>
+                <input type="text" class="form-control" placeholder="Repeat new password">
             </div>
             <br>
             <div class="button-submit">
-                <button type="button" class="btn btn-default btn-lg" style="alignment: right">Submit</button>
+                <button type="submit" class="btn btn-primary">
+                    Submit
+                </button>
             </div>
-
         </div>
     </div>
 </template>
@@ -29,14 +31,16 @@
     #myTab {
         margin-bottom: 15px;
     }
+
+    .input-group-addon {
+        min-width: 110px;
+    }
 </style>
 
 <script>
-
     export default {
         mounted() {
-            console.log("Home component mounted.")
+            console.log("Settings component mounted.")
         }
     }
-
 </script>

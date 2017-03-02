@@ -34,6 +34,10 @@
                         <i class="fa fa-btn fa-area-chart"></i> Statistics
                     </router-link>
 
+                    <router-link to="/home/accounts" class="list-group-item" exat>
+                        <i class="fa fa-btn fa-users"></i> Accounts
+                    </router-link>
+
                     <router-link to="/home/settings" class="list-group-item" exat>
                         <i class="fa fa-btn fa-cogs"></i> Settings
                     </router-link>
