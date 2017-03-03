@@ -52,7 +52,7 @@
                         <div class="form-group login-with-group">
                             <label for="password" class="col-md-4 control-label">Login with</label>
                             <div class="col-md-6">
-                                <a href="{{ route('auth.provider', ['provider' => 'vkontakte']) }}"><img src="/image/vk.png" alt="must be vk" style="width: 40px; height: auto"/> </a>
+                                <a href="{{ route('auth.provider', ['provider' => 'vkontakte']) }}"><img src="/image/vk.png" alt="must be vk" style="width: 40px; height: auto"/></a>
                                 <a href="{{ route('auth.provider', ['provider' => 'facebook']) }}"><img src="/image/fb.png" alt="must be fb" style="width: 40px; height: auto"/></a>
                             </div>
                         </div>
