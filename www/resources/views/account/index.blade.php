@@ -18,7 +18,7 @@
         @if(Session::has('message'))
             <p class="alert alert-info" style="margin-top:40px">{{ Session::get('message') }}</p>
         @endif
-        <div class="row main-row">
+        <div class="main-row">
             <div class="col-md-3">
                 <ul class="list-group">
                     <router-link to="/home" class="list-group-item" exact>
