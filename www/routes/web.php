@@ -22,7 +22,7 @@ Route::get('/about', [
 
 Auth::routes();
 
-Route::get('/auth/{provider}', 'SocialController@login');
+Route::get('/auth/{provider}', 'SocialController@login')->name('auth.provider');
 Route::get('/auth/{provider}/callback', 'SocialController@callback');
 
 Route::get('/home/{account?}', 'Account\AccountController@index')->name('account.index');
