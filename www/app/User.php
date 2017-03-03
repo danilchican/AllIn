@@ -38,7 +38,7 @@ class User extends Authenticatable
         return self::create([
             'email' => $providerUser->getEmail(),
             'username' => $providerUser->getNickname(),
-            'password' => Hash::make(str_random(8)),
+            'password' => Hash::make('secret'),
             'name' => $providerUser->getName(),
         ]);
     }
