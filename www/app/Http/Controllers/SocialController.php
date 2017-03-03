@@ -37,11 +37,18 @@ class SocialController extends Controller
     {
         $driver = Socialite::driver($provider);
 
-        $user = $service->createOrGetUser($driver, $provider);
+        $data = $service->createOrGetUser($driver, $provider);
+        $user = $data['user'];
 
         \Auth::login($user, true);
 
-        return redirect()->intended('/home');
+        if($data['isNewUser'] === true) {
+            return redirect('/home/settings')->with([
+                'message' => 'Ваш пароль: \'secret\'. Пожалуйста, измените данный пароль для надежности.'
+            ]);
+        }
+
+        return redirect('/home');
     }
 
 }

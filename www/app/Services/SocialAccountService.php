@@ -18,14 +18,19 @@ class SocialAccountService
     public function createOrGetUser($providerObj, $providerName)
     {
         $providerUser = $providerObj->user();
+        $isNewUser = false;
 
         $account = UserSocialAccount::whereProvider($providerName)
             ->whereProviderUserId($providerUser->getId())
             ->first();
 
         if ($account) {
-            return $account->user;
+            return [
+                'user' => $account->user,
+                'isNewUser' => $isNewUser
+            ];
         } else {
+            $isNewUser = true;
             $account = new UserSocialAccount([
                 'provider_user_id' => $providerUser->getId(),
                 'provider' => $providerName]);
@@ -39,7 +44,10 @@ class SocialAccountService
             $account->user()->associate($user);
             $account->save();
 
-            return $user;
+            return [
+                'user' => $user,
+                'isNewUser' => $isNewUser
+            ];
         }
 
     }
