@@ -3,6 +3,7 @@ import Posting      from './components/Posting.vue'
 import Calendar     from './components/Calendar.vue'
 import Statistic    from './components/Statistic.vue'
 import Settings     from './components/Settings.vue'
+import Accounts     from './components/Accounts.vue'
 
 import VueRouter    from 'vue-router'
 import Vue          from 'vue'
@@ -21,6 +22,7 @@ export default new VueRouter({
         { path: '/home/post',       component: Posting },
         { path: '/home/calendar',   component: Calendar },
         { path: '/home/statistics', component: Statistic },
-        { path: '/home/settings',   component: Settings }
+        { path: '/home/settings',   component: Settings },
+        { path: '/home/accounts',   component: Accounts }
     ]
 });
