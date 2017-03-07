@@ -16,7 +16,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('guest', ['only' => 'login']);
     }
 
     /**
@@ -38,6 +38,23 @@ class AuthController extends Controller
         }
 
         return Response::json(compact('token'));
+    }
+
+    /**
+     * Get user info.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAuthUser() {
+        try {
+            if (! $user = JWTAuth::parseToken()->toUser()) {
+                return Response::json(['error' => 'User not found!'], 404);
+            }
+        } catch (JWTException $e) {
+            return Response::json(['error' => 'Something went wrong!'], 500);
+        }
+
+        return Response::json(compact('user'));
     }
 
     /**
