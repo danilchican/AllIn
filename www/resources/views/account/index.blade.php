@@ -9,7 +9,6 @@
         .main-row {
             margin-top: 40px;
         }
-
     </style>
 @endsection
 

@@ -29,12 +29,18 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that should be visible in arrays.
+     *
+     * @var array
+     */
+    protected $visible = ['name', 'email'];
+
+    /**
      * @param $providerUser
      * @return mixed
      */
     public static function createBySocialProvider($providerUser)
     {
-
         return self::create([
             'email' => $providerUser->getEmail(),
             'username' => $providerUser->getNickname(),
