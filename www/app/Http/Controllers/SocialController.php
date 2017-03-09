@@ -9,14 +9,14 @@ class SocialController extends Controller
 {
     private $scopes = [];
 
-//    /**
-//     * Create a new controller instance.
-//     *
-//     */
-//    public function __construct()
-//    {
-//        $this->middleware('guest', ['except' => ['create', 'appendSocialCallback']]);
-//    }
+    /**
+     * Create a new controller instance.
+     *
+     */
+    public function __construct()
+    {
+        $this->middleware('guest', ['except' => ['create', 'appendSocialCallback']]);
+    }
 
     /**
      * Login.
