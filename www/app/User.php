@@ -48,4 +48,15 @@ class User extends Authenticatable
             'name' => $providerUser->getName(),
         ]);
     }
+
+    /**
+     * Get the social account of user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function socials()
+    {
+        return $this->hasMany(UserSocialAccount::class);
+    }
+
 }
