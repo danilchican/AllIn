@@ -30,7 +30,6 @@ class SocialAccountService
                 'isNewUser' => $isNewUser
             ];
         } else {
-            $isNewUser = true;
             $account = new UserSocialAccount([
                 'provider_user_id' => $providerUser->getId(),
                 'provider' => $providerName]);
@@ -38,6 +37,7 @@ class SocialAccountService
             $user = User::whereEmail($providerUser->getEmail())->first();
 
             if (!$user) {
+                $isNewUser = true;
                 $user = User::createBySocialProvider($providerUser);
             }
 
