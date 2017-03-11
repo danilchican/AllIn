@@ -1,5 +1,5 @@
 <template>
-    <div class="panel panel-default">
+    <div class="panel panel-default statistic-panel">
         <div class="panel-body">
             <h3>Statistics page</h3>
             <img src="/image/stat.png" alt="must be stat"/>
@@ -8,8 +8,8 @@
 </template>
 
 <style>
-    #myTab {
-        margin-bottom: 15px;
+    .statistic-panel {
+        height: 400px;
     }
 </style>
 

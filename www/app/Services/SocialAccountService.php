@@ -30,7 +30,6 @@ class SocialAccountService
                 'isNewUser' => $isNewUser
             ];
         } else {
-            $isNewUser = true;
             $account = new UserSocialAccount([
                 'provider_user_id' => $providerUser->getId(),
                 'provider' => $providerName]);
@@ -38,6 +37,7 @@ class SocialAccountService
             $user = User::whereEmail($providerUser->getEmail())->first();
 
             if (!$user) {
+                $isNewUser = true;
                 $user = User::createBySocialProvider($providerUser);
             }
 
@@ -49,6 +49,46 @@ class SocialAccountService
                 'isNewUser' => $isNewUser
             ];
         }
+    }
 
+    /**
+     * Append social to user account.
+     *
+     * @param $providerObj
+     * @param $providerName
+     * @return array
+     */
+    public function appendSocialAccount($providerObj, $providerName)
+    {
+        $providerUser = $providerObj->user();
+
+        $account = UserSocialAccount::whereProvider($providerName)
+            ->whereProviderUserId($providerUser->getId())
+            ->first();
+
+        $existAccount = false;
+
+        if ($account) {
+            $existAccount = true;
+
+            return [
+                'existAccount' => $existAccount
+            ];
+        } else {
+
+            $account = new UserSocialAccount([
+                'provider_user_id' => $providerUser->getId(),
+                'provider' => $providerName]);
+
+            $user = \Auth::user();
+
+            if($user) {
+                $user->socials()->save($account);
+            }
+
+            return [
+                'existAccount' => $existAccount
+            ];
+        }
     }
 }

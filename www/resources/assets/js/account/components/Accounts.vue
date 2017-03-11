@@ -1,39 +1,137 @@
 <template>
-    <div class="panel panel-default">
+    <div class="panel panel-default accounts-panel">
         <div class="panel-body">
             <div class="socials" v-if="getSocialsCount() == 0">
-                <h3>No connected socials. Press plus button to add.</h3>
+                <div class="socials-info">
+                    <h3>It seems, you are not connect any social networks<br>
+                        Press on plus button below, to link!
+                    </h3>
+                </div>
             </div>
-            <div class="socials" v-else>
-                <h2>Here connected socials. Press plust to add more.</h2>
+
+            <div class="connected-socials" v-else>
+                <h3>Here connected socials. Press plus to add more.</h3>
+
+                <div class="currently-linked" v-if="isVkLinked() === true && isFbLinked() === true">
+                    <img src="/image/vk.png" alt="vk_logo" style="width: 60px; height: auto"/>
+                    <img src="/image/fb.png" alt="fb_logo" style="width: 60px; height: auto"/>
+
+                </div>
             </div>
 
             <div class="plus-button">
-                <button class="btn btn-sq-sm btn-primary add-button" @click="handlePlus()">
-                    <i class="fa fa-plus fa-2x"></i><br/>
+                <button type="button" class="btn btn-default btn-block add-button" @click="handlePlus()">
+                    <i class="fa fa-plus"></i><br/>
                 </button>
             </div>
 
-            <div v-if="isOpened()">
-                <br><label>test</label>
+            <div class="social-enter" v-if="isOpened()">
+                <a href="https://github.com" class="social-network facebook">
+                    <img src="/image/socials/fb_logo.png" alt="fb_logo" class="fb-logo"/>
+                    <div class="social-name"></div>
+                </a>
+
+                <a href="https://github.com" class="social-network vkontakte">
+                    <img src="/image/socials/vk_logo.png" alt="vk_logo" class="vk-logo"/>
+                    <div class="social-name"></div>
+                </a>
+
             </div>
         </div>
     </div>
 </template>
 
 <style>
-    .panel-body {
-        min-height: 150px;
+    .accounts-panel {
+        height: auto;
     }
+
+    .socials-info {
+        text-align: center;
+        font-style: italic;
+    }
+
+    .connected-socials {
+        text-align: center;
+    }
+    .currently-linked {
+        margin-top: 15px;
+    }
+
+    .plus-button {
+        margin-top: 50px;
+        margin-bottom: 10px;
+    }
+
+    .add-button:focus, .add-button:active, .add-button:hover {
+        outline: none !important;
+    }
+
+    .social-enter {
+        margin-top: 50px;
+        text-align: center;
+        alignment: center;
+    }
+
+    .social-network {
+        margin: 0 8px 15px;
+        width: 140px;
+        height: 140px;
+        border-radius: 10px;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .social-network.facebook {
+        background-color: #3b5998;
+    }
+    .fb-logo {
+        width: 80px;
+        height: auto;
+        margin-top: 30px;
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    .fb-logo:hover {
+        transform: scale(1.2);
+        transition: all 0.3s ease;
+        transition-property: all;
+        transition-duration: 0.3s;
+        transition-timing-function: ease;
+        transition-delay: initial;
+    }
+
+    .social-network.vkontakte {
+        background-color: #4C75A3;
+    }
+    .vk-logo {
+        width: 80px;
+        height: auto;
+        margin-top: 30px;
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+    .vk-logo:hover {
+        transform: scale(1.2);
+        transition: all 0.3s ease;
+        transition-property: all;
+        transition-duration: 0.3s;
+        transition-timing-function: ease;
+        transition-delay: initial;
+    }
+
 </style>
 
 <script>
-
     export default {
         data : function() {
             return {
+                vkLinked: false,
+                fbLinked: false,
                 plusButton: false,
-                socials: [1]
+                //socials: ["vkontakte", "facebook"]
+                socials: []
             }
         },
 
@@ -52,8 +150,15 @@
 
             getSocialsCount() {
                 return this.socials.length
+            },
+
+            isVkLinked() {
+                return this.vkLinked
+            },
+
+            isFbLinked() {
+                return this.fbLinked
             }
         }
     }
-
 </script>

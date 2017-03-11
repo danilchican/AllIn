@@ -1,5 +1,5 @@
 <template>
-    <div class="panel panel-default">
+    <div class="panel panel-default settings-panel">
         <div class="panel-body">
             <h3>Settings page</h3>
 
@@ -28,8 +28,8 @@
 </template>
 
 <style>
-    #myTab {
-        margin-bottom: 15px;
+    .settings-panel {
+        height: 330px;
     }
 
     .input-group-addon {

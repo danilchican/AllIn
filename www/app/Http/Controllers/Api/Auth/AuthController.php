@@ -16,7 +16,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('guest', ['only' => 'login']);
     }
 
     /**
@@ -31,13 +31,30 @@ class AuthController extends Controller
 
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                return Response::json(['error' => 'User credentials are not correct!'], 401);
+                return Response::json(['error' => 'User credentials are not correct!', 'code' => 401], 401);
             }
         } catch (JWTException $e) {
-            return Response::json(['error' => 'Something went wrong!'], 500);
+            return Response::json(['error' => 'Something went wrong!', 'code' => 500], 500);
         }
 
-        return Response::json(compact('token'));
+        return Response::json(['token' => $token, 'code' => 200]);
+    }
+
+    /**
+     * Get user info.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAuthUser() {
+        try {
+            if (! $user = JWTAuth::parseToken()->toUser()) {
+                return Response::json(['error' => 'User not found!', 'code' => 404], 404);
+            }
+        } catch (JWTException $e) {
+            return Response::json(['error' => 'Something went wrong!', 'code' => 500], 500);
+        }
+
+        return Response::json(['user' => $user, 'code' => 200]);
     }
 
     /**
@@ -50,14 +67,15 @@ class AuthController extends Controller
 
         try {
             if (! JWTAuth::invalidate($token)) {
-                return Response::json(['error' => 'Can\'t logout from server!'], 401);
+                return Response::json(['error' => 'Can\'t logout from server!', 'code' => 401], 401);
             }
         } catch (JWTException $e) {
-            return Response::json(['error' => 'Something went wrong!'], 500);
+            return Response::json(['error' => 'Something went wrong!', 'code' => 500], 500);
         }
 
         return Response::json([
-            'success' => 'User is logged off.'
+            'success' => 'User is logged off.',
+            'code' => 200
         ]);
     }
 }

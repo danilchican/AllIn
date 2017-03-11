@@ -29,12 +29,18 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that should be visible in arrays.
+     *
+     * @var array
+     */
+    protected $visible = ['name', 'email'];
+
+    /**
      * @param $providerUser
      * @return mixed
      */
     public static function createBySocialProvider($providerUser)
     {
-
         return self::create([
             'email' => $providerUser->getEmail(),
             'username' => $providerUser->getNickname(),
@@ -42,4 +48,15 @@ class User extends Authenticatable
             'name' => $providerUser->getName(),
         ]);
     }
+
+    /**
+     * Get the social account of user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function socials()
+    {
+        return $this->hasMany(UserSocialAccount::class);
+    }
+
 }
