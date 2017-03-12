@@ -22,7 +22,7 @@ class SocialController extends Controller
                 return Response::json(['error' => 'User not found!', 'code' => 404], 404);
             }
 
-            $socials = $this->getSocialsForUser($user);
+            $socials = $user->socials()->get();
 
             if($socials->isEmpty()) {
                 return Response::json([
@@ -35,15 +35,5 @@ class SocialController extends Controller
         }
 
         return Response::json(['socials' => $socials, 'code' => 200]);
-    }
-
-    /**
-     * Get socials account for a user.
-     *
-     * @param User $user
-     * @return mixed
-     */
-    public function getSocialsForUser(User $user) {
-        return $user->socials()->get();
     }
 }

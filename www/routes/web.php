@@ -25,4 +25,5 @@ Route::get('/auth/{provider}/callback', 'SocialController@callback');
 Route::get('/socials/{provider}/create', 'SocialController@create')->name('socials.provider');
 Route::get('/socials/{provider}/callback', 'SocialController@appendSocialCallback');
 
+Route::get('/socials/list', 'Account\AccountController@getAttachedSocials')->name('socials.list');
 Route::get('/home/{account?}', 'Account\AccountController@index')->name('account.index');
