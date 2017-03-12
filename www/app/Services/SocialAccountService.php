@@ -32,6 +32,7 @@ class SocialAccountService
         } else {
             $account = new UserSocialAccount([
                 'provider_user_id' => $providerUser->getId(),
+                'access_token' => $providerUser->token,
                 'provider' => $providerName]);
 
             $user = User::whereEmail($providerUser->getEmail())->first();
@@ -40,6 +41,9 @@ class SocialAccountService
                 $isNewUser = true;
                 $user = User::createBySocialProvider($providerUser);
             }
+
+            $user->avatar = $providerUser->getAvatar();
+            $user->save();
 
             $account->user()->associate($user);
             $account->save();
