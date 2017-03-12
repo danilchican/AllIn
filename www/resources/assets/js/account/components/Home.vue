@@ -1,8 +1,8 @@
 <template>
-    <div class="panel panel-default">
+    <div class="panel panel-default home-panel">
         <div class="panel-body">
             <h3>Latest</h3>
-            <p class="lead">Yesterday posts:<br>
+            <p class="lead">Yesterday posts now:<br>
                Plan: 01.03.2017 at 00:00 Happy Birthday, Mary!<br>
                 <img src="/image/pusheencat.png" alt="must be cat" style="width: 100px; height: auto"/>
             <p class="lead"> Posted in:</p>
@@ -14,12 +14,8 @@
 </template>
 
 <style>
-    .panel-body {
-        margin-bottom: 100px;
-    }
-
-    #myTab {
-        margin-bottom: 15px;
+    .home-panel {
+        height: 380px;
     }
 </style>
 
