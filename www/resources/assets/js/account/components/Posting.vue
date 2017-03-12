@@ -78,6 +78,13 @@
             },
 
             handlePostButton() {
+                this.message = $('textarea#comment').val();
+
+                if (this.message == '') {
+                    toastr.warning('Nothing to post.');
+                    return;
+                }
+
                 this.dateTime = $('input#date-time').val();
                 if (this.dateTime === '') {
                     toastr.success("Successfully posted!");
@@ -85,7 +92,6 @@
                     toastr.success("Scheduled to " + this.dateTime);
                 }
 
-                this.message = $('textarea#comment').val();
                 $('textarea#comment').val('');
                 $('textarea#comment').attr("placeholder", "Write something...");
 
