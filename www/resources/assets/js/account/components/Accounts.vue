@@ -11,11 +11,11 @@
 
             <div class="connected-socials" v-else>
                 <h3>Here connected socials. Press plus to add more.</h3>
-
-                <div class="currently-linked" v-if="isVkLinked() === true && isFbLinked() === true">
-                    <img src="/image/vk.png" alt="vk_logo" style="width: 60px; height: auto"/>
-                    <img src="/image/fb.png" alt="fb_logo" style="width: 60px; height: auto"/>
-
+                <div class="display-socials" v-for="item in socials">
+                    <div class="currently-linked" v-if="isVkLinked() === true && isFbLinked() === true">
+                        <img src="/image/vk.png" alt="vk_logo" style="width: 60px; height: auto"/>
+                        <img src="/image/fb.png" alt="fb_logo" style="width: 60px; height: auto"/>
+                    </div>
                 </div>
             </div>
 
@@ -130,9 +130,13 @@
                 vkLinked: false,
                 fbLinked: false,
                 plusButton: false,
-                //socials: ["vkontakte", "facebook"]
                 socials: []
+            /*    socials: [
+                    { network: 'vkontakte' },
+                    { network: 'facebook' }
+                ]*/
             }
+
         },
 
         mounted() {
