@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'avatar'
     ];
 
     /**
@@ -33,7 +33,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $visible = ['name', 'email'];
+    protected $visible = ['name', 'email', 'avatar'];
 
     /**
      * @param $providerUser
@@ -44,6 +44,7 @@ class User extends Authenticatable
         return self::create([
             'email' => $providerUser->getEmail(),
             'username' => $providerUser->getNickname(),
+            'avatar' => $providerUser->getAvatar(),
             'password' => Hash::make('secret'),
             'name' => $providerUser->getName(),
         ]);
