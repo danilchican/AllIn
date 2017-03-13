@@ -43,6 +43,12 @@
         @endif
         <div class="main-row">
             <div class="col-md-3">
+                <h3 style="margin-top:0;">{{ $user->name }}</h3>
+
+                @if($user->avatar)
+                    <img src="{{ $user->avatar }}" alt="User photo" />
+                @endif
+
                 <ul class="list-group">
                     <router-link to="/home" class="list-group-item" exact>
                         <i class="fa fa-btn fa-user-circle-o"></i> Home

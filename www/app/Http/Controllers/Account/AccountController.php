@@ -24,7 +24,10 @@ class AccountController extends Controller
      */
     public function index()
     {
-        return view('account.index');
+        $user = \Auth::user();
+
+        return view('account.index')
+            ->with(compact('user'));
     }
 
     /**
