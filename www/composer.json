@@ -10,12 +10,13 @@
         "barryvdh/laravel-debugbar": "^2.3",
         "barryvdh/laravel-ide-helper": "^2.2",
         "bugsnag/bugsnag-laravel": "^2.0",
+        "dingo/api": "dev-master#a852013",
         "fzaninotto/faker": "^1.6",
+        "guzzlehttp/guzzle": "^6.2",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "socialiteproviders/vkontakte": "^3.0",
-        "tymon/jwt-auth": "^0.5.10",
-        "dingo/api": "dev-master#a852013"
+        "tymon/jwt-auth": "^0.5.10"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
