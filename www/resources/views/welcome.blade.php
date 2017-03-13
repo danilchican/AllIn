@@ -18,6 +18,8 @@
             padding-bottom: 25px;
             background-color: #fff;
             color: inherit;
+            font-style: inherit;
+            font-size: 20px;
         }
 
         .container-third {
@@ -25,6 +27,8 @@
             padding-bottom: 150px;
             background-color: inherit;
             color: inherit;
+            font-style: inherit;
+            font-size: 20px;
         }
 
         .container-boarder {
@@ -73,31 +77,28 @@
         </div>
 
         <div class="container-additional">
-            <h1>Additional information here</h1>
-            <p class="lead">Text here<br>
-                <br>Info
-                <br>Info
-                <br>Info
-                <br>Info
-                <br>Info
-                <br>Info
-                <br>Info
-                <br>Info
-            </p>
+            <h1>Маркетинг и продвижение в социальных сетях
+                <br>с надежным сервисом для SMM</h1>
+            <br>Создавайте отложенные посты и публикуйте их сразу
+            <br>во всех выбранных аккаунтах в несколько кликов с помощью одного сервиса.
+            <br>Вовлекайте аудиторию. Превращайте ваши страницы
+            <br>в инструмент маркетинга в социальных сетях.
+
+            <h1>Визуальный контент</h1>
+            <br>Добавляйте несколько изображений к одной публикации.
+            <br>Создавайте кликабельные интерактивные посты!
+
         </div>
 
         <div class="container-third">
-            <h1>Third information here</h1>
-            <p class="lead">Text here
-                <br>Info
-                <br>Info
-                <br>Info
-                <br>Info
-                <br>Info
-                <br>Info
-                <br>Info
-                <br>Info
-            </p>
+            <h1>Анализ социальных сетей</h1>
+            <br>Запустив анализ социальных сетей, вы можете проводить контент-анализ
+            <br>и отслеживать, как контент, который вы публикуете в разные соцсети,
+            <br>влияет на рост подписчиков и вовлеченность аудитории.
+
+            <h1>Календарь и история публикаций</h1>
+            <br>Всегда будьте в курсе статуса ваших публикаций.
+
         </div>
     </div>
 @endsection

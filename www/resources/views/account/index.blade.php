@@ -79,5 +79,7 @@
 @endsection
 
 @section('scripts')
+    <link rel="stylesheet" href="/css/toastr.css">
+    <script src="toastr.js"></script>
     <script src="/js/account.js"></script>
 @endsection
