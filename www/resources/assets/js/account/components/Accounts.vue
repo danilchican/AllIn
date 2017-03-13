@@ -26,16 +26,15 @@
             </div>
 
             <div class="social-enter" v-if="isOpened()">
-                <a href="https://github.com" class="social-network facebook">
-                    <img src="/image/socials/fb_logo.png" alt="fb_logo" class="fb-logo"/>
-                    <div class="social-name"></div>
-                </a>
-
-                <a href="https://github.com" class="social-network vkontakte">
+                <a href="/socials/vkontakte/create" class="social-network vkontakte">
                     <img src="/image/socials/vk_logo.png" alt="vk_logo" class="vk-logo"/>
                     <div class="social-name"></div>
                 </a>
 
+                <a href="/socials/facebook/create" class="social-network facebook">
+                    <img src="/image/socials/fb_logo.png" alt="fb_logo" class="fb-logo"/>
+                    <div class="social-name"></div>
+                </a>
             </div>
         </div>
     </div>
@@ -130,16 +129,14 @@
                 vkLinked: false,
                 fbLinked: false,
                 plusButton: false,
-                socials: []
-            /*    socials: [
-                    { network: 'vkontakte' },
-                    { network: 'facebook' }
-                ]*/
+                socials: [],
+                linked: []
             }
 
         },
 
         mounted() {
+            this.getLinkedSocials();
             console.log("Accounts component mounted.")
         },
 
@@ -154,6 +151,29 @@
 
             getSocialsCount() {
                 return this.socials.length
+            },
+
+            getLinkedSocials() {
+                this.$http.get('/socials/list')
+                    .then((data) => {
+                        // success callback
+                        this.linked = data.body.linked;
+                        this.getLinkedSocials();
+
+                        if(data.body.success !== true) {
+                            toastr.error('Help! I need somebody Help!', 'Error')
+                        }
+                    }, (data) => {
+                        // error callback
+                        var errors = data.body;
+                        $.each(errors, function(key, value) {
+                            if(data.status === 422) {
+                                toastr.error(value[0], 'Error')
+                            } else {
+                                toastr.error(value, 'Error')
+                            }
+                        });
+                    });
             },
 
             isVkLinked() {

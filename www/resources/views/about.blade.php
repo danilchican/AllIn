@@ -8,6 +8,8 @@
             text-align: center;
             color: #fff;
             background-color: #127cd0;
+            font-size: 20px;
+            font-style: inherit;
         }
 
         .team-info {
@@ -59,6 +61,13 @@
     <div class="about-info">
         <h1>About us</h1>
         <p class="lead">Make your dreams come true with Allin<br> </p>
+
+        AllInco — это онлайн сервис для Social Media Marketing (SMM),
+        <br>который позволяет вам создавать, планировать
+        <br>и размещать публикации в нескольких социальных сетях одновременно.
+        <br>В данный момент AllInco имеет возможность делать публикации
+        <br>и анализировать такие социальные сети, как Facebook и ВКонтакте.
+        <br>Но мы планируем добавление других не менее популярных медиа.
     </div>
     <div class="team-info">
         <h1>Our team</h1>
