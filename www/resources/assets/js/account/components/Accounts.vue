@@ -11,17 +11,16 @@
 
             <div class="connected-socials" v-else>
                 <h3>Here connected socials. Press plus to add more.</h3>
-                <div class="display-socials" v-for="item in socials">
-                    <div class="currently-linked" v-if="isVkLinked() === true && isFbLinked() === true">
-                        <img src="/image/vkontakte.png" alt="vk_logo" style="width: 60px; height: auto"/>
-                        <img src="/image/facebook.png" alt="fb_logo" style="width: 60px; height: auto"/>
+                <div class="display-socials">
+                    <div class="currently-linked" v-for="item in socials">
+                        <img :src="getSocialImageURL(item)" style="width: 60px; height: auto"/>
                     </div>
                 </div>
             </div>
 
             <div class="plus-button">
                 <button type="button" class="btn btn-default btn-block add-button" @click="handlePlus()">
-                    <i class="fa fa-plus"></i><br/>
+                    <i :class="[ !isOpened() ? 'fa fa-plus' : 'fa fa-minus' ]"></i><br/>
                 </button>
             </div>
 
@@ -126,12 +125,10 @@
     export default {
         data : function() {
             return {
-                vkLinked: false,
-                fbLinked: false,
                 plusButton: false,
-                socials: []
+                socials: [],
+                links: []
             }
-
         },
 
         mounted() {
@@ -152,6 +149,16 @@
                 return this.socials.length
             },
 
+            getSocialImageURL(account) {
+                return "/image/" + account.provider + ".png";
+            },
+
+            setLinks() {
+                this.socials.forEach(function(key) {
+
+                });
+            },
+
             getLinkedSocials() {
                 this.$http.get('/socials/list')
                     .then((data) => {
@@ -161,6 +168,7 @@
                             return;
                         } else {
                             toastr.success('Connected networks updated!');
+
                         }
 
                         this.socials = data.body.socials;
@@ -176,14 +184,6 @@
                         });
                     });
             },
-
-            isVkLinked() {
-                return this.vkLinked
-            },
-
-            isFbLinked() {
-                return this.fbLinked
-            }
         }
     }
 </script>

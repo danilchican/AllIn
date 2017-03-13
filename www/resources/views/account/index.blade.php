@@ -13,6 +13,8 @@
         .user-info {
             background-color: white;
             border-radius: 5px;
+            alignment: center;
+            text-align: center;
         }
     </style>
 
@@ -49,7 +51,7 @@
         <div class="main-row">
             <div class="col-md-3">
                 <div class="user-info">
-                    <h3 style="margin-top:0;">{{ $user->name }}</h3>
+                    <h4 style="margin-top:0;">{{ $user->name }}</h4>
 
                     @if($user->avatar)
                         <img src="{{ $user->avatar }}" alt="User photo" />
