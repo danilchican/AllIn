@@ -6,8 +6,8 @@
                Plan: 01.03.2017 at 00:00 Happy Birthday, Mary!<br>
                 <img src="/image/pusheencat.png" alt="must be cat" style="width: 100px; height: auto"/>
             <p class="lead"> Posted in:</p>
-                <img src="/image/vk.png" alt="must be cat" style="width: 50px; height: auto"/>
-                <img src="/image/fb.png" alt="must be cat" style="width: 50px; height: auto"/>
+                <img src="/image/vkontakte.png" alt="must be cat" style="width: 50px; height: auto"/>
+                <img src="/image/facebook.png" alt="must be cat" style="width: 50px; height: auto"/>
             </p>
         </div>
     </div>
