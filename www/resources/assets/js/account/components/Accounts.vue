@@ -158,7 +158,6 @@
                     .then((data) => {
                         // success callback
                         this.linked = data.body.linked;
-                        this.getLinkedSocials();
 
                         if(data.body.success !== true) {
                             toastr.error('Help! I need somebody Help!', 'Error')
