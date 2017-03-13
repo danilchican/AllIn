@@ -136,6 +136,7 @@
         },
 
         mounted() {
+            this.getLinkedSocials();
             console.log("Accounts component mounted.")
         },
 

@@ -6,8 +6,6 @@
  */
 
 require('./bootstrap');
-require('toastr');
-require('vue-toaster');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
