@@ -9,6 +9,11 @@
         .main-row {
             margin-top: 40px;
         }
+
+        .user-info {
+            background-color: white;
+            border-radius: 5px;
+        }
     </style>
 
     <script>
@@ -43,6 +48,10 @@
         @endif
         <div class="main-row">
             <div class="col-md-3">
+                <div class="user-info">
+
+                </div>
+
                 <ul class="list-group">
                     <router-link to="/home" class="list-group-item" exact>
                         <i class="fa fa-btn fa-user-circle-o"></i> Home
