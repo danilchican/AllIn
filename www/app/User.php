@@ -39,12 +39,12 @@ class User extends Authenticatable
      * @param $providerUser
      * @return mixed
      */
-    public static function createBySocialProvider($providerUser)
+    public static function createBySocialProvider($providerUser, $avatar)
     {
         return self::create([
             'email' => $providerUser->getEmail(),
             'username' => $providerUser->getNickname(),
-            'avatar' => $providerUser->getAvatar(),
+            'avatar' => $avatar,
             'password' => Hash::make('secret'),
             'name' => $providerUser->getName(),
         ]);
