@@ -54,7 +54,7 @@
                     <h4 style="margin-top:0;">{{ $user->name }}</h4>
 
                     @if($user->avatar)
-                        <img src="{{ $user->avatar }}" alt="User photo" />
+                        <img src="{{ $user->avatar }}" alt="User photo" style="max-width: 250px; " />
                     @endif
                 </div>
 
