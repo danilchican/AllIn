@@ -9,6 +9,11 @@
         .main-row {
             margin-top: 40px;
         }
+
+        .user-info {
+            background-color: white;
+            border-radius: 5px;
+        }
     </style>
 
     <script>
@@ -43,11 +48,13 @@
         @endif
         <div class="main-row">
             <div class="col-md-3">
-                <h3 style="margin-top:0;">{{ $user->name }}</h3>
+                <div class="user-info">
+                    <h3 style="margin-top:0;">{{ $user->name }}</h3>
 
-                @if($user->avatar)
-                    <img src="{{ $user->avatar }}" alt="User photo" />
-                @endif
+                    @if($user->avatar)
+                        <img src="{{ $user->avatar }}" alt="User photo" />
+                    @endif
+                </div>
 
                 <ul class="list-group">
                     <router-link to="/home" class="list-group-item" exact>

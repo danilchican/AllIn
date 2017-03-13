@@ -129,8 +129,7 @@
                 vkLinked: false,
                 fbLinked: false,
                 plusButton: false,
-                socials: [],
-                linked: []
+                socials: []
             }
 
         },
@@ -157,16 +156,19 @@
                 this.$http.get('/socials/list')
                     .then((data) => {
                         // success callback
-                        this.linked = data.body.linked;
-
-                        if(data.body.success !== true) {
-                            toastr.error('Help! I need somebody Help!', 'Error')
+                        if(data.body.message !== undefined) {
+                            toastr.warning(data.body.message, 'Warning');
+                            return;
+                        } else {
+                            toastr.success('Connected networks updated!');
                         }
+
+                        this.socials = data.body.socials;
                     }, (data) => {
                         // error callback
                         var errors = data.body;
                         $.each(errors, function(key, value) {
-                            if(data.status === 422) {
+                            if(data.status !== 200) {
                                 toastr.error(value[0], 'Error')
                             } else {
                                 toastr.error(value, 'Error')
