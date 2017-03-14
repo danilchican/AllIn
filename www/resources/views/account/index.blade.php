@@ -12,7 +12,7 @@
 
         .user-info {
             background-color: white;
-            border-radius: 5px;
+            border-radius: 4px;
             border: 1px solid #d3e0e9;
             alignment: center;
             text-align: center;
