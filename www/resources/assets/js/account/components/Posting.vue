@@ -8,12 +8,15 @@
             </div>
             <div class="row">
                 <div class="display-socials" align="left">
-                    <ul><li><input type="checkbox" id="select-vkontakte"/>
-                        <label for="select-vkontakte">
-                            <img src="/image/vkontakte.png" style="width: 60px; height: auto; margin: 0 10px;" />
-                        </label>
+                    <ul>
+                        <li>
+                            <input type="checkbox" id="select-vkontakte"/>
+                            <label for="select-vkontakte">
+                                <img src="/image/vkontakte.png" style="width: 60px; height: auto; margin: 0 10px;" />
+                            </label>
                         </li>
-                        <li><input type="checkbox" id="select-facebook" />
+                        <li>
+                            <input type="checkbox" id="select-facebook" />
                         <label for="select-facebook">
                             <img src="/image/facebook.png" style="width: 60px; height: auto; margin: 0 10px;" />
                         </label>
