@@ -26,4 +26,5 @@ Route::get('/socials/{provider}/create', 'SocialController@create')->name('socia
 Route::get('/socials/{provider}/callback', 'SocialController@appendSocialCallback');
 
 Route::get('/socials/list', 'Account\AccountController@getAttachedSocials')->name('socials.list');
+Route::get('/user/info', 'Account\AccountController@getUserInfo')->name('user.info');
 Route::get('/home/{account?}', 'Account\AccountController@index')->name('account.index');

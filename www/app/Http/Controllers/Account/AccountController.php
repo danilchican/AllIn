@@ -31,6 +31,20 @@ class AccountController extends Controller
     }
 
     /**
+     * Get user info.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getUserInfo()
+    {
+        if (! $user = \Auth::user()) {
+            return Response::json(['error' => 'User not found!', 'code' => 404], 404);
+        }
+
+        return Response::json(['user' => $user, 'code' => 200], 200);
+    }
+
+    /**
      * Get user's socials.
      *
      * @return mixed|json
