@@ -24,8 +24,7 @@
     export default {
         data: function () {
             return {
-                newPassword: "",
-                email: ""
+
             }
         },
 
@@ -34,54 +33,7 @@
         },
 
         methods: {
-            getUserEmail() {
-                this.$http.get('user/give/me/email')
-                    .then((data) => {
-                        // success callback
-                        this.email = data.body.email;
 
-                        if(data.body.success !== true) {
-                            toastr.error('Help! I need somebody Help!', 'Error')
-                        }
-                    }, (data) => {
-                        // error callback
-                        var errors = data.body;
-                        $.each(errors, function(key, value) {
-                            if(data.status === 422) {
-                                toastr.error(value[0], 'Error')
-                            } else {
-                                toastr.error(value, 'Error')
-                            }
-                        });
-                    });
-            },
-
-            changeUserPassword(userEmail, userNewPassword) {
-                this.$http.post('change/password/blya', {email: userEmail, password: userNewPassword})
-                    .then((data) => {
-                        // success callback
-
-                        if(data.body.success === true) {
-                            var messages = data.body.messages;
-
-                            $.each( messages, function( key, value ) {
-                                toastr.success(value, 'Success')
-                            });
-                        } else {
-                            toastr.error('Что-то пошло не так...', 'Error')
-                        }
-                    }, (data) => {
-                        // error callback
-                        var errors = data.body;
-                        $.each( errors, function( key, value ) {
-                            if(data.status === 422) {
-                                toastr.error(value[0], 'Error')
-                            } else {
-                                toastr.error(value, 'Error')
-                            }
-                        });
-                    });
-            }
         }
     }
 

@@ -7,6 +7,25 @@
                 <textarea class="form-control post-textarea" rows="7" cols="120" id="comment" placeholder="Write something..."></textarea>
             </div>
             <div class="row">
+                <div class="display-socials" align="left">
+                    <ul>
+                        <li>
+                            <input type="checkbox" id="select-vkontakte"/>
+                            <label for="select-vkontakte">
+                                <img src="/image/vkontakte.png" style="width: 60px; height: auto; margin: 0 10px;" />
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="select-facebook" />
+                        <label for="select-facebook">
+                            <img src="/image/facebook.png" style="width: 60px; height: auto; margin: 0 10px;" />
+                        </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-sm-6 date-input">
                     <div class='input-group date' id='datetimepicker'>
                         <input type='text' class="form-control" id="date-time"/>
@@ -26,17 +45,9 @@
 
 <style>
     .post-panel {
-        height: 350px;
+        height: auto;
     }
 
-    .date-input {
-        margin-top: 25px;
-    }
-
-    .post-button {
-        margin-top: 25px;
-        alignment: right;
-    }
 
     .post-input {
         border-radius: 7px;
@@ -46,6 +57,69 @@
         resize: none;
         border-radius: 7px;
     }
+
+    .display-socials {
+        margin-top: 20px;
+        margin-bottom: 5px;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    li {
+        display: inline-block;
+    }
+
+    input[type="checkbox"][id^="select-"] {
+        display: none;
+    }
+
+    label {
+        border: 0px solid #fff;
+        display: block;
+        position: relative;
+        cursor: pointer;
+    }
+
+    label:before {
+        background-color: white;
+        color: white;
+        content: " ";
+        display: block;
+        border-radius: 50%;
+        border: 1px solid grey;
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        transition-duration: 0.4s;
+        transform: scale(0);
+    }
+
+    label img {
+        height: 60px;
+        width: 60px;
+        transition-duration: 0.2s;
+        transform-origin: 50% 50%;
+    }
+
+    :checked + label {
+        border-color: white;
+    }
+
+    :checked + label:before {
+        content: "✓";
+        background-color: green;
+        transform: scale(1);
+    }
+
+    :checked + label img {
+        transform: scale(0.9);
+        z-index: -1;
+    }
 </style>
 
 <script>
@@ -54,11 +128,14 @@
             return {
                 isCalendarOpened: false,
                 message: "",
-                dateTime: ""
+                dateTime: "",
+                linkedSocials: [],
+                socialsForPost: []
             }
         },
 
         mounted() {
+            this.getLinkedSocials();
             console.log("Post component mounted.")
         },
 
@@ -74,7 +151,25 @@
             },
 
             isOpened() {
-                return this.isCalendarOpened
+                return this.isCalendarOpened;
+            },
+
+            getSelectedNetworksCount() {
+                return this.socialsForPost.length;
+            },
+
+            getSocialImageURL(account) {
+                return "/image/" + account.provider + ".png";
+            },
+
+            isLinked(social) {
+                this.linkedSocials.forEach(function (key) {
+                    if (key.provider === social) {
+                        return true;
+                    }
+                });
+
+                return false;
             },
 
             handlePostButton() {
@@ -96,6 +191,74 @@
                 $('textarea#comment').attr("placeholder", "Write something...");
 
                 $('input#date-time').val('');
+            },
+
+            getLinkedSocials() {
+                this.$http.get('/socials/list')
+                    .then((data) => {
+                        // success callback
+                        if(data.body.message !== undefined) {
+                            toastr.warning(data.body.message, 'Warning');
+                            return;
+                        } else {
+                            toastr.success('Connected networks updated!');
+
+                        }
+
+                        this.linkedSocials = data.body.socials;
+                    }, (data) => {
+                        // error callback
+                        var errors = data.body;
+                        $.each(errors, function(key, value) {
+                            if(data.status !== 200) {
+                                toastr.error(value[0], 'Error')
+                            } else {
+                                toastr.error(value, 'Error')
+                            }
+                        });
+                    });
+            },
+
+            sendPostData(data, networks) {
+                this.$http.post('usage/post', { message: data, socials: networks })
+                    .then((data) => {
+                        // success callback
+
+                        if(data.body.success === true) {
+                            var messages = data.body.messages;
+
+                            $.each( messages, function( key, value ) {
+                                toastr.success(value, 'Success')
+                            });
+                        } else {
+                            toastr.error('Что-то пошло не так...', 'Error')
+                        }
+                    }, (data) => {
+                        // error callback
+                        var errors = data.body;
+                        toastr.error(errors, "Error");
+                    });
+            },
+
+            schedulePostData(data, networks, time) {
+                this.$http.post('usage/schedule', { message: data, socials: networks, schedule: time })
+                    .then((data) => {
+                        // success callback
+
+                        if(data.body.success === true) {
+                            var messages = data.body.messages;
+
+                            $.each( messages, function( key, value ) {
+                                toastr.success(value, 'Success')
+                            });
+                        } else {
+                            toastr.error("It's seems something went wrong...", 'Error');
+                        }
+                    }, (data) => {
+                        // error callback
+                        var errors = data.body;
+                        toastr.error(errors, "Error");
+                    });
             }
         }
     }

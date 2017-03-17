@@ -12,9 +12,12 @@
 
         .user-info {
             background-color: white;
-            border-radius: 5px;
+            border-radius: 4px;
+            border: 1px solid #d3e0e9;
             alignment: center;
             text-align: center;
+            padding: 20px 0;
+            margin-bottom: 10px;
         }
     </style>
 
@@ -54,7 +57,9 @@
                     <h4 style="margin-top:0;">{{ $user->name }}</h4>
 
                     @if($user->avatar)
-                        <img src="{{ $user->avatar }}" alt="User photo" />
+                        <img src="{{ $user->avatar }}" alt="User photo" style="max-width: 200px;" />
+                    @else
+                        <img src="/image/no_avatar.jpg" alt="User photo" style="max-width: 200px;" />
                     @endif
                 </div>
 
