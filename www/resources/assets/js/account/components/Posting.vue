@@ -140,6 +140,9 @@
         },
 
         methods : {
+            /**
+             * Handle calendar button press.
+             */
             handleCalendar() {
                 if (this.isCalendarOpened == true) {
                     $('#datetimepicker').datetimepicker('hide');
@@ -150,18 +153,33 @@
                 }
             },
 
+            /**
+             * Return current calendar state.
+             */
             isOpened() {
                 return this.isCalendarOpened;
             },
 
+            /**
+             * Get connected networks count.
+             */
             getSelectedNetworksCount() {
                 return this.socialsForPost.length;
             },
 
+            /**
+             * Get URL of image using it's name.
+             */
             getSocialImageURL(account) {
                 return "/image/" + account.provider + ".png";
             },
 
+            /**
+             * Check if social network with given name
+             * exist in array of linked socials.
+             *
+             * @param social name of social network.
+             */
             isLinked(social) {
                 this.linkedSocials.forEach(function (key) {
                     if (key.provider === social) {
@@ -172,6 +190,17 @@
                 return false;
             },
 
+            /**
+             * Handle Post button actions:
+             *
+             * 1. Get data from input fields;
+             * 2. Collect checked socials;
+             * 3. Clear all input fields;
+             * 4. Send POST request to server for post data if
+             *    date and time wasn't set.
+             * 5. Send POST request to server to schedule post
+             *    if date and time was set.
+             */
             handlePostButton() {
                 this.message = $('textarea#comment').val();
 
@@ -187,12 +216,42 @@
                     toastr.success("Scheduled to " + this.dateTime);
                 }
 
+                this.getSocialsForPost();
+
                 $('textarea#comment').val('');
                 $('textarea#comment').attr("placeholder", "Write something...");
 
                 $('input#date-time').val('');
             },
 
+            /**
+             * Get every checkbox state and make
+             * array of socials for posting.
+             */
+            getSocialsForPost() {
+                console.log("Length: " + this.linkedSocials.length);
+
+                var forPost = [];
+
+                this.linkedSocials.forEach(function (item) {
+                    var checkbox = document.getElementById("select-" + item.provider);
+
+                    if (checkbox.checked) {
+                        forPost.push(item.provider);
+                    }
+                });
+
+                $('input[type=checkbox]').each(function() {
+                    this.checked = false;
+                });
+
+                this.socialsForPost = forPost;
+            },
+
+            /**
+             * Send GET request to server and retrieve
+             * connected networks of current user.
+             */
             getLinkedSocials() {
                 this.$http.get('/socials/list')
                     .then((data) => {
@@ -218,6 +277,18 @@
                     });
             },
 
+
+            /**
+             * Send POST request on server for immediate post
+             * user data in socials.
+             *
+             * !important
+             * TODO: POST request for immediate posting.
+             * !important
+             *
+             * @param data User data for post
+             * @param networks Linked networks for post
+             */
             sendPostData(data, networks) {
                 this.$http.post('usage/post', { message: data, socials: networks })
                     .then((data) => {
@@ -239,11 +310,22 @@
                     });
             },
 
+            /**
+             * Send data for schedule post to server.
+             * Data will be posted in specific time.
+             *
+             * !important
+             * TODO: POST request for scheduled data.
+             * !important
+             *
+             * @param data User data for post
+             * @param networks Socials for post
+             * @param time Schedule time
+             */
             schedulePostData(data, networks, time) {
                 this.$http.post('usage/schedule', { message: data, socials: networks, schedule: time })
                     .then((data) => {
                         // success callback
-
                         if(data.body.success === true) {
                             var messages = data.body.messages;
 
