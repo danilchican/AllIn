@@ -60,4 +60,13 @@ class User extends Authenticatable
         return $this->hasMany(UserSocialAccount::class);
     }
 
+    /**
+     * Getting posts for a user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
