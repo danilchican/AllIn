@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css" />
 </head>
 <body>
-<div id="app">
+<div id="app" style="background-color: #edeef0;">
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
