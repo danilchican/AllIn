@@ -62,6 +62,9 @@
                     }
                 }
             });
+
+            var url_base64 = document.getElementById('myChart').toDataURL('image/png');
+
             console.log("Home component mounted.")
         }
     }

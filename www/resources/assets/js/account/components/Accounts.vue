@@ -24,15 +24,13 @@
                 </button>
             </div>
 
-            <div class="social-enter" v-if="isOpened()">
-                <a href="/socials/vkontakte/create" class="social-network vkontakte">
+            <div class="social-enter">
+                <a href="/socials/vkontakte/create" class="social-network vkontakte" id="vkontakte">
                     <img src="/image/socials/vk_logo.png" alt="vk_logo" class="vk-logo"/>
-                    <div class="social-name"></div>
                 </a>
 
-                <a href="/socials/facebook/create" class="social-network facebook">
+                <a href="/socials/facebook/create" class="social-network facebook" id="facebook">
                     <img src="/image/socials/fb_logo.png" alt="fb_logo" class="fb-logo"/>
-                    <div class="social-name"></div>
                 </a>
             </div>
         </div>
@@ -159,6 +157,13 @@
                 });
             },
 
+            isSocialLinked() {
+                this.socials.forEach(function (item) {
+                    var x = document.getElementById(item.provider);
+                    x.style.border = "5px solid green";
+                });
+            },
+
             getLinkedSocials() {
                 this.$http.get('/socials/list')
                     .then((data) => {
@@ -168,7 +173,7 @@
                             return;
                         } else {
                             toastr.success('Connected networks updated!');
-
+                            this.isSocialLinked();
                         }
 
                         this.socials = data.body.socials;

@@ -17,9 +17,9 @@
                         </li>
                         <li>
                             <input type="checkbox" id="select-facebook" />
-                        <label for="select-facebook">
-                            <img src="/image/facebook.png" style="width: 60px; height: auto; margin: 0 10px;" />
-                        </label>
+                            <label for="select-facebook">
+                                <img src="/image/facebook.png" style="width: 60px; height: auto; margin: 0 10px;" />
+                            </label>
                         </li>
                     </ul>
                 </div>
