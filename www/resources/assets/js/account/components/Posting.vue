@@ -202,7 +202,6 @@
                             return;
                         } else {
                             toastr.success('Connected networks updated!');
-
                         }
 
                         this.linkedSocials = data.body.socials;
