@@ -5,7 +5,7 @@
 
             <div class="input-group">
                 <span class="input-group-addon">Email</span>
-                <input type="email" class="form-control" id="email-field" placeholder="Email" required>
+                <input type="text" class="form-control" id="email-field" readonly>
             </div>
             <br>
             <div class="input-group">
@@ -55,15 +55,19 @@
             getUserEmail() {
                 this.$http.get('/user/info')
                     .then((data) => {
-                        // success callback
                         if(data.body.code === 404) {
                             toastr.error("Error code: " + data.body.code, 'Error');
                             return;
                         } else {
                             this.email = data.body.user.email;
+                            this.setEmailField();
                             toastr.success('User email loaded! ' + this.email);
                         }
                     });
+            },
+
+            setEmailField() {
+                document.getElementById('email-field').value = this.email;
             },
 
             changeUserPassword(userEmail, userNewPassword) {
@@ -95,27 +99,6 @@
                     */
             },
 
-            validateEmail() {
-                var userEmail = $('input#email-field').val();
-
-                if (userEmail == '') {
-                    toastr.warning('Email is required.');
-                    return false;
-                } else {
-                    toastr.warning('User enter email: ' + userEmail);
-                    document.getElementById('email-field').value = "";
-                    document.getElementById('email-field').placeholder = "Email";
-
-                    if (this.email.localeCompare(userEmail) === 0) {
-                        toastr.success('Email: ok!');
-                        return true;
-                    } else {
-                        toastr.warning('Entered email is not valid!');
-                        return false;
-                    }
-                }
-            },
-
             validatePassword() {
                 var newPassword = $('input#password-field').val();
                 var newPasswordRepeat = $('input#repeat-password-field').val();
@@ -141,10 +124,9 @@
             },
 
             handleSubmit() {
-                var validEmail = this.validateEmail();
                 var validPassword = this.validatePassword();
 
-                if (validEmail && validPassword) {
+                if (validPassword) {
                     this.changeUserPassword(this.email, this.newPassword);
                 }
             }

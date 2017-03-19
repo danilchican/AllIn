@@ -127,6 +127,7 @@
         data : function() {
             return {
                 isCalendarOpened: false,
+                isPlannded: false,
                 message: "",
                 dateTime: "",
                 linkedSocials: [],
@@ -211,8 +212,10 @@
 
                 this.dateTime = $('input#date-time').val();
                 if (this.dateTime === '') {
-                    toastr.success("Successfully posted!");
+                    this.dateTime = null;
+                    this.isPlannded = false;
                 } else {
+                    this.isPlannded = true;
                     toastr.success("Scheduled to " + this.dateTime);
                 }
 
@@ -222,6 +225,8 @@
                 $('textarea#comment').attr("placeholder", "Write something...");
 
                 $('input#date-time').val('');
+
+                this.sendPostData(this.isPlannded, this.dateTime, this.socialsForPost, this.message);
             },
 
             /**
@@ -282,66 +287,28 @@
              * Send POST request on server for immediate post
              * user data in socials.
              *
-             * !important
-             * TODO: POST request for immediate posting.
-             * !important
-             *
-             * @param data User data for post
+             * @param isPlan Boolean is post planned
+             * @param dateTime Time for post if it's planned
              * @param networks Linked networks for post
+             * @param data User data for posting
              */
-            sendPostData(data, networks) {
-                this.$http.post('usage/post', { message: data, socials: networks })
-                    .then((data) => {
-                        // success callback
+            sendPostData(isPlan, dateTime, networks, data) {
+                this.$http.post('/post/store', {
+                    is_plan: isPlan,
+                    date: dateTime,
+                    socials: networks,
+                    body: data
+                })
+                .then((data) => {
+                    // success callback
 
-                        if(data.body.success === true) {
-                            var messages = data.body.messages;
-
-                            $.each( messages, function( key, value ) {
-                                toastr.success(value, 'Success')
-                            });
-                        } else {
-                            toastr.error('Что-то пошло не так...', 'Error')
-                        }
-                    }, (data) => {
-                        // error callback
-                        var errors = data.body;
-                        toastr.error(errors, "Error");
-                    });
+                    if(data.body.code === 200) {
+                        toastr.success('Successfully posted! ?!?!!');
+                    } else {
+                        toastr.error('Что-то пошло не так...', 'Error');
+                    }
+                });
             },
-
-            /**
-             * Send data for schedule post to server.
-             * Data will be posted in specific time.
-             *
-             * !important
-             * TODO: POST request for scheduled data.
-             * !important
-             *
-             * @param data User data for post
-             * @param networks Socials for post
-             * @param time Schedule time
-             */
-            schedulePostData(data, networks, time) {
-                this.$http.post('usage/schedule', { message: data, socials: networks, schedule: time })
-                    .then((data) => {
-                        // success callback
-                        if(data.body.success === true) {
-                            var messages = data.body.messages;
-
-                            $.each( messages, function( key, value ) {
-                                toastr.success(value, 'Success')
-                            });
-                        } else {
-                            toastr.error("It's seems something went wrong...", 'Error');
-                        }
-                    }, (data) => {
-                        // error callback
-                        var errors = data.body;
-                        toastr.error(errors, "Error");
-                    });
-            }
         }
     }
-
 </script>
