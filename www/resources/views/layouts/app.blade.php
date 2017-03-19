@@ -8,11 +8,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'All-in') }}</title>
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
     <style>
         body {
@@ -32,8 +33,6 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
-
-    <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css" />
 </head>
 <body>
 <div id="app" style="background-color: #edeef0;">
@@ -107,7 +106,6 @@
 @yield('footer')
 
 <!-- Scripts -->
-
 @yield('scripts')
 </body>
 </html>
