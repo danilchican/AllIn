@@ -5,6 +5,7 @@
 @endsection
 
 @section('styles')
+    <link rel="stylesheet" href="/css/toastr.css">
     <style>
         .main-row {
             margin-top: 40px;
@@ -99,6 +100,5 @@
 @endsection
 
 @section('scripts')
-    <link rel="stylesheet" href="/css/toastr.css">
     <script src="/js/account.js"></script>
 @endsection
