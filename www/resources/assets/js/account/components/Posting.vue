@@ -8,14 +8,14 @@
             </div>
             <div class="row">
                 <div class="display-socials" align="left">
-                    <ul>
-                        <li>
+                    <ul class="socials">
+                        <li class="socials-list">
                             <input type="checkbox" id="select-vkontakte"/>
                             <label for="select-vkontakte">
                                 <img src="/image/vkontakte.png" style="width: 60px; height: auto; margin: 0 10px;" />
                             </label>
                         </li>
-                        <li>
+                        <li class="socials-list">
                             <input type="checkbox" id="select-facebook" />
                             <label for="select-facebook">
                                 <img src="/image/facebook.png" style="width: 60px; height: auto; margin: 0 10px;" />
@@ -63,11 +63,11 @@
         margin-bottom: 5px;
     }
 
-    ul {
+    ul.socials {
         list-style-type: none;
     }
 
-    li {
+    li.socials-list {
         display: inline-block;
     }
 
@@ -127,7 +127,7 @@
         data : function() {
             return {
                 isCalendarOpened: false,
-                isPlannded: false,
+                isPlanned: false,
                 message: "",
                 dateTime: "",
                 linkedSocials: [],
@@ -213,9 +213,9 @@
                 this.dateTime = $('input#date-time').val();
                 if (this.dateTime === '') {
                     this.dateTime = null;
-                    this.isPlannded = false;
+                    this.isPlanned = false;
                 } else {
-                    this.isPlannded = true;
+                    this.isPlanned = true;
                     toastr.success("Scheduled to " + this.dateTime);
                 }
 
@@ -226,7 +226,7 @@
 
                 $('input#date-time').val('');
 
-                this.sendPostData(this.isPlannded, this.dateTime, this.socialsForPost, this.message);
+                this.sendPostData(this.isPlanned, this.dateTime, this.socialsForPost, this.message);
             },
 
             /**
