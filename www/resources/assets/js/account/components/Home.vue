@@ -32,10 +32,6 @@
 </template>
 
 <style>
-    .nav a, .pagination a, .carousel a {
-        cursor: hand;
-    }
-
     .home-panel {
         height: auto;
     }
