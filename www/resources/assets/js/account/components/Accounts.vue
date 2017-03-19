@@ -1,36 +1,16 @@
 <template>
     <div class="panel panel-default accounts-panel">
         <div class="panel-body">
-            <div class="socials" v-if="getSocialsCount() == 0">
-                <div class="socials-info">
-                    <h3>It seems, you are not connect any social networks<br>
-                        Press on plus button below, to link!
-                    </h3>
-                </div>
-            </div>
-
-            <div class="connected-socials" v-else>
-                <h3>Here connected socials. Press plus to add more.</h3>
-                <div class="display-socials">
-                    <div class="currently-linked" v-for="item in socials">
-                        <img :src="getSocialImageURL(item)" style="width: 60px; height: auto"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="plus-button">
-                <button type="button" class="btn btn-default btn-block add-button" @click="handlePlus()">
-                    <i :class="[ !isOpened() ? 'fa fa-plus' : 'fa fa-minus' ]"></i><br/>
-                </button>
-            </div>
+            <h2>Manage your linked profiles</h2>
+            <h4>Socials, that already linked will be circle with green border</h4>
 
             <div class="social-enter">
                 <a href="/socials/vkontakte/create" class="social-network vkontakte" id="vkontakte">
-                    <img src="/image/socials/vk_logo.png" alt="vk_logo" class="vk-logo"/>
+                    <img src="/image/socials/vk_logo.png" alt="vk_logo" class="vkontakte-logo" id="vkontakte-img"/>
                 </a>
 
                 <a href="/socials/facebook/create" class="social-network facebook" id="facebook">
-                    <img src="/image/socials/fb_logo.png" alt="fb_logo" class="fb-logo"/>
+                    <img src="/image/socials/fb_logo.png" alt="fb_logo" class="facebook-logo" id="facebook-img"/>
                 </a>
             </div>
         </div>
@@ -39,28 +19,8 @@
 
 <style>
     .accounts-panel {
+        text-align: center;
         height: auto;
-    }
-
-    .socials-info {
-        text-align: center;
-        font-style: italic;
-    }
-
-    .connected-socials {
-        text-align: center;
-    }
-    .currently-linked {
-        margin-top: 15px;
-    }
-
-    .plus-button {
-        margin-top: 50px;
-        margin-bottom: 10px;
-    }
-
-    .add-button:focus, .add-button:active, .add-button:hover {
-        outline: none !important;
     }
 
     .social-enter {
@@ -81,7 +41,7 @@
     .social-network.facebook {
         background-color: #3b5998;
     }
-    .fb-logo {
+    .facebook-logo {
         width: 80px;
         height: auto;
         margin-top: 30px;
@@ -89,7 +49,7 @@
         margin-right: 30px;
     }
 
-    .fb-logo:hover {
+    .facebook-logo:hover {
         transform: scale(1.2);
         transition: all 0.3s ease;
         transition-property: all;
@@ -101,14 +61,12 @@
     .social-network.vkontakte {
         background-color: #4C75A3;
     }
-    .vk-logo {
+    .vkontakte-logo {
         width: 80px;
         height: auto;
-        margin-top: 30px;
-        margin-left: 30px;
-        margin-right: 30px;
+        margin: 30px;
     }
-    .vk-logo:hover {
+    .vkontakte-logo:hover {
         transform: scale(1.2);
         transition: all 0.3s ease;
         transition-property: all;
@@ -151,16 +109,15 @@
                 return "/image/" + account.provider + ".png";
             },
 
-            setLinks() {
-                this.socials.forEach(function(key) {
-
-                });
-            },
-
             isSocialLinked() {
                 this.socials.forEach(function (item) {
                     var x = document.getElementById(item.provider);
-                    x.style.border = "5px solid green";
+                    x.style.border = "7px solid green";
+                    x.style.pointerEvents = "none";
+
+                    var img = document.getElementById(item.provider + "-img")
+                    img.style.margin = "23px";
+                    img.title = "Already linked";
                 });
             },
 
@@ -172,11 +129,11 @@
                             toastr.warning(data.body.message, 'Warning');
                             return;
                         } else {
+                            this.socials = data.body.socials;
                             toastr.success('Connected networks updated!');
                             this.isSocialLinked();
                         }
 
-                        this.socials = data.body.socials;
                     }, (data) => {
                         // error callback
                         var errors = data.body;
