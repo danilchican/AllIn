@@ -2,11 +2,25 @@
 
 namespace App\Services;
 
+use App\Helpers\SocialContract;
 use App\UserSocialAccount;
 use App\User;
 
 class SocialAccountService
 {
+    /**
+     * @var SocialContract
+     */
+    private $client;
+
+    /**
+     * SocialAccountService constructor.
+     * @param SocialContract $client
+     */
+    public function __construct(SocialContract $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * Create or get user.
@@ -30,7 +44,7 @@ class SocialAccountService
                 'isNewUser' => $isNewUser
             ];
         } else {
-            $avatar = $this->getUserAvatar($providerName, $providerUser);
+            $avatar = $this->client->getUserAvatarByProvider($providerName, $providerUser);
 
             $account = new UserSocialAccount([
                 'provider_user_id' => $providerUser->getId(),
@@ -98,31 +112,5 @@ class SocialAccountService
                 'existAccount' => $existAccount
             ];
         }
-    }
-
-    /**
-     * Get user avatar.
-     *
-     * @param $providerName
-     * @param $providerUser
-     * @return null
-     */
-    public function getUserAvatar($providerName, $providerUser)
-    {
-        if($providerName === 'vkontakte') {
-            $client = new \GuzzleHttp\Client();
-            $request = $client->request('GET',
-                'https://api.vk.com/method/users.get?user_id='
-                .$providerUser->getId()
-                .'&v=5.37&fields=photo_400_orig&access_token='
-                .$providerUser->token);
-
-            $result = json_decode($request->getBody());
-            return $result->response[0]->photo_400_orig;
-        } else {
-            return $providerUser->getAvatar();
-        }
-
-        return null;
     }
 }

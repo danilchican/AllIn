@@ -88,12 +88,12 @@ class SocialContractImpl implements SocialContract
     /**
      * Create a new request to client.
      *
-     * @param string $method
      * @param $client
      * @param $request
+     * @param string $method
      * @return mixed|\Psr\Http\Message\ResponseInterface
      */
-    public function request($method = 'GET', $client, $request)
+    public function request($client, $request, $method = 'GET')
     {
         return $this->client->request($method, $client.$request);
     }
