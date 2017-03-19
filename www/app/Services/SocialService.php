@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Services;
 
+use App\Helpers\SocialContract;
 
-class SocialContractImpl implements SocialContract
+class SocialService implements SocialContract
 {
     const VK_API_CLIENT = 'https://api.vk.com';
     const FB_API_CLIENT = 'https://graph.facebook.com';

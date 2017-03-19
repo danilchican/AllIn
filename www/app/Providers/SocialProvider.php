@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Helpers\SocialContractImpl;
+use App\Services\SocialService;
 use Illuminate\Support\ServiceProvider;
 
 class SocialProvider extends ServiceProvider
@@ -25,7 +25,7 @@ class SocialProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(\App\Helpers\SocialContract::class, function(){
-            return new SocialContractImpl();
+            return new SocialService();
         });
     }
 }
