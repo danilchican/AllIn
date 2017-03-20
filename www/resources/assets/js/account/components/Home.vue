@@ -39,6 +39,13 @@
 
 <script>
     export default {
+        http: {
+            root: '/home',
+            headers: {
+                'X-CSRF-TOKEN': window.Laravel.csrfToken,
+            }
+        },
+
         data: function () {
             return {
 

@@ -19,6 +19,13 @@
 
 <script>
     export default {
+        http: {
+            root: '/home',
+            headers: {
+                'X-CSRF-TOKEN': window.Laravel.csrfToken,
+            }
+        },
+
         mounted() {
             var ctx = document.getElementById("myChart").getContext('2d');
 

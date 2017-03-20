@@ -16,6 +16,13 @@
 <script>
 
     export default {
+        http: {
+            root: '/home',
+            headers: {
+                'X-CSRF-TOKEN': window.Laravel.csrfToken,
+            }
+        },
+
         mounted() {
             console.log("Home component mounted.")
         }
