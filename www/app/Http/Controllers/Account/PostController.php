@@ -11,7 +11,6 @@ class PostController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
      */
     public function __construct()
     {
@@ -20,6 +19,6 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        //..
+        return dd($request->all());
     }
 }
