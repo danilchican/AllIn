@@ -28,6 +28,10 @@ class SocialController extends Controller
     {
         if(!strcmp($provider, 'vkontakte')) {
             $this->scopes = ['photos', 'wall', 'offline', 'groups', 'stats', 'docs'];
+        } else if (!strcmp($provider, 'facebook')) {
+            $this->scopes = ['publish_actions','manage_pages','publish_pages'];
+        } else if (!strcmp($provider, 'twitter')) {
+            return Socialite::with($provider)->redirect();
         }
 
         return Socialite::with($provider)->scopes($this->scopes)->redirect();
@@ -67,6 +71,12 @@ class SocialController extends Controller
     public function create($provider) {
         if(!strcmp($provider, 'vkontakte')) {
             $this->scopes = ['photos', 'wall', 'offline', 'groups', 'stats', 'docs'];
+        } else if (!strcmp($provider, 'facebook')) {
+            $this->scopes = ['publish_actions','manage_pages','publish_pages'];
+        } else if (!strcmp($provider, 'twitter')) {
+            return Socialite::with($provider)
+                ->redirectUrl(env('APP_URL').'/socials/'.$provider.'/callback')
+                ->redirect();
         }
 
         return Socialite::with($provider)
