@@ -11,6 +11,30 @@ class SocialService implements SocialContract, SocialAccountContract
     use SocialRequest;
 
     /**
+     * Get the access token of the user.
+     *
+     * @param $providerName
+     * @param $providerUser
+     * @return null
+     */
+    public function getAccessToken($providerName, $providerUser)
+    {
+        switch ($providerName) {
+            case 'facebook':
+                return $this->getFacebookAccessToken($providerUser);
+            default:
+                return null;
+        }
+    }
+
+    public function getFacebookAccessToken($providerUser)
+    {
+        $oAuth2Client = $this->fb->getOAuth2Client();
+
+        return $oAuth2Client->getLongLivedAccessToken($providerUser->token);
+    }
+
+    /**
      * Get the avatar of the user.
      *
      * @param $providerName
