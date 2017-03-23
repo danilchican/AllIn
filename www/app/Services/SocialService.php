@@ -22,9 +22,16 @@ class SocialService implements SocialContract, SocialAccountContract
         switch ($providerName) {
             case 'facebook':
                 return $this->getFacebookAccessToken($providerUser);
+            case 'twitter':
+                return $this->getTwitterAccessToken($providerUser);
             default:
                 return null;
         }
+    }
+
+    public function getTwitterAccessToken($providerUser)
+    {
+        return $providerUser->token;
     }
 
     public function getFacebookAccessToken($providerUser)

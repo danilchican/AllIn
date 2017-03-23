@@ -38,9 +38,17 @@ class SocialAccountService
             ->whereProviderUserId($providerUser->getId())
             ->first();
 
+
         if ($account) {
             $token = $this->client->getAccessToken($providerName, $providerUser);
-            $account->update(['access_token' => $token]);
+            $upFields = ['access_token' => $token];
+
+
+            if($providerName === 'twitter') {
+                $upFields['access_token_secret'] = $providerUser->tokenSecret;
+            }
+
+            $account->update($upFields);
 
             return [
                 'user' => $account->user,
@@ -50,10 +58,17 @@ class SocialAccountService
             $avatar = $this->client->getUserAvatarByProvider($providerName, $providerUser);
             $token = $this->client->getAccessToken($providerName, $providerUser);
 
-            $account = new UserSocialAccount([
-                'provider_user_id' => $providerUser->getId(),
+            $fields = [
                 'access_token' => $token,
-                'provider' => $providerName]);
+                'provider' => $providerName,
+                'provider_user_id' => $providerUser->getId()
+            ];
+
+            if($providerName === 'twitter') {
+                $fields['access_token_secret'] = $providerUser->tokenSecret;
+            }
+
+            $account = new UserSocialAccount($fields);
 
             $user = User::whereEmail($providerUser->getEmail())->first();
 
