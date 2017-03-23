@@ -40,6 +40,11 @@ class Post extends Model
         $this->body = $body;
     }
 
+    public function getBody()
+    {
+        return $this->body;
+    }
+
     /**
      * Set the planned type post.
      *

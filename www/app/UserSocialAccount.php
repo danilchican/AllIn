@@ -36,4 +36,29 @@ class UserSocialAccount extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the secret token of the user provider.
+     *
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->access_token;
+    }
+
+    /**
+     * Get the user provider ID.
+     *
+     * @return mixed
+     */
+    public function getProviderID()
+    {
+        return $this->provider_user_id;
+    }
+
+    public function updateToken($token)
+    {
+        $this->access_token = $token;
+    }
 }
