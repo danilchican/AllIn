@@ -39,16 +39,20 @@ class SocialAccountService
             ->first();
 
         if ($account) {
+            $token = $this->client->getAccessToken($providerName, $providerUser);
+            $account->update(['access_token' => $token]);
+
             return [
                 'user' => $account->user,
                 'isNewUser' => $isNewUser
             ];
         } else {
             $avatar = $this->client->getUserAvatarByProvider($providerName, $providerUser);
+            $token = $this->client->getAccessToken($providerName, $providerUser);
 
             $account = new UserSocialAccount([
                 'provider_user_id' => $providerUser->getId(),
-                'access_token' => $providerUser->token,
+                'access_token' => $token,
                 'provider' => $providerName]);
 
             $user = User::whereEmail($providerUser->getEmail())->first();
@@ -91,16 +95,21 @@ class SocialAccountService
         $existAccount = false;
 
         if ($account) {
+            $token = $this->client->getAccessToken($providerName, $providerUser);
+            $account->update(['access_token' => $token]);
+
             $existAccount = true;
 
             return [
                 'existAccount' => $existAccount
             ];
         } else {
+            $token = $this->client->getAccessToken($providerName, $providerUser);
 
             $account = new UserSocialAccount([
                 'provider_user_id' => $providerUser->getId(),
-                'provider' => $providerName]);
+                'provider' => $providerName,
+                'access_token' => $token]);
 
             $user = \Auth::user();
 
