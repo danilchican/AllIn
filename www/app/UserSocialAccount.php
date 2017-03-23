@@ -18,7 +18,7 @@ class UserSocialAccount extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'provider_user_id', 'provider', 'access_token'];
+    protected $fillable = ['user_id', 'provider_user_id', 'provider', 'access_token', 'access_token_secret'];
 
     /**
      * The attributes that should be visible in arrays.
@@ -38,13 +38,23 @@ class UserSocialAccount extends Model
     }
 
     /**
-     * Get the secret token of the user provider.
+     * Get the token of the user provider.
      *
      * @return mixed
      */
     public function getToken()
     {
         return $this->access_token;
+    }
+
+    /**
+     * Get the secret token of the user provider.
+     *
+     * @return mixed
+     */
+    public function getSecretToken()
+    {
+        return $this->access_token_secret;
     }
 
     /**
