@@ -2,18 +2,11 @@
 
 namespace App\Services;
 
-use App\Helpers\SocialContract;
+use App\Contracts\SocialAccountContract;
+use App\Contracts\SocialContract;
 
-class SocialService implements SocialContract
+class SocialService implements SocialContract, SocialAccountContract
 {
-    const VK_API_CLIENT = 'https://api.vk.com';
-    const FB_API_CLIENT = 'https://graph.facebook.com';
-
-    const GET_METHOD = 'GET';
-    const POST_METHOD = 'POST';
-
-    const VK_API_VER = '5.37';
-
     /**
      * @var \GuzzleHttp\Client
      */

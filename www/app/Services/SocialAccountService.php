@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Helpers\SocialContract;
+use App\Contracts\SocialContract;
 use App\UserSocialAccount;
 use App\User;
 
