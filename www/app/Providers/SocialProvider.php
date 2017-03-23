@@ -24,7 +24,7 @@ class SocialProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(\App\Helpers\SocialContract::class, function(){
+        $this->app->bind(\App\Contracts\SocialContract::class, function(){
             return new SocialService();
         });
     }
