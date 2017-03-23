@@ -223,17 +223,16 @@
                     this.isPlanned = false;
                 } else {
                     this.isPlanned = true;
-                    toastr.success("Scheduled to " + this.dateTime);
                 }
 
                 this.getSocialsForPost();
 
-                $('textarea#comment').val('');
-                $('textarea#comment').attr("placeholder", "Write something...");
-
-                $('input#date-time').val('');
-
-                this.sendPostData(this.isPlanned, this.dateTime, this.socialsForPost, this.message);
+                if (this.sendPostData(this.isPlanned, this.dateTime, this.socialsForPost, this.message)) {
+                    $('textarea#comment').val('');
+                    $('textarea#comment').attr("placeholder", "Write something...");
+                    $('input#date-time').val('');
+                    this.clearSocialsForPost();
+                }
             },
 
             /**
@@ -241,23 +240,44 @@
              * array of socials for posting.
              */
             getSocialsForPost() {
-                console.log("Length: " + this.linkedSocials.length);
-
                 var forPost = [];
 
                 this.linkedSocials.forEach(function (item) {
                     var checkbox = document.getElementById("select-" + item.provider);
 
                     if (checkbox.checked) {
-                        forPost.push(item.provider);
+                        var prov = item.provider;
+
+                        var id = 0;
+
+                        switch (prov) {
+                            case 'vkontakte':
+                                id = 8;
+                                break;
+                            case 'facebook':
+                                id = 4;
+                                break;
+                            default:
+                                id = 0;
+                                break;
+                        }
+
+                        console.log("id: " + id + " provider: " + prov);
+
+                        forPost.push({
+                            "id": id,
+                            "provider": prov
+                        });
                     }
                 });
 
+                this.socialsForPost = forPost;
+            },
+
+            clearSocialsForPost() {
                 $('input[type=checkbox]').each(function() {
                     this.checked = false;
                 });
-
-                this.socialsForPost = forPost;
             },
 
             /**
@@ -311,11 +331,28 @@
 
                     if(data.body.code === 200) {
                         toastr.success('Successfully posted! ?!?!!');
+                        return true;
                     } else {
                         toastr.error('Что-то пошло не так...', 'Error');
                     }
+                }, (data) => {
+                    // error callback
+                    var errors = data.body;
+                    $.each( errors, function( key, value ) {
+                        if(data.status === 422) {
+                            toastr.error(value[0], 'Error')
+                        } else {
+                            toastr.error(value, 'Error')
+                        }
+                    });
                 });
             },
+
+            disableCheckBoxes() {
+                this.linkedSocials.forEach(function (item) {
+
+                })
+            }
         }
     }
 </script>
