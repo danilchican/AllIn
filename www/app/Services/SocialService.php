@@ -55,13 +55,15 @@ class SocialService implements SocialContract, SocialAccountContract
                 return $this->getVkontakteAvatar($providerUser);
             case 'facebook':
                 return $this->getFacebookAvatar($providerUser);
+            case 'twitter':
+                return $this->getTwitterAvatar($providerUser);
             default:
                 return null;
         }
     }
 
     /**
-     * Get the VK avatar of the user.
+     * Get the Vkontakte avatar of the user.
      *
      * @param $providerUser
      * @return string
@@ -90,7 +92,7 @@ class SocialService implements SocialContract, SocialAccountContract
     }
 
     /**
-     * Get the FB avatar of the user.
+     * Get the Facebook avatar of the user.
      *
      * @param $providerUser
      * @return mixed
@@ -98,6 +100,17 @@ class SocialService implements SocialContract, SocialAccountContract
     public function getFacebookAvatar($providerUser)
     {
         return $providerUser->getAvatar();
+    }
+
+    /**
+     * Get the Twitter avatar of the user.
+     *
+     * @param $providerUser
+     * @return mixed
+     */
+    public function getTwitterAvatar($providerUser)
+    {
+        return $providerUser->avatar_original;
     }
 
 }

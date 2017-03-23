@@ -43,7 +43,6 @@ class SocialAccountService
             $token = $this->client->getAccessToken($providerName, $providerUser);
             $upFields = ['access_token' => $token];
 
-
             if($providerName === 'twitter') {
                 $upFields['access_token_secret'] = $providerUser->tokenSecret;
             }
