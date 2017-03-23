@@ -69,23 +69,23 @@
                         <i class="fa fa-btn fa-user-circle-o"></i> Home
                     </router-link>
 
-                    <router-link to="/home/post" class="list-group-item" exat>
+                    <router-link to="/home/post" class="list-group-item" exact>
                         <i class="fa fa-btn fa-pencil-square-o"></i> Post
                     </router-link>
 
-                    <router-link to="/home/calendar" class="list-group-item" exat>
+                    <router-link to="/home/calendar" class="list-group-item" exact>
                         <i class="fa fa-btn fa-calendar-o"></i> Calendar
                     </router-link>
 
-                    <router-link to="/home/statistics" class="list-group-item" exat>
+                    <router-link to="/home/statistics" class="list-group-item" exact>
                         <i class="fa fa-btn fa-area-chart"></i> Statistics
                     </router-link>
 
-                    <router-link to="/home/accounts" class="list-group-item" exat>
+                    <router-link to="/home/accounts" class="list-group-item" exact>
                         <i class="fa fa-btn fa-users"></i> Accounts
                     </router-link>
 
-                    <router-link to="/home/settings" class="list-group-item" exat>
+                    <router-link to="/home/settings" class="list-group-item" exact>
                         <i class="fa fa-btn fa-cogs"></i> Settings
                     </router-link>
                 </ul>

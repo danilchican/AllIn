@@ -12,6 +12,10 @@
                 <a href="/socials/facebook/create" class="social-network facebook" id="facebook">
                     <img src="/image/socials/fb_logo.png" alt="fb_logo" class="facebook-logo" id="facebook-img"/>
                 </a>
+
+                <a href="/socials/twitter/create" class="social-network twitter" id="twitter">
+                    <img src="/image/socials/tw_logo.png" alt="tw_logo" class="twitter-logo" id="twitter-img"/>
+                </a>
             </div>
         </div>
     </div>
@@ -75,6 +79,22 @@
         transition-delay: initial;
     }
 
+    .social-network.twitter {
+        background-color: #4099FF;
+    }
+    .twitter-logo {
+        width: 80px;
+        height: auto;
+        margin: 30px;
+    }
+    .twitter-logo:hover {
+        transform: scale(1.2);
+        transition: all 0.3s ease;
+        transition-property: all;
+        transition-duration: 0.3s;
+        transition-timing-function: ease;
+        transition-delay: initial;
+    }
 </style>
 
 <script>
@@ -88,7 +108,6 @@
 
         data : function() {
             return {
-                plusButton: false,
                 socials: [],
                 links: []
             }
@@ -119,7 +138,7 @@
             isSocialLinked() {
                 this.socials.forEach(function (item) {
                     var x = document.getElementById(item.provider);
-                    x.style.border = "7px solid green";
+                    x.style.border = "7px solid #39FF14";
                     x.style.pointerEvents = "none";
 
                     var img = document.getElementById(item.provider + "-img")

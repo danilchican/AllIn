@@ -21,6 +21,12 @@
                                 <img src="/image/facebook.png" style="width: 60px; height: auto; margin: 0 10px;" />
                             </label>
                         </li>
+                        <li class="socials-list">
+                            <input type="checkbox" id="select-twitter" />
+                            <label for="select-twitter">
+                                <img src="/image/twitter.png" style="width: 60px; height: auto; margin: 0 10px;" />
+                            </label>
+                        </li>
                     </ul>
                 </div>
             </div>
