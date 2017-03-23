@@ -10,11 +10,23 @@ trait SocialRequest
     private $client;
 
     /**
+     * @var
+     */
+    private $fb;
+
+    /**
      * SocialContractImpl constructor.
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function __construct()
     {
         $this->client = new \GuzzleHttp\Client();
+
+        $this->fb = new \Facebook\Facebook([
+            'app_id' => env('FACEBOOK_KEY'),
+            'app_secret' => env('FACEBOOK_SECRET'),
+            'default_graph_version' => 'v2.5',
+        ]);
     }
 
     /**
