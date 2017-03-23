@@ -1,15 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Vlad
- * Date: 23.03.2017
- * Time: 9:23
- */
 
 namespace App\Contracts;
 
+use App\Post;
 
-class PostContract
+interface PostContract
 {
+    public function send(Post $post, $providerName, $providerUser);
 
+    public function sendVkontaktePost(Post $post, $providerUser);
+    public function sendFacebookPost(Post $post, $providerUser);
 }
