@@ -144,7 +144,8 @@
                 message: "",
                 dateTime: "",
                 linkedSocials: [],
-                socialsForPost: []
+                socialsForPost: [],
+                obj: null
             }
         },
 
@@ -233,7 +234,24 @@
 
                 this.getSocialsForPost();
 
-                if (this.sendPostData(this.isPlanned, this.dateTime, this.socialsForPost, this.message)) {
+                this.obj = null;
+
+                if (this.isPlanned) {
+                    this.obj = {
+                        is_plan: this.isPlanned,
+                        date: this.dateTime,
+                        socials: this.socialsForPost,
+                        body: this.message
+                    }
+                } else {
+                    this.obj = {
+                        is_plan: this.isPlanned,
+                        socials: this.socialsForPost,
+                        body: this.message
+                    }
+                }
+
+                if (this.sendPostData(this.obj)) {
                     $('textarea#comment').val('');
                     $('textarea#comment').attr("placeholder", "Write something...");
                     $('input#date-time').val('');
@@ -253,22 +271,7 @@
 
                     if (checkbox.checked) {
                         var prov = item.provider;
-
-                        var id = 0;
-
-                        switch (prov) {
-                            case 'vkontakte':
-                                id = 8;
-                                break;
-                            case 'facebook':
-                                id = 4;
-                                break;
-                            default:
-                                id = 0;
-                                break;
-                        }
-
-                        console.log("id: " + id + " provider: " + prov);
+                        var id = item.id;
 
                         forPost.push({
                             "id": id,
@@ -325,18 +328,13 @@
              * @param networks Linked networks for post
              * @param data User data for posting
              */
-            sendPostData(isPlan, dateTime, networks, data) {
-                this.$http.post('/post/store', {
-                    is_plan: isPlan,
-                    date: dateTime,
-                    socials: networks,
-                    body: data
-                })
+            sendPostData(obj) {
+                this.$http.post('/post/store', obj)
                 .then((data) => {
                     // success callback
 
                     if(data.body.code === 200) {
-                        toastr.success('Successfully posted! ?!?!!');
+                        toastr.success('Successfully posted!');
                         return true;
                     } else {
                         toastr.error('Что-то пошло не так...', 'Error');
