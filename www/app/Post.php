@@ -29,4 +29,44 @@ class Post extends Model
     {
         return $this->hasMany(SocialPost::class);
     }
+
+    /**
+     * Set the body of the new post.
+     *
+     * @param $body
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+    }
+
+    /**
+     * Set the planned type post.
+     *
+     * @param $is_plan
+     */
+    public function setPlanned($is_plan)
+    {
+        $this->planned = $is_plan;
+    }
+
+    /**
+     * Set the status of the post.
+     *
+     * @param $status
+     */
+    public function setStatus($status = 0)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * Set the status of the post.
+     *
+     * @param $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
 }
