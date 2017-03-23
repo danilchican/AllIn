@@ -4,21 +4,11 @@ namespace App\Services;
 
 use App\Contracts\SocialAccountContract;
 use App\Contracts\SocialContract;
+use App\Helpers\SocialRequest;
 
 class SocialService implements SocialContract, SocialAccountContract
 {
-    /**
-     * @var \GuzzleHttp\Client
-     */
-    private $client;
-
-    /**
-     * SocialContractImpl constructor.
-     */
-    public function __construct()
-    {
-        $this->client = new \GuzzleHttp\Client();
-    }
+    use SocialRequest;
 
     /**
      * Get the avatar of the user.
@@ -79,16 +69,4 @@ class SocialService implements SocialContract, SocialAccountContract
         return $providerUser->getAvatar();
     }
 
-    /**
-     * Create a new request to client.
-     *
-     * @param $client
-     * @param $request
-     * @param string $method
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     */
-    public function request($client, $request, $method = 'GET')
-    {
-        return $this->client->request($method, $client.$request);
-    }
 }
