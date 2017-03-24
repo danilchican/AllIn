@@ -9,25 +9,14 @@
             <div class="row">
                 <div class="display-socials" align="left">
                     <ul class="socials">
-                        <li class="socials-list">
-                            <input type="checkbox" id="select-vkontakte"/>
-                            <label for="select-vkontakte">
-                                <img src="/image/vkontakte.png" style="width: 60px; height: auto; margin: 0 10px;" />
-                            </label>
-                        </li>
-                        <li class="socials-list">
-                            <input type="checkbox" id="select-facebook" />
-                            <label for="select-facebook">
-                                <img src="/image/facebook.png" style="width: 60px; height: auto; margin: 0 10px;" />
-                            </label>
-                        </li>
-                        <li class="socials-list">
-                            <input type="checkbox" id="select-twitter" />
-                            <label for="select-twitter">
-                                <img src="/image/twitter.png" style="width: 60px; height: auto; margin: 0 10px;" />
+                        <li class="socials-list" v-for="item in linkedSocials">
+                            <input type="checkbox" :id="getInputIDSocial(item)"/>
+                            <label :for="getInputIDSocial(item)">
+                                <img :src="getCheckboxImage(item)" style="width: 60px; height: auto; margin: 0 10px;" />
                             </label>
                         </li>
                     </ul>
+
                 </div>
             </div>
 
@@ -352,10 +341,12 @@
                 });
             },
 
-            disableCheckBoxes() {
-                this.linkedSocials.forEach(function (item) {
+            getInputIDSocial(item) {
+                return "select-" + item.provider;
+            },
 
-                })
+            getCheckboxImage(item) {
+                return "/image/" + item.provider + ".png";
             }
         }
     }
