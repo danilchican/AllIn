@@ -187,6 +187,7 @@ return [
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
 
         App\Providers\SocialProvider::class,
+        \SocialiteProviders\Manager\ServiceProvider::class,
     ],
 
     /*

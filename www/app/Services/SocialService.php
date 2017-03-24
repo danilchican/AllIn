@@ -110,7 +110,7 @@ class SocialService implements SocialContract, SocialAccountContract
      */
     public function getTwitterAvatar($providerUser)
     {
-        return $providerUser->avatar_original;
+        return $providerUser->avatar;
     }
 
 }

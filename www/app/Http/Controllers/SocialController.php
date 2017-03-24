@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Abraham\TwitterOAuth\TwitterOAuth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Services\SocialAccountService;
 
@@ -47,7 +48,6 @@ class SocialController extends Controller
     public function callback(SocialAccountService $service, $provider)
     {
         $driver = Socialite::driver($provider);
-
         $response = $service->createOrGetUser($driver, $provider);
         $user = $response['user'];
 
@@ -74,9 +74,18 @@ class SocialController extends Controller
         } else if (!strcmp($provider, 'facebook')) {
             $this->scopes = ['publish_actions','manage_pages','publish_pages'];
         } else if (!strcmp($provider, 'twitter')) {
-            return Socialite::with($provider)
-                ->redirectUrl(env('APP_URL').'/socials/'.$provider.'/callback')
-                ->redirect();
+
+            define('CONSUMER_KEY', env('TWITTER_KEY'));
+            define('CONSUMER_SECRET', env('TWITTER_SECRET'));
+            define('OAUTH_CALLBACK', env('APP_URL').'/socials/'.$provider.'/callback');
+
+            $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
+
+            $request_token = $connection->oauth('oauth/request_token', array('oauth_callback' => OAUTH_CALLBACK));
+
+            $url = $connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token']));
+
+            return redirect($url);
         }
 
         return Socialite::with($provider)
@@ -94,7 +103,12 @@ class SocialController extends Controller
      */
     public function appendSocialCallback(SocialAccountService $service, $provider)
     {
-        $driver = Socialite::driver($provider)->redirectUrl(env('APP_URL').'/socials/'.$provider.'/callback');
+        if (!strcmp($provider, 'twitter')) {
+            $driver = Socialite::driver($provider);
+            return $driver->userFromTokenAndSecret();
+        } else {
+            $driver = Socialite::driver($provider)->redirectUrl(env('APP_URL').'/socials/'.$provider.'/callback');
+        }
 
         $response = $service->appendSocialAccount($driver, $provider);
 
