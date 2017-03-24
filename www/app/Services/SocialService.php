@@ -11,7 +11,7 @@ class SocialService implements SocialContract, SocialAccountContract
     use SocialRequest;
 
     /**
-     * Get the access token of the user.
+     * Get the access token for the provider name.
      *
      * @param $providerName
      * @param $providerUser
@@ -29,11 +29,24 @@ class SocialService implements SocialContract, SocialAccountContract
         }
     }
 
+    /**
+     * Get the Twitter access token for the provider name.
+     *
+     * @param $providerUser
+     * @return mixed
+     */
     public function getTwitterAccessToken($providerUser)
     {
         return $providerUser->token;
     }
 
+    /**
+     * Get the Facebook access token for the provider name.
+     *
+     * @param $providerUser
+     * @return \Facebook\Authentication\AccessToken
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
     public function getFacebookAccessToken($providerUser)
     {
         $oAuth2Client = $this->fb->getOAuth2Client();
