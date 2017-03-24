@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
+use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Services\SocialAccountService;
 
@@ -27,10 +28,10 @@ class SocialController extends Controller
      */
     public function login($provider)
     {
-        if(!strcmp($provider, 'vkontakte')) {
+        if (!strcmp($provider, 'vkontakte')) {
             $this->scopes = ['photos', 'wall', 'offline', 'groups', 'stats', 'docs'];
         } else if (!strcmp($provider, 'facebook')) {
-            $this->scopes = ['publish_actions','manage_pages','publish_pages'];
+            $this->scopes = ['publish_actions', 'manage_pages', 'publish_pages'];
         } else if (!strcmp($provider, 'twitter')) {
             return Socialite::with($provider)->redirect();
         }
@@ -53,7 +54,7 @@ class SocialController extends Controller
 
         \Auth::login($user, true);
 
-        if($response['isNewUser'] === true) {
+        if ($response['isNewUser'] === true) {
             return redirect('/home/settings')->with([
                 'message' => 'Ваш пароль: \'secret\'. Пожалуйста, измените данный пароль для надежности.'
             ]);
@@ -66,31 +67,25 @@ class SocialController extends Controller
      * Append social to user account.
      *
      * @param $provider
+     * @param SocialAccountService $service
+     * @param Request $request
      * @return mixed
+     * @throws \RuntimeException
+     * @throws \Abraham\TwitterOAuth\TwitterOAuthException
      */
-    public function create($provider) {
-        if(!strcmp($provider, 'vkontakte')) {
+    public function create($provider, SocialAccountService $service, Request $request)
+    {
+        if (!strcmp($provider, 'vkontakte')) {
             $this->scopes = ['photos', 'wall', 'offline', 'groups', 'stats', 'docs'];
         } else if (!strcmp($provider, 'facebook')) {
-            $this->scopes = ['publish_actions','manage_pages','publish_pages'];
+            $this->scopes = ['publish_actions', 'manage_pages', 'publish_pages'];
         } else if (!strcmp($provider, 'twitter')) {
-
-            define('CONSUMER_KEY', env('TWITTER_KEY'));
-            define('CONSUMER_SECRET', env('TWITTER_SECRET'));
-            define('OAUTH_CALLBACK', env('APP_URL').'/socials/'.$provider.'/callback');
-
-            $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
-
-            $request_token = $connection->oauth('oauth/request_token', array('oauth_callback' => OAUTH_CALLBACK));
-
-            $url = $connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token']));
-
-            return redirect($url);
+            return $service->twitterDriver($request)->redirect();
         }
 
         return Socialite::with($provider)
             ->scopes($this->scopes)
-            ->redirectUrl(env('APP_URL').'/socials/'.$provider.'/callback')
+            ->redirectUrl(env('APP_URL') . '/socials/' . $provider . '/callback')
             ->redirect();
     }
 
@@ -99,20 +94,22 @@ class SocialController extends Controller
      *
      * @param SocialAccountService $service
      * @param $provider
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \RuntimeException
      */
-    public function appendSocialCallback(SocialAccountService $service, $provider)
+    public function appendSocialCallback(SocialAccountService $service, Request $request, $provider)
     {
         if (!strcmp($provider, 'twitter')) {
-            $driver = Socialite::driver($provider);
-            return $driver->userFromTokenAndSecret();
+            $response = $service->appendTwitter($request);
         } else {
-            $driver = Socialite::driver($provider)->redirectUrl(env('APP_URL').'/socials/'.$provider.'/callback');
+            $driver = Socialite::driver($provider)
+                ->redirectUrl(env('APP_URL') . '/socials/' . $provider . '/callback');
+
+            $response = $service->appendSocialAccount($driver, $provider);
         }
 
-        $response = $service->appendSocialAccount($driver, $provider);
-
-        if($response['existAccount'] === true) {
+        if ($response['existAccount'] === true) {
             return redirect('/home/accounts')->with([
                 'message' => 'Данная соц.сеть уже подключена.'
             ]);
