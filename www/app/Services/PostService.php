@@ -47,7 +47,7 @@ class PostService implements SocialContract, PostContract
             }
         }
 
-        return $responses;
+        return proccessResponse($responses, $providers);
     }
 
     /**
@@ -103,5 +103,32 @@ class PostService implements SocialContract, PostContract
             'response' => ['errors' => $response->errors],
             'status' => false
         ];
+    }
+
+    /**
+     * @param $responses
+     * @param $providers array
+     * @return array
+     */
+    public function proccessResponse($responses, $providers)
+    {
+        $finishResponse = [];
+
+        foreach($providers as $provider) {
+            $responseItem = $responses[$provider];
+
+            if (PostService::hasPostErrorsInResponse($responseItem)) {
+                //..
+            } else {
+                //..
+            }
+        }
+
+        return $finishResponse;
+    }
+
+    public static function hasPostErrorsInResponse($response)
+    {
+        //..
     }
 }

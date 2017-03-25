@@ -10,4 +10,8 @@ interface PostContract
 
     public function sendFacebookPost(Post $post, $user, $provider);
     public function sendTwitterPost(Post $post, $user, $provider);
+
+    public static function hasPostErrorsInResponse($provider);
+
+    public function proccessResponse($response, $providers);
 }
