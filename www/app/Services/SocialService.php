@@ -84,25 +84,7 @@ class SocialService implements SocialContract, SocialAccountContract
      */
     public function getVkontakteAvatar($providerUser)
     {
-        $userID = $providerUser->getId();
-        $token = $providerUser->token;
-
-        $fields = ['photo_400_orig'];
-
-        $request = '/method/users.get?user_id='.$userID
-                    .'&v='.self::VK_API_VER
-                    .'&fields='.implode(',', $fields)
-                    .'&access_token='.$token;
-
-        $response = $this->request(self::VK_API_CLIENT, $request);
-
-        $result = json_decode($response->getBody());
-
-        if(isset($result->response[0]->photo_400_orig)) {
-            return $result->response[0]->photo_400_orig;
-        }
-
-        return null;
+        return $providerUser->getAvatar();
     }
 
     /**

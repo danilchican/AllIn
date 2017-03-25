@@ -12,7 +12,6 @@ use Facebook\Exceptions\FacebookSDKException;
 
 class PostService implements SocialContract, PostContract
 {
-    use TwitterAuth;
     use SocialRequest;
 
     /**
