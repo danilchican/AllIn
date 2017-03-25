@@ -40,6 +40,11 @@ class Post extends Model
         $this->body = $body;
     }
 
+    /**
+     * Get the body of the Post.
+     *
+     * @return mixed
+     */
     public function getBody()
     {
         return $this->body;

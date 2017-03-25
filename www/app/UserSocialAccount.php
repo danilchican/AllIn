@@ -67,6 +67,11 @@ class UserSocialAccount extends Model
         return $this->provider_user_id;
     }
 
+    /**
+     * Update access_token in DB.
+     *
+     * @param $token
+     */
     public function updateToken($token)
     {
         $this->access_token = $token;
