@@ -100,23 +100,6 @@
         transition-delay: initial;
     }
 
-    .social-network.vkontakte {
-        background-color: #4C75A3;
-    }
-    .vkontakte-logo {
-        width: 80px;
-        height: auto;
-        margin: 30px;
-    }
-    .vkontakte-logo:hover {
-        transform: scale(1.2);
-        transition: all 0.3s ease;
-        transition-property: all;
-        transition-duration: 0.3s;
-        transition-timing-function: ease;
-        transition-delay: initial;
-    }
-
     .social-network.twitter {
         background-color: #4099FF;
     }
@@ -149,11 +132,6 @@
                 show: false,
                 socials: [],
                 links: [
-                    {
-                        provider: "vkontakte",
-                        logo: "vk_logo",
-                        linked: false
-                    },
                     {
                         provider: "facebook",
                         logo: "fb_logo",
@@ -217,7 +195,6 @@
                             this.hideLoadBar();
                             this.showSocials();
                             this.isSocialLinked();
-                            toastr.success('Connected networks updated!');
                         }
 
                     }, (data) => {
