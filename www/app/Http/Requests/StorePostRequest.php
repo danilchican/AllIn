@@ -28,7 +28,7 @@ class StorePostRequest extends FormRequest
             'date' => 'date_format:"Y-m-d H:i"',
             'socials' => 'required|array',
             'socials.*.id' => 'distinct|exists:user_social_account|integer',
-            'body' => 'required|min:20|max:1000'
+            'body' => 'required|max:4000'
         ];
     }
 }
