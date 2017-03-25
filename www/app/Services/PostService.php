@@ -68,9 +68,15 @@ class PostService implements SocialContract, PostContract
         try {
             $response = $this->fb->post('/me/feed', $data, $provider->getToken());
         } catch(FacebookResponseException $e) {
-            return ['status' => false, 'message' => $e->getMessage()];
+            return [
+                'response' => [ 'errors' => [$e->getMessage()] ],
+                'status' => false,
+            ];
         } catch(FacebookSDKException $e) {
-            return ['status' => false, 'message' => $e->getMessage()];
+            return [
+                'response' => [ 'errors' => [$e->getMessage()] ],
+                'status' => false,
+            ];
         }
 
         return ['response' => $response->getGraphNode(), 'status' => true];
@@ -87,7 +93,15 @@ class PostService implements SocialContract, PostContract
     public function sendTwitterPost(Post $post, $user, $provider)
     {
         $this->twitter_connection->setOauthToken($provider->getToken(), $provider->getSecretToken());
+        $response = $this->twitter_connection->post('statuses/update', ['status' => $post->getBody()]);
 
-        return $this->twitter_connection->post('statuses/update', ['status' => $post->getBody()]);
+        if ($this->twitter_connection->getLastHttpCode() === 200) {
+            return ['response' => $response, 'status' => true];
+        }
+
+        return [
+            'response' => ['errors' => $response->errors],
+            'status' => false
+        ];
     }
 }
