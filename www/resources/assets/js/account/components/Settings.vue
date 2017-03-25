@@ -24,7 +24,7 @@
             </div>
             <br>
             <div class="button-submit">
-                <button type="submit" class="btn btn-primary" @click="handleSubmit()">
+                <button type="submit" class="btn btn-primary" id="submit-btn" @click="handleSubmit()">
                     Submit
                 </button>
             </div>
@@ -71,6 +71,8 @@
              */
             disableInputs() {
                 $('input').attr('disabled', 'disabled');
+                $('#submit-btn').attr('disabled', 'disabled');
+
                 this.disable = true;
             },
 
@@ -79,6 +81,7 @@
              */
             enableInputs() {
                 $('input').attr('disabled', false);
+                $('#submit-btn').attr('disabled', false);
                 this.disable = false;
             },
 
