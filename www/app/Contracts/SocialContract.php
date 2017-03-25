@@ -11,6 +11,4 @@ interface SocialContract
     const POST_METHOD = 'POST';
 
     const VK_API_VER = '5.63';
-
-    public function request($client, $request, $method = 'GET');
 }

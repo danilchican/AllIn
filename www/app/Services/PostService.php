@@ -12,16 +12,8 @@ use Facebook\Exceptions\FacebookSDKException;
 
 class PostService implements SocialContract, PostContract
 {
-    use SocialRequest;
     use TwitterAuth;
-
-    /**
-     * PostService constructor.
-     */
-    public function __construct()
-    {
-        $this->initializeTwitterOAuth('twitter');
-    }
+    use SocialRequest;
 
     /**
      * Send post to all entered providers.
@@ -34,6 +26,8 @@ class PostService implements SocialContract, PostContract
      */
     public function send(Post $post, $providers = [], $user)
     {
+        $responses = [];
+
         $listProviders = $user->socials()->where(function ($query) use ($providers) {
             foreach($providers as $provider) {
                 $query->orWhere('id', '=', $provider['id']);
@@ -45,13 +39,17 @@ class PostService implements SocialContract, PostContract
 
             switch ($providerName) {
                 case 'facebook':
-                    return $this->sendFacebookPost($post, $user, $provider);
+                    $responses[$providerName] = $this->sendFacebookPost($post, $user, $provider);
+                    break;
                 case 'twitter':
-                    return $this->sendTwitterPost($post, $user, $provider);
+                    $responses[$providerName] = $this->sendTwitterPost($post, $user, $provider);
+                    break;
                 default:
-                    return null;
+                    break;
             }
         }
+
+        return $responses;
     }
 
     /**
@@ -68,6 +66,7 @@ class PostService implements SocialContract, PostContract
         $data = [
             'message' => $post->getBody()
         ];
+
 
         try {
             $response = $this->fb->post('/me/feed', $data, $provider->getToken());
