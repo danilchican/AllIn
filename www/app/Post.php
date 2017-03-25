@@ -18,7 +18,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'body', 'planned', 'status', 'date'];
+    protected $fillable = ['user_id', 'body', 'planned', 'status'];
 
     /**
      * Getting socials for a post.
@@ -68,15 +68,5 @@ class Post extends Model
     public function setStatus($status = 0)
     {
         $this->status = $status;
-    }
-
-    /**
-     * Set the status of the post.
-     *
-     * @param $date
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
     }
 }
