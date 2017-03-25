@@ -10,7 +10,12 @@
             <br>
             <div class="input-group">
                 <span class="input-group-addon">Password</span>
-                <input type="password" class="form-control" id="password-field" placeholder="New password" required>
+                <input type="password" class="form-control" id="password-field" placeholder="Your password" required>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">New Password</span>
+                <input type="password" class="form-control" id="new-password-field" placeholder="New password" required>
             </div>
             <br>
             <div class="input-group">
@@ -29,11 +34,11 @@
 
 <style>
     .settings-panel {
-        height: 330px;
+        height: auto;
     }
 
     .input-group-addon {
-        min-width: 110px;
+        min-width: 125px;
     }
 </style>
 
@@ -50,15 +55,36 @@
             return {
                 newPassword: "",
                 email: "",
+                disable: false
             }
         },
 
         mounted() {
+            this.disableInputs();
             this.getUserEmail();
             console.log("Settings component mounted.")
         },
 
         methods: {
+            /**
+             * Disable data input fields till email isn't loaded from server.
+             */
+            disableInputs() {
+                $('input').attr('disabled', 'disabled');
+                this.disable = true;
+            },
+
+            /**
+             * Enable input fields.
+             */
+            enableInputs() {
+                $('input').attr('disabled', false);
+                this.disable = false;
+            },
+
+            /**
+             * Retrieve user email with GET request to server.
+             */
             getUserEmail() {
                 this.$http.get('/user/info')
                     .then((data) => {
@@ -68,29 +94,7 @@
                         } else {
                             this.email = data.body.user.email;
                             this.setEmailField();
-                            toastr.success('User email loaded! ' + this.email);
-                        }
-                    });
-            },
-
-            setEmailField() {
-                document.getElementById('email-field').value = this.email;
-            },
-
-            changeUserPassword(userEmail, userNewPassword) {
-                /*
-                this.$http.post('change/password/blya', {email: userEmail, password: userNewPassword})
-                    .then((data) => {
-                        // success callback
-
-                        if(data.body.success === true) {
-                            var messages = data.body.messages;
-
-                            $.each( messages, function( key, value ) {
-                                toastr.success(value, 'Success')
-                            });
-                        } else {
-                            toastr.error('Что-то пошло не так...', 'Error')
+                            this.enableInputs();
                         }
                     }, (data) => {
                         // error callback
@@ -103,9 +107,32 @@
                             }
                         });
                     });
-                    */
             },
 
+            /**
+             * Set user email to email-field.
+             */
+            setEmailField() {
+                document.getElementById('email-field').value = this.email;
+            },
+
+            /**
+             * Send POST request to server to change user password.
+             *
+             * TODO
+             *
+             * @param userEmail current user email.
+             * @param userNewPassword new user password
+             */
+            changeUserPassword(userEmail, userNewPassword) {
+
+            },
+
+            /**
+             * Validate new user password.
+             *
+             * @returns {boolean} validation result
+             */
             validatePassword() {
                 var newPassword = $('input#password-field').val();
                 var newPasswordRepeat = $('input#repeat-password-field').val();
@@ -130,6 +157,9 @@
                 }
             },
 
+            /**
+             * Handle submit button actions.
+             */
             handleSubmit() {
                 var validPassword = this.validatePassword();
 
