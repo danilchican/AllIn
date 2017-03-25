@@ -17,6 +17,7 @@ class CreateSocialsPostsTable extends Migration
             $table->increments('id');
             $table->integer('post_id')->nullable()->unsigned();
             $table->integer('post_provider_id')->unsigned();
+            $table->boolean('status')->default(0);
             $table->string('provider');
 
             $table->foreign('post_id')
