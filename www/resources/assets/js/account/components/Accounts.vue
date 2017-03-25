@@ -3,63 +3,17 @@
         <div class="panel-body">
             <h2>Manage your linked profiles</h2>
             <h4>Socials, that already linked will be circle with green border</h4>
-
-            <div id="loader">
-                <!--
-                <svg width="135" height="140" viewBox="0 0 135 140" xmlns="http://www.w3.org/2000/svg" fill="#127cd0">
-                    <rect y="10" width="15" height="120" rx="6">
-                        <animate attributeName="height"
-                                 begin="0.5s" dur="1s"
-                                 values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear"
-                                 repeatCount="indefinite" />
-                        <animate attributeName="y"
-                                 begin="0.5s" dur="1s"
-                                 values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear"
-                                 repeatCount="indefinite" />
-                    </rect>
-                    <rect x="30" y="10" width="15" height="120" rx="6">
-                        <animate attributeName="height"
-                                 begin="0.25s" dur="1s"
-                                 values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear"
-                                 repeatCount="indefinite" />
-                        <animate attributeName="y"
-                                 begin="0.25s" dur="1s"
-                                 values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear"
-                                 repeatCount="indefinite" />
-                    </rect>
-                    <rect x="60" width="15" height="140" rx="6">
-                        <animate attributeName="height"
-                                 begin="0s" dur="1s"
-                                 values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear"
-                                 repeatCount="indefinite" />
-                        <animate attributeName="y"
-                                 begin="0s" dur="1s"
-                                 values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear"
-                                 repeatCount="indefinite" />
-                    </rect>
-                    <rect x="90" y="10" width="15" height="120" rx="6">
-                        <animate attributeName="height"
-                                 begin="0.25s" dur="1s"
-                                 values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear"
-                                 repeatCount="indefinite" />
-                        <animate attributeName="y"
-                                 begin="0.25s" dur="1s"
-                                 values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear"
-                                 repeatCount="indefinite" />
-                    </rect>
-                    <rect x="120" y="10" width="15" height="120" rx="6">
-                        <animate attributeName="height"
-                                 begin="0.5s" dur="1s"
-                                 values="120;110;100;90;80;70;60;50;40;140;120" calcMode="linear"
-                                 repeatCount="indefinite" />
-                        <animate attributeName="y"
-                                 begin="0.5s" dur="1s"
-                                 values="10;15;20;25;30;35;40;45;50;0;10" calcMode="linear"
-                                 repeatCount="indefinite" />
-                    </rect>
-                </svg>
-                -->
-
+            <div id="social-enter" v-if="show">
+                <div v-for="link in links" style="float:left">
+                    <a v-if="link.linked" :class="getSocialClass(link) + ' linked'" :id="link.provider">
+                        <img :src="getImageUrl(link)" :class="link.provider + '-logo'" :id="getIDImage(link)">
+                    </a>
+                    <a v-else :href="'/socials/' + link.provider + '/create'" :class="getSocialClass(link)" :id="link.provider">
+                        <img :src="getImageUrl(link)" :class="link.provider + '-logo'" :id="getIDImage(link)">
+                    </a>
+                </div>
+            </div>
+            <div id="loader" v-else>
                 <svg width="120" height="30" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg" fill="#127cd0">
                     <circle cx="15" cy="15" r="15">
                         <animate attributeName="r" from="15" to="15"
@@ -92,21 +46,6 @@
                                  repeatCount="indefinite" />
                     </circle>
                 </svg>
-
-            </div>
-
-            <div id="social-enter">
-                <a href="/socials/vkontakte/create" class="social-network vkontakte" id="vkontakte">
-                    <img src="/image/socials/vk_logo.png" alt="vk_logo" class="vkontakte-logo" id="vkontakte-img"/>
-                </a>
-
-                <a href="/socials/facebook/create" class="social-network facebook" id="facebook">
-                    <img src="/image/socials/fb_logo.png" alt="fb_logo" class="facebook-logo" id="facebook-img"/>
-                </a>
-
-                <a href="/socials/twitter/create" class="social-network twitter" id="twitter">
-                    <img src="/image/socials/tw_logo.png" alt="tw_logo" class="twitter-logo" id="twitter-img"/>
-                </a>
             </div>
         </div>
     </div>
@@ -118,10 +57,18 @@
         height: auto;
     }
 
-    social-enter {
+    #social-enter {
         margin-top: 50px;
         text-align: center;
-        alignment: center;
+        display: inline-block;
+    }
+
+    .social-network.linked {
+        border: 7px solid #39FF14;
+    }
+
+    .social-network.linked > img {
+        margin: 23px;
     }
 
     .social-network {
@@ -199,43 +146,62 @@
 
         data : function() {
             return {
+                show: false,
                 socials: [],
-                links: []
+                links: [
+                    {
+                        provider: "vkontakte",
+                        logo: "vk_logo",
+                        linked: false
+                    },
+                    {
+                        provider: "facebook",
+                        logo: "fb_logo",
+                        linked: false
+                    },
+                    {
+                        provider: "twitter",
+                        logo: "tw_logo",
+                        linked: false
+                    }
+                ]
             }
         },
 
         mounted() {
-            $("#social-enter").hide();
             this.getLinkedSocials();
-            console.log("Accounts component mounted.")
         },
 
         methods : {
-            handlePlus() {
-                this.plusButton = !this.plusButton
+
+            getImageUrl(item) {
+                return '/image/socials/' + item.logo + '.png'
             },
 
-            isOpened() {
-                return this.plusButton
+            getSocialClass(item) {
+                return 'social-network ' + item.provider
+            },
+
+            getIDImage(item) {
+                return ('' + item.provider + '-img')
             },
 
             getSocialsCount() {
                 return this.socials.length
             },
 
-            getSocialImageURL(account) {
-                return "/image/" + account.provider + ".png";
-            },
-
             isSocialLinked() {
-                this.socials.forEach(function (item) {
-                    var x = document.getElementById(item.provider);
-                    x.style.border = "7px solid #39FF14";
-                    x.style.pointerEvents = "none";
+                var s = this.socials;
 
-                    var img = document.getElementById(item.provider + "-img")
-                    img.style.margin = "23px";
-                    img.title = "Already linked";
+                this.links.forEach(function (link) {
+
+                    var value = s.filter(function (item) {
+                        return item.provider === link.provider;
+                    });
+
+                    if(value.length != 0) {
+                        link.linked = true;
+                    }
                 });
             },
 
@@ -249,8 +215,8 @@
                         } else {
                             this.socials = data.body.socials;
                             this.hideLoadBar();
-                            this.isSocialLinked();
                             this.showSocials();
+                            this.isSocialLinked();
                             toastr.success('Connected networks updated!');
                         }
 
@@ -268,11 +234,11 @@
             },
 
             hideLoadBar() {
-                $("#loader").hide("slow");
+                this.show = false;
             },
 
             showSocials() {
-                $("#social-enter").show("slow");
+                this.show = true;
             }
         }
     }
