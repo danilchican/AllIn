@@ -365,7 +365,7 @@
                     // success callback
 
                     if(data.body.code === 200) {
-                        toastr.success('Successfully posted!');
+                        toastr.success(data.body.message);
                         return true;
                     } else {
                         toastr.error('Что-то пошло не так...', 'Error');
@@ -373,11 +373,15 @@
                 }, (data) => {
                     // error callback
                     var errors = data.body;
+
+                    if(data.status === 400) {
+                        var errors = data.body.errors;
+                    }
                     $.each( errors, function( key, value ) {
                         if(data.status === 422) {
                             toastr.error(value[0], 'Error')
                         } else {
-                            toastr.error(value, 'Error')
+                            toastr.error(value.message, 'Error')
                         }
                     });
                 });

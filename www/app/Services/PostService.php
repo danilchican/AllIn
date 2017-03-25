@@ -47,7 +47,7 @@ class PostService implements SocialContract, PostContract
             }
         }
 
-        return proccessResponse($responses, $providers);
+        return $this->proccessResponse($responses, $providers);
     }
 
     /**
@@ -112,23 +112,32 @@ class PostService implements SocialContract, PostContract
      */
     public function proccessResponse($responses, $providers)
     {
-        $finishResponse = [];
+        $finishResponse = ['status' => true, 'code' => 200];
+        $errors = [];
 
         foreach($providers as $provider) {
-            $responseItem = $responses[$provider];
+            $responseItem = $responses[$provider['provider']];
 
             if (PostService::hasPostErrorsInResponse($responseItem)) {
-                //..
+                $finishResponse['errors'][] = $responseItem['response']['errors'];
+                $finishResponse['code'] = 400;
+                $finishResponse['status'] = false;
             } else {
-                //..
+                $finishResponse['message'] = 'Your post was published!';
             }
         }
 
         return $finishResponse;
     }
 
+    /**
+     * Check if the post has any errors.
+     *
+     * @param $response
+     * @return bool
+     */
     public static function hasPostErrorsInResponse($response)
     {
-        //..
+        return $response['status'] !== true;
     }
 }
