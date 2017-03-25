@@ -27,7 +27,7 @@ class StorePostRequest extends FormRequest
             'is_plan' => 'boolean|required',
             'date' => 'date_format:"Y-m-d H:i"',
             'socials' => 'required|array',
-            'socials.*' => 'distinct|exists:user_social_account|integer',
+            'socials.*.id' => 'distinct|exists:user_social_account|integer',
             'body' => 'required|min:20|max:1000'
         ];
     }
