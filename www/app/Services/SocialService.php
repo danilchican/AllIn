@@ -65,8 +65,6 @@ class SocialService implements SocialContract, SocialAccountContract
     public function getUserAvatarByProvider($providerName, $providerUser)
     {
         switch ($providerName) {
-            case 'vkontakte':
-                return $this->getVkontakteAvatar($providerUser);
             case 'facebook':
                 return $this->getFacebookAvatar($providerUser);
             case 'twitter':
@@ -74,17 +72,6 @@ class SocialService implements SocialContract, SocialAccountContract
             default:
                 return null;
         }
-    }
-
-    /**
-     * Get the Vkontakte avatar of the user.
-     *
-     * @param $providerUser
-     * @return string
-     */
-    public function getVkontakteAvatar($providerUser)
-    {
-        return $providerUser->getAvatar();
     }
 
     /**

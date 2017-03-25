@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Contracts\PostContract;
 use App\Contracts\SocialContract;
 use App\Helpers\SocialRequest;
-use App\Helpers\TwitterAuth;
 use App\Post;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
