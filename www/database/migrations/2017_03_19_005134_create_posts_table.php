@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration
             $table->text('body');
             $table->boolean('planned')->default(0);
             $table->boolean('status')->default(0);
-            $table->dateTime('date')->nullable();
+            $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')

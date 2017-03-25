@@ -21,6 +21,13 @@ class SocialPost extends Model
     protected $fillable = ['post_id', 'post_provider_id', 'provider'];
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Get the post.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
