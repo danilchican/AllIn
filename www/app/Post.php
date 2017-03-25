@@ -18,7 +18,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'body', 'planned', 'status'];
+    protected $fillable = ['user_id', 'body', 'planned'];
 
     /**
      * Getting socials for a post.
@@ -58,15 +58,5 @@ class Post extends Model
     public function setPlanned($is_plan)
     {
         $this->planned = $is_plan;
-    }
-
-    /**
-     * Set the status of the post.
-     *
-     * @param $status
-     */
-    public function setStatus($status = 0)
-    {
-        $this->status = $status;
     }
 }
