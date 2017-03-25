@@ -151,23 +151,49 @@
         },
 
         methods : {
-
+            /**
+             * Get image URL by giving name.
+             *
+             * @param item social network name
+             * @returns {string} image URL
+             */
             getImageUrl(item) {
                 return '/image/socials/' + item.logo + '.png'
             },
 
+            /**
+             * Get image URL by giving name.
+             *
+             * @param item social network name
+             * @returns {string} class name
+             */
             getSocialClass(item) {
                 return 'social-network ' + item.provider
             },
 
+            /**
+             * Get image URL by giving name.
+             *
+             * @param item social network name
+             * @returns {string} element id
+             */
             getIDImage(item) {
                 return ('' + item.provider + '-img')
             },
 
+            /**
+             * Get count of socials
+             *
+             * @returns {number} socials count
+             */
             getSocialsCount() {
                 return this.socials.length
             },
 
+            /**
+             *
+             *
+             */
             isSocialLinked() {
                 var s = this.socials;
 
@@ -183,6 +209,9 @@
                 });
             },
 
+            /**
+             * Send GET request to server to get linked user socials
+             */
             getLinkedSocials() {
                 this.$http.get('/socials/list')
                     .then((data) => {
@@ -210,10 +239,16 @@
                     });
             },
 
+            /**
+             * Hide loading image
+             */
             hideLoadBar() {
                 this.show = false;
             },
 
+            /**
+             * Show socials to link
+             */
             showSocials() {
                 this.show = true;
             }
