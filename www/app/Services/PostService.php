@@ -65,16 +65,15 @@ class PostService implements SocialContract, PostContract
             'message' => $post->getBody()
         ];
 
-
         try {
             $response = $this->fb->post('/me/feed', $data, $provider->getToken());
         } catch(FacebookResponseException $e) {
-            return 'Graph returned an error: ' . $e->getMessage();
+            return ['status' => false, 'message' => $e->getMessage()];
         } catch(FacebookSDKException $e) {
-            return 'Facebook SDK returned an error: ' . $e->getMessage();
+            return ['status' => false, 'message' => $e->getMessage()];
         }
 
-        return $response->getGraphNode();
+        return ['response' => $response->getGraphNode(), 'status' => true];
     }
 
     /**
