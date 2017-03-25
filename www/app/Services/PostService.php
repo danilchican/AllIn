@@ -69,12 +69,16 @@ class PostService implements SocialContract, PostContract
             $response = $this->fb->post('/me/feed', $data, $provider->getToken());
         } catch(FacebookResponseException $e) {
             return [
-                'response' => [ 'errors' => [$e->getMessage()] ],
+                'response' => [ 'errors' => [
+                    ['message' => $e->getMessage()]
+                ]],
                 'status' => false,
             ];
         } catch(FacebookSDKException $e) {
             return [
-                'response' => [ 'errors' => [$e->getMessage()] ],
+                'response' => [ 'errors' => [
+                    ['message' => $e->getMessage()]
+                ]],
                 'status' => false,
             ];
         }
@@ -119,12 +123,21 @@ class PostService implements SocialContract, PostContract
             $responseItem = $responses[$provider['provider']];
 
             if (PostService::hasPostErrorsInResponse($responseItem)) {
-                $finishResponse['errors'][] = $responseItem['response']['errors'];
+
+                foreach($responseItem['response']['errors'] as $error) {
+                    $error = (array)$error;
+                    $errors[]['message'] = $error['message'];
+                }
+
                 $finishResponse['code'] = 400;
                 $finishResponse['status'] = false;
             } else {
                 $finishResponse['message'] = 'Your post was published!';
             }
+        }
+
+        if($finishResponse['status'] === false) {
+            $finishResponse['errors'] = $errors;
         }
 
         return $finishResponse;
