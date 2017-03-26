@@ -18,7 +18,6 @@ class CreatePostsTable extends Migration
             $table->integer('user_id')->nullable()->unsigned();
             $table->text('body');
             $table->boolean('planned')->default(0);
-            $table->boolean('status')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')

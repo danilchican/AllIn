@@ -384,11 +384,32 @@
                     .then((data) => {
                         // success callback
 
+<<<<<<< HEAD
                         if(data.body.code === 200) {
                             toastr.success(data.body.message);
                             return true;
                         } else {
                             toastr.error('Что-то пошло не так...', 'Error');
+=======
+                    if(data.body.code === 200) {
+                        toastr.success(data.body.message);
+                        return true;
+                    } else {
+                        toastr.error('Что-то пошло не так...', 'Error');
+                    }
+                }, (data) => {
+                    // error callback
+                    var errors = data.body;
+
+                    if(data.status === 400) {
+                        var errors = data.body.errors;
+                    }
+                    $.each( errors, function( key, value ) {
+                        if(data.status === 422) {
+                            toastr.error(value[0], 'Error')
+                        } else {
+                            toastr.error(value.message, 'Error')
+>>>>>>> 30665e0c35a88b1c92851a692a188f51019f0f6c
                         }
                     }, (data) => {
                         // error callback

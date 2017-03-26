@@ -18,7 +18,7 @@ class SocialPost extends Model
      *
      * @var array
      */
-    protected $fillable = ['post_id', 'post_provider_id', 'provider'];
+    protected $fillable = ['post_id', 'post_provider_id', 'provider', 'status'];
 
     /**
      * Indicates if the model should be timestamped.
