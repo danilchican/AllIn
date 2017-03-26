@@ -201,6 +201,13 @@
                 this.disable = false;
             },
 
+            clearFields() {
+                $('textarea#comment').val('');
+                $('textarea#comment').attr("placeholder", "Write something...");
+                $('input#date-time').val('');
+                this.clearSocialsForPost();
+            },
+
             hideCheckboxes() {
                 $("#socials-checkbox").hide();
             },
@@ -301,12 +308,7 @@
                     }
                 }
 
-                if (this.sendPostData(this.obj)) {
-                    $('textarea#comment').val('');
-                    $('textarea#comment').attr("placeholder", "Write something...");
-                    $('input#date-time').val('');
-                    this.clearSocialsForPost();
-                }
+                this.sendPostData(this.obj);
             },
 
             /**
@@ -383,10 +385,9 @@
                 this.$http.post('/post/store', obj)
                     .then((data) => {
                         // success callback
-                        ss
                         if(data.body.code === 200) {
                             toastr.success(data.body.message);
-                            return true;
+                            this.clearFields();
                         } else {
                             toastr.error('Что-то пошло не так...', 'Error');
                         }

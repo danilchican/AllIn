@@ -18,6 +18,7 @@
     <style>
         body {
             position: relative;
+            background-color: #edeef0;
         }
 
         .navbar {
