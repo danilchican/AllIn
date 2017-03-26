@@ -6,7 +6,7 @@
             <img src="/image/stat.png" alt="must be stat"/>
             -->
 
-            <canvas id="myChart" style="width: auto; height: 400px;"></canvas>
+            <canvas id="myChart" style="width: auto; max-width: 850px; height: 400px;"></canvas>
         </div>
     </div>
 </template>

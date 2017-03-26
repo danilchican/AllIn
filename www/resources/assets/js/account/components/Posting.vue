@@ -57,6 +57,17 @@
             </div>
 
             <div class="row">
+                <div class="col-sm-6 file-input">
+                    <div class='input-group date' id='file-chooser'>
+                        <input type='text' class="form-control" id="file-choose" placeholder="Choose file..."/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="button">File...</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-sm-6 date-input">
                     <div class='input-group date' id='datetimepicker'>
                         <input type='text' class="form-control" id="date-time"/>
@@ -155,6 +166,10 @@
     :checked + label img {
         transform: scale(0.9);
         z-index: -1;
+    }
+
+    .file-input {
+        margin-bottom: 15px;
     }
 </style>
 
