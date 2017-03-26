@@ -65,7 +65,7 @@
                 </div>
 
                 <div class="col-sm-3 post-button">
-                    <button type="submit" class="btn btn-primary" @click="handlePostButton()">
+                    <button type="submit" class="btn btn-primary" id="post-btn" @click="handlePostButton()">
                         Post
                     </button>
                 </div>
@@ -76,7 +76,7 @@
 
 <style>
     .post-panel {
-        height: 400px;
+        height: auto;
     }
 
     .loader {
@@ -169,6 +169,7 @@
 
         data : function() {
             return {
+                disable: false,
                 isCalendarOpened: false,
                 isPlanned: false,
                 message: "",
@@ -180,12 +181,30 @@
         },
 
         mounted() {
-            $("#socials-checkbox").hide();
+            this.disableInput();
             this.getLinkedSocials();
             console.log("Post component mounted.")
         },
 
         methods : {
+            disableInput() {
+                $('textarea').prop('disabled', 'disabled');
+                $('input').prop('disabled', 'disabled');
+                $('#post-btn').prop('disabled', 'disabled');
+                this.disable = true;
+            },
+
+            enableInput() {
+                $('textarea').prop('disabled', false);
+                $('input').prop('disabled', false);
+                $('#post-btn').prop('disabled', false);
+                this.disable = false;
+            },
+
+            hideCheckboxes() {
+                $("#socials-checkbox").hide();
+            },
+
             /**
              * Handle calendar button press.
              */
@@ -334,6 +353,7 @@
                         }
 
                         this.linkedSocials = data.body.socials;
+                        this.enableInput();
                         this.hideLoadBar();
                         this.showSocials();
                     }, (data) => {
@@ -361,26 +381,30 @@
              */
             sendPostData(obj) {
                 this.$http.post('/post/store', obj)
-                .then((data) => {
-                    // success callback
+                    .then((data) => {
+                        // success callback
 
-                    if(data.body.code === 200) {
-                        toastr.success('Successfully posted!');
-                        return true;
-                    } else {
-                        toastr.error('Что-то пошло не так...', 'Error');
-                    }
-                }, (data) => {
-                    // error callback
-                    var errors = data.body;
-                    $.each( errors, function( key, value ) {
-                        if(data.status === 422) {
-                            toastr.error(value[0], 'Error')
+                        if(data.body.code === 200) {
+                            toastr.success(data.body.message);
+                            return true;
                         } else {
-                            toastr.error(value, 'Error')
+                            toastr.error('Что-то пошло не так...', 'Error');
                         }
+                    }, (data) => {
+                        // error callback
+                        var errors = data.body;
+
+                        if(data.status === 400) {
+                            var errors = data.body.errors;
+                        }
+                        $.each( errors, function( key, value ) {
+                            if(data.status === 422) {
+                                toastr.error(value[0], 'Error')
+                            } else {
+                                toastr.error(value.message, 'Error')
+                            }
+                        });
                     });
-                });
             },
 
             getInputIDSocial(item) {
@@ -392,7 +416,7 @@
             },
 
             hideLoadBar() {
-                $("#loader").hide("slow");
+                $("#loader").hide();
             },
 
             showSocials() {
