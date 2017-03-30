@@ -52,7 +52,6 @@
                             </label>
                         </li>
                     </ul>
-
                 </div>
             </div>
 
@@ -61,7 +60,7 @@
                     <div class='input-group date' id='file-chooser'>
                         <input type='text' class="form-control" id="file-choose" placeholder="Choose file..."/>
                         <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button">File...</button>
+                            <button class="btn btn-secondary file-button" type="button">File...</button>
                         </span>
                     </div>
                 </div>
@@ -289,6 +288,7 @@
              *    if date and time was set.
              */
             handlePostButton() {
+                this.disableInput();
                 this.message = $('textarea#comment').val();
 
                 if (this.message == '') {
@@ -403,6 +403,7 @@
                         if(data.body.code === 200) {
                             toastr.success(data.body.message);
                             this.clearFields();
+                            this.enableInput();
                         } else {
                             toastr.error('Что-то пошло не так...', 'Error');
                         }
