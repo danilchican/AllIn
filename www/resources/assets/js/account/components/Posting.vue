@@ -203,6 +203,9 @@
         },
 
         methods : {
+            /**
+             * Disable input fields.
+             */
             disableInput() {
                 $('textarea').prop('disabled', 'disabled');
                 $('input').prop('disabled', 'disabled');
@@ -210,6 +213,9 @@
                 this.disable = true;
             },
 
+            /**
+             * Enable input fields.
+             */
             enableInput() {
                 $('textarea').prop('disabled', false);
                 $('input').prop('disabled', false);
@@ -217,6 +223,9 @@
                 this.disable = false;
             },
 
+            /**
+             * Clear input fields.
+             */
             clearFields() {
                 $('textarea#comment').val('');
                 $('textarea#comment').attr("placeholder", "Write something...");
@@ -224,6 +233,9 @@
                 this.clearSocialsForPost();
             },
 
+            /**
+             * Hide social checkbox buttons.
+             */
             hideCheckboxes() {
                 $("#socials-checkbox").hide();
             },
@@ -353,6 +365,9 @@
                 this.socialsForPost = forPost;
             },
 
+            /**
+             * Clear social buttons checkbox states.
+             */
             clearSocialsForPost() {
                 $('input[type=checkbox]').each(function() {
                     this.checked = false;
@@ -428,18 +443,36 @@
                     });
             },
 
+            /**
+             * Get element id by given name.
+             *
+             * @param item item.
+             * @returns {string} element id.
+             */
             getInputIDSocial(item) {
                 return "select-" + item.provider;
             },
 
+            /**
+             * Get picture for checkbox element by given name.
+             *
+             * @param item item.
+             * @returns {string} element picture name.
+             */
             getCheckboxImage(item) {
                 return "/image/" + item.provider + ".png";
             },
 
+            /**
+             * Hide loading animation.
+             */
             hideLoadBar() {
                 $("#loader").hide();
             },
 
+            /**
+             * Show social checkbox buttons.
+             */
             showSocials() {
                 $("#socials-checkbox").show("slow");
             }
