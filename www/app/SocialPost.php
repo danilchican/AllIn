@@ -36,4 +36,23 @@ class SocialPost extends Model
     {
         return $this->belongsTo(Post::class);
     }
+
+    /**
+     * Get the provider name.
+     *
+     * @return mixed
+     */
+    public function getProviderName()
+    {
+        return $this->provider;
+    }
+
+    /**
+     * Set the status of the SocialPost.
+     *
+     * @param $status
+     */
+    public function setStatus($status) {
+        $this->status = $status;
+    }
 }
