@@ -21,5 +21,9 @@ $api->version('v1', function ($api) {
 });
 
 $api->version('v1', ['middleware' => 'jwt.auth'], function($api) {
+    $api->get('user', 'App\Http\Controllers\Api\Auth\AuthController@getAuthUser');
     $api->post('logout', 'App\Http\Controllers\Api\Auth\AuthController@logout');
+
+    // socials
+    $api->get('socials', 'App\Http\Controllers\Api\SocialController@getAssociatedAccounts');
 });

@@ -25,6 +25,7 @@ window.toastr.options = {
 
 import VueRouter  from 'vue-router'
 import router     from './account/router'
+import Chart      from 'chart.js'
 
 new Vue({
     router,
