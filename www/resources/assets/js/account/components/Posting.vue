@@ -52,30 +52,31 @@
                             </label>
                         </li>
                     </ul>
-
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-sm-6 file-input">
-                    <div class='input-group date' id='file-chooser'>
+                <div class="col-md-8 file-input">
+                    <div class='input-group file' id='file-chooser' style="width: auto;">
                         <input type='text' class="form-control" id="file-choose" placeholder="Choose file..."/>
                         <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button">File...</button>
+                            <label class="btn btn-default btn-file" style="background-color: #edeef0; width: 125px;">
+                                Browse <input type="file" style="display: none;">
+                            </label>
                         </span>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-sm-6 date-input">
-                    <div class='input-group date' id='datetimepicker'>
+                <div class="col-md-8 date-input">
+                    <div class='input-group date' id='datetimepicker' style="width: auto;">
                         <input type='text' class="form-control" id="date-time"/>
                         <span class="input-group-addon" @click="handleCalendar()"><span class="fa fa-calendar"></span></span>
                     </div>
                 </div>
 
-                <div class="col-sm-3 post-button">
+                <div class="col-md-4 post-button">
                     <button type="submit" class="btn btn-primary" id="post-btn" @click="handlePostButton()">
                         Post
                     </button>
@@ -202,6 +203,9 @@
         },
 
         methods : {
+            /**
+             * Disable input fields.
+             */
             disableInput() {
                 $('textarea').prop('disabled', 'disabled');
                 $('input').prop('disabled', 'disabled');
@@ -209,6 +213,9 @@
                 this.disable = true;
             },
 
+            /**
+             * Enable input fields.
+             */
             enableInput() {
                 $('textarea').prop('disabled', false);
                 $('input').prop('disabled', false);
@@ -216,6 +223,9 @@
                 this.disable = false;
             },
 
+            /**
+             * Clear input fields.
+             */
             clearFields() {
                 $('textarea#comment').val('');
                 $('textarea#comment').attr("placeholder", "Write something...");
@@ -223,6 +233,9 @@
                 this.clearSocialsForPost();
             },
 
+            /**
+             * Hide social checkbox buttons.
+             */
             hideCheckboxes() {
                 $("#socials-checkbox").hide();
             },
@@ -289,9 +302,11 @@
              *    if date and time was set.
              */
             handlePostButton() {
+                this.disableInput();
                 this.message = $('textarea#comment').val();
 
                 if (this.message == '') {
+                    this.enableInput();
                     toastr.warning('Nothing to post.');
                     return;
                 }
@@ -350,6 +365,9 @@
                 this.socialsForPost = forPost;
             },
 
+            /**
+             * Clear social buttons checkbox states.
+             */
             clearSocialsForPost() {
                 $('input[type=checkbox]').each(function() {
                     this.checked = false;
@@ -403,12 +421,14 @@
                         if(data.body.code === 200) {
                             toastr.success(data.body.message);
                             this.clearFields();
+                            this.enableInput();
                         } else {
                             toastr.error('Что-то пошло не так...', 'Error');
                         }
                     }, (data) => {
                         // error callback
                         var errors = data.body;
+                        this.enableInput();
 
                         if(data.status === 400) {
                             var errors = data.body.errors;
@@ -423,18 +443,36 @@
                     });
             },
 
+            /**
+             * Get element id by given name.
+             *
+             * @param item item.
+             * @returns {string} element id.
+             */
             getInputIDSocial(item) {
                 return "select-" + item.provider;
             },
 
+            /**
+             * Get picture for checkbox element by given name.
+             *
+             * @param item item.
+             * @returns {string} element picture name.
+             */
             getCheckboxImage(item) {
                 return "/image/" + item.provider + ".png";
             },
 
+            /**
+             * Hide loading animation.
+             */
             hideLoadBar() {
                 $("#loader").hide();
             },
 
+            /**
+             * Show social checkbox buttons.
+             */
             showSocials() {
                 $("#socials-checkbox").show("slow");
             }
