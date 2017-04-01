@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Requests\StorePostRequest;
+use App\Jobs\SendPlannedPost;
 use App\Post;
 use App\Services\PostService;
 use App\SocialPost;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Controller;
 
@@ -26,6 +28,7 @@ class PostController extends Controller
      * @param StorePostRequest $request
      * @param PostService $service
      * @return \Illuminate\Http\JsonResponse
+     * @throws \InvalidArgumentException
      * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function store(StorePostRequest $request, PostService $service)
@@ -84,6 +87,7 @@ class PostController extends Controller
      * @param $providers
      * @param $date
      * @return \Illuminate\Http\JsonResponse
+     * @throws \InvalidArgumentException
      */
     public function planPost(Post $post, $providers, $date)
     {
@@ -102,7 +106,10 @@ class PostController extends Controller
         $user->posts()->save($post);
         $post->socials()->saveMany($postSocialModels);
 
-        // send task
+        $job = (new SendPlannedPost($user, $post, $providers))
+            ->delay( Carbon::createFromFormat('Y-m-d H:i', $date ));
+
+        dispatch($job);
 
         return Response::json([
             'status' => true,
