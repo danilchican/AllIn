@@ -20,24 +20,51 @@ class PostController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Send the post to socials.
+     *
+     * @param StorePostRequest $request
+     * @param PostService $service
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
     public function store(StorePostRequest $request, PostService $service)
     {
-        $user = \Auth::user();
-
         $providers = $request->input('socials');
-        $postSocialModels = [];
+        $post = new Post($request->only(['body']));
+        $post->setPlanned($request->input('is_plan'));
 
-        $post = new Post($request->only(['body', 'is_plan']));
+        if($request->input('is_plan')) {
+            return $this->planPost($post, $providers, $request->input('date'));
+        } else {
+            return $this->storePost($post, $service, $providers);
+        }
+    }
+
+    /**
+     * Store the post in DB.
+     *
+     * @param Post $post
+     * @param PostService $service
+     * @param $providers
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Facebook\Exceptions\FacebookSDKException
+     */
+    public function storePost(Post $post, PostService $service, $providers)
+    {
+        $user = \Auth::user();
+        $response = $service->send($post, $providers, $user);
+
+        $postSocialModels = [];
 
         /** @var array $providers */
         foreach($providers as $social) {
             $postSocialModels[] = new SocialPost([
                 'post_provider_id' => $social['id'],
-                'provider' => $social['provider']
+                'provider' => $social['provider'],
+                'status' => $response['posts'][$social['provider']]['status']
             ]);
         }
-
-        $response = $service->send($post, $providers, $user);
 
         $status = 400;
 
@@ -48,5 +75,39 @@ class PostController extends Controller
         }
 
         return Response::json($response, $status);
+    }
+
+    /**
+     * Plan new Post to post.
+     *
+     * @param Post $post
+     * @param $providers
+     * @param $date
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function planPost(Post $post, $providers, $date)
+    {
+        $user = \Auth::user();
+        $postSocialModels = [];
+
+        /** @var array $providers */
+        foreach($providers as $social) {
+            $postSocialModels[] = new SocialPost([
+                'post_provider_id' => $social['id'],
+                'provider' => $social['provider'],
+                'status' => 0
+            ]);
+        }
+
+        $user->posts()->save($post);
+        $post->socials()->saveMany($postSocialModels);
+
+        // send task
+
+        return Response::json([
+            'status' => true,
+            'code' => 200,
+            'message' => 'Tweet will be posted at '.$date
+        ]);
     }
 }

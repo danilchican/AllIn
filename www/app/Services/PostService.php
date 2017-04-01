@@ -118,6 +118,7 @@ class PostService implements SocialContract, PostContract
     {
         $finishResponse = ['status' => true, 'code' => 200];
         $errors = [];
+        $posts = [];
 
         foreach($providers as $provider) {
             $responseItem = $responses[$provider['provider']];
@@ -131,7 +132,9 @@ class PostService implements SocialContract, PostContract
 
                 $finishResponse['code'] = 400;
                 $finishResponse['status'] = false;
+                $posts[$provider['provider']]['status'] = false;
             } else {
+                $posts[$provider['provider']]['status'] = true;
                 $finishResponse['message'] = 'Your post was published!';
             }
         }
@@ -139,6 +142,8 @@ class PostService implements SocialContract, PostContract
         if($finishResponse['status'] === false) {
             $finishResponse['errors'] = $errors;
         }
+
+        $finishResponse['posts'] = $posts;
 
         return $finishResponse;
     }
