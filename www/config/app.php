@@ -185,6 +185,9 @@ return [
         Barryvdh\Cors\ServiceProvider::class,
         Dingo\Api\Provider\LaravelServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
+
+        App\Providers\SocialProvider::class,
+        \SocialiteProviders\Manager\ServiceProvider::class,
     ],
 
     /*
