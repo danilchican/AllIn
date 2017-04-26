@@ -27,7 +27,7 @@ class PostService implements SocialContract, PostContract
         $responses = [];
 
         $listProviders = $user->socials()->where(function ($query) use ($providers) {
-            foreach($providers as $provider) {
+            foreach ($providers as $provider) {
                 $query->orWhere('id', '=', $provider['id']);
             }
         })->get();
@@ -67,23 +67,26 @@ class PostService implements SocialContract, PostContract
 
         try {
             $response = $this->fb->post('/me/feed', $data, $provider->getToken());
-        } catch(FacebookResponseException $e) {
+        } catch (FacebookResponseException $e) {
             return [
-                'response' => [ 'errors' => [
+                'response' => ['errors' => [
                     ['message' => $e->getMessage()]
                 ]],
                 'status' => false,
             ];
-        } catch(FacebookSDKException $e) {
+        } catch (FacebookSDKException $e) {
             return [
-                'response' => [ 'errors' => [
+                'response' => ['errors' => [
                     ['message' => $e->getMessage()]
                 ]],
                 'status' => false,
             ];
         }
 
-        return ['response' => $response->getGraphNode(), 'status' => true];
+        return [
+            'response' => \GuzzleHttp\json_decode($response->getBody()),
+            'status' => true
+        ];
     }
 
     /**
@@ -120,12 +123,12 @@ class PostService implements SocialContract, PostContract
         $errors = [];
         $posts = [];
 
-        foreach($providers as $provider) {
+        foreach ($providers as $provider) {
             $responseItem = $responses[$provider['provider']];
 
             if (PostService::hasPostErrorsInResponse($responseItem)) {
 
-                foreach($responseItem['response']['errors'] as $error) {
+                foreach ($responseItem['response']['errors'] as $error) {
                     $error = (array)$error;
                     $errors[]['message'] = $error['message'];
                 }
@@ -134,12 +137,15 @@ class PostService implements SocialContract, PostContract
                 $finishResponse['status'] = false;
                 $posts[$provider['provider']]['status'] = false;
             } else {
+                $id = $responseItem['response']->id;
+
+                $posts[$provider['provider']]['id'] = $id;
                 $posts[$provider['provider']]['status'] = true;
                 $finishResponse['message'] = 'Your post was published!';
             }
         }
 
-        if($finishResponse['status'] === false) {
+        if ($finishResponse['status'] === false) {
             $finishResponse['errors'] = $errors;
         }
 

@@ -53,7 +53,16 @@ class SendPlannedPost implements ShouldQueue
         $response = $service->send($this->post, $this->providers, $this->user);
 
         if($response['status']) {
-            $this->post->socials()->update(['status' => true]);
+            $posts = $this->post->socials()->get();
+
+            foreach($posts as $post) {
+                $providerName = $post->getProviderName();
+
+                $post->update([
+                    'social_post_id' => $response['posts'][$providerName]['id'],
+                    'status' => true
+                ]);
+            }
         }
     }
 }
