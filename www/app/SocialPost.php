@@ -18,7 +18,7 @@ class SocialPost extends Model
      *
      * @var array
      */
-    protected $fillable = ['post_id', 'post_provider_id', 'provider', 'status'];
+    protected $fillable = ['post_id', 'social_post_id', 'provider_id', 'provider', 'status'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -54,5 +54,14 @@ class SocialPost extends Model
      */
     public function setStatus($status) {
         $this->status = $status;
+    }
+
+    /**
+     * Set the social post ID of the post.
+     *
+     * @param $social_post_id
+     */
+    public function setSocialPostID($social_post_id) {
+        $this->social_post_id = $social_post_id;
     }
 }
