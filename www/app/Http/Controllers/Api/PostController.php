@@ -64,11 +64,13 @@ class PostController extends Controller
         /** @var array $providers */
         foreach($providers as $social) {
             $postSocialModels[] = new SocialPost([
-                'post_provider_id' => $social['id'],
+                'provider_id' => $social['id'],
+                'social_post_id' => $response['posts'][$social['provider']]['id'],
                 'provider' => $social['provider'],
                 'status' => $response['posts'][$social['provider']]['status']
             ]);
         }
+
 
         $status = 400;
 
@@ -98,7 +100,7 @@ class PostController extends Controller
         /** @var array $providers */
         foreach($providers as $social) {
             $postSocialModels[] = new SocialPost([
-                'post_provider_id' => $social['id'],
+                'provider_id' => $social['id'],
                 'provider' => $social['provider'],
                 'status' => 0
             ]);
