@@ -6,8 +6,45 @@
         </ul>
 
         <div class="panel-body tab-content">
+            <div class="row">
+                <div class="col-md-5 col-md-offset-5 loader" id="loader">
+                    <svg width="120" height="30" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg" fill="#127cd0">
+                        <circle cx="15" cy="15" r="15">
+                            <animate attributeName="r" from="15" to="15"
+                                     begin="0s" dur="0.8s"
+                                     values="15;9;15" calcMode="linear"
+                                     repeatCount="indefinite" />
+                            <animate attributeName="fill-opacity" from="1" to="1"
+                                     begin="0s" dur="0.8s"
+                                     values="1;.5;1" calcMode="linear"
+                                     repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="60" cy="15" r="9" fill-opacity="0.3">
+                            <animate attributeName="r" from="9" to="9"
+                                     begin="0s" dur="0.8s"
+                                     values="9;15;9" calcMode="linear"
+                                     repeatCount="indefinite" />
+                            <animate attributeName="fill-opacity" from="0.5" to="0.5"
+                                     begin="0s" dur="0.8s"
+                                     values=".5;1;.5" calcMode="linear"
+                                     repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="105" cy="15" r="15">
+                            <animate attributeName="r" from="15" to="15"
+                                     begin="0s" dur="0.8s"
+                                     values="15;9;15" calcMode="linear"
+                                     repeatCount="indefinite" />
+                            <animate attributeName="fill-opacity" from="1" to="1"
+                                     begin="0s" dur="0.8s"
+                                     values="1;.5;1" calcMode="linear"
+                                     repeatCount="indefinite" />
+                        </circle>
+                    </svg>
+                </div>
+            </div>
+
             <div role="tabpanel" class="tab-pane active" id="latest">
-                <h3>Latest post</h3>
+                <h3 align="center">Latest post</h3>
                 <div class="latest-list" v-if="this.latestPost != null">
                     <section class="user-post">
                         <p class="lead" style="margin: 10px 10px; white-space: pre-wrap;">{{this.latestPost.body}}</p>
@@ -31,7 +68,7 @@
             </div>
 
             <div role="tabpanel" class="tab-pane" id="scheduled">
-                <h3>Scheduled post</h3>
+                <h3 align="center">Scheduled post</h3>
                 <div class="latest-list" v-if="this.plannedPost != null">
                     <section class="user-post">
                         <p class="lead" style="margin: 10px 10px; white-space: pre-wrap;">{{this.plannedPost.body}}</p>
@@ -60,7 +97,13 @@
 
 <style>
     .home-panel {
-        height: auto;
+        min-height: 100px;
+    }
+
+    .loader {
+        margin-top: 20px;
+        width: 70px;
+        height: 20px;
     }
 
     .user-post {
@@ -97,6 +140,7 @@
         },
 
         mounted() {
+            $("#latest").hide();
             this.getLatestPosts();
             this.getPlannedPosts();
             console.log("Home component mounted.")
@@ -105,6 +149,13 @@
         methods: {
             getImageUrl(item) {
                 return '/image/' + item.provider + '.png'
+            },
+
+            hideLoaderBar() {
+                $("#loader").hide("slow", function () {
+                    $("#latest").show("fast");
+
+                });
             },
 
             getLatestPosts() {
@@ -140,6 +191,8 @@
                         }
 
                         this.plannedPost = data.body.post;
+                        this.hideLoaderBar();
+
                     }, (data) => {
                         // error callback
                         var errors = data.body;
@@ -150,6 +203,8 @@
                                 toastr.error(value, 'Error')
                             }
                         });
+                        this.hideLoaderBar();
+
                     });
             },
         }
