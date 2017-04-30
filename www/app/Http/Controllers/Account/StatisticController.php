@@ -18,7 +18,7 @@ class StatisticController extends Controller
     }
 
     /**
-     * Get statistic by week.
+     * Get like statistic by week.
      *
      * @param StatisticService $service
      * @return \Illuminate\Http\JsonResponse

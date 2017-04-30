@@ -19,6 +19,7 @@ class StatisticService implements SocialContract, StatisticContract
      *
      * @param $posts
      * @param $user
+     * @return array
      */
     public function getLikesForPosts($posts, $user)
     {
