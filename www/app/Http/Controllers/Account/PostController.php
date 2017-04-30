@@ -43,11 +43,6 @@ class PostController extends Controller
         ]);
     }
 
-    public function getLastPlanned()
-    {
-
-    }
-
     /**
      * Send the post to socials.
      *
