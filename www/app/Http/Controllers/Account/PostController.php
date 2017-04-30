@@ -16,6 +16,14 @@ class PostController extends Controller
 {
 
     /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Get the user's posts by date range.
      *
      * @param Request $request
@@ -57,14 +65,6 @@ class PostController extends Controller
             'posts' => (!$posts->isEmpty()) ? $posts : null,
             'success' => true
         ]);
-    }
-
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
     }
 
     /**
