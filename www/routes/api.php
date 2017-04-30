@@ -27,4 +27,5 @@ $api->version('v1', ['middleware' => 'jwt.auth'], function($api) {
     // socials
     $api->get('socials', 'App\Http\Controllers\Api\SocialController@getAssociatedAccounts');
     $api->post('post/store', 'App\Http\Controllers\Api\PostController@store');
+    $api->get('post/last/{planned?}', 'App\Http\Controllers\Api\PostController@getLastPost');
 });
