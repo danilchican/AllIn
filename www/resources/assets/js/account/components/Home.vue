@@ -13,8 +13,8 @@
                         <p class="lead" style="margin: 10px 10px; white-space: pre-wrap;">{{this.latestPost.body}}</p>
                         <div class="row">
                             <div class="form-group">
-                                <div class="col-md-4">
-                                    <div v-for="social in this.latestPost.socials">
+                                <div class="col-md-6" style="margin-left: 5px;">
+                                    <div v-for="social in this.latestPost.socials" style="display: inline-block;">
                                         <img :src="getImageUrl(social)" :class="'logo-' + social" :id="social + '-logo-id'">
                                     </div>
                                 </div>
@@ -37,8 +37,8 @@
                         <p class="lead" style="margin: 10px 10px; white-space: pre-wrap;">{{this.plannedPost.body}}</p>
                         <div class="row">
                             <div class="form-group">
-                                <div class="col-md-4">
-                                    <div v-for="social in this.plannedPost.socials">
+                                <div class="col-md-6" style="margin-left: 5px;">
+                                    <div v-for="social in this.plannedPost.socials" style="display: inline-block;">
                                         <img :src="getImageUrl(social)" :class="'logo-' + social" :id="social + '-logo-id'">
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
     img[id$="-logo-id"]{
         width: 40px;
         height: auto;
-        margin: 10px 15px;
+        margin: 10px 5px;
     }
 
 </style>
