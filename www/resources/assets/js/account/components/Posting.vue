@@ -47,7 +47,7 @@
                     <ul class="socials">
                         <li class="socials-list" v-for="item in linkedSocials">
                             <input type="checkbox" :id="getInputIDSocial(item)"/>
-                            <label :for="getInputIDSocial(item)">
+                            <label class="social-checks" :for="getInputIDSocial(item)">
                                 <img :src="getCheckboxImage(item)" style="width: 60px; height: auto; margin: 0 10px;" />
                             </label>
                         </li>
@@ -123,14 +123,14 @@
         display: none;
     }
 
-    label {
+    label.social-checks {
         border: 0px solid #fff;
         display: block;
         position: relative;
         cursor: pointer;
     }
 
-    label:before {
+    label.social-checks:before {
         background-color: white;
         color: white;
         content: " ";
@@ -147,7 +147,7 @@
         transform: scale(0);
     }
 
-    label img {
+    label.social-checks img {
         height: 60px;
         width: 60px;
         transition-duration: 0.2s;
@@ -424,6 +424,7 @@
                             this.enableInput();
                         } else {
                             toastr.error('Что-то пошло не так...', 'Error');
+                            this.enableInput();
                         }
                     }, (data) => {
                         // error callback
