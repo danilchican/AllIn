@@ -29,5 +29,6 @@ Route::get('/socials/list', 'Account\AccountController@getAttachedSocials')->nam
 Route::get('/user/info', 'Account\AccountController@getUserInfo')->name('user.info');
 
 Route::post('/post/store', 'Account\PostController@store')->name('post.store');
+Route::get('/post/last/{planned?}', 'Account\PostController@getLastPost')->name('post.last');
 
 Route::get('/home/{account?}', 'Account\AccountController@index')->name('account.index');

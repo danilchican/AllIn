@@ -21,6 +21,13 @@ class Post extends Model
     protected $fillable = ['user_id', 'body', 'planned'];
 
     /**
+     * The attributes that should be visible in arrays.
+     *
+     * @var array
+     */
+    protected $visible = ['id', 'body', 'planned', 'socials'];
+
+    /**
      * Getting socials for a post.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
