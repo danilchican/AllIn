@@ -33,7 +33,7 @@ class StatisticController extends Controller
         $posts = $user->posts()
             ->where('updated_at', '>=', $fromDate)
             ->where('updated_at', '<=', $toDate)
-            ->with('socials')
+            ->with('socials')->orderBy('updated_at', 'asc')
             ->get();
 
         $response = $service->getLikesForPosts($posts, $user);
