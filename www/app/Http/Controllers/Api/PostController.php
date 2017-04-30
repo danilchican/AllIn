@@ -17,6 +17,39 @@ use Illuminate\Support\Facades\Response;
 class PostController extends Controller
 {
     /**
+     * Get the user's posts by date range.
+     *
+     * @param Request $request
+     * @param $date
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getPostsByDate(Request $request, $date)
+    {
+        try {
+            $fromDate = Carbon::createFromFormat('Y-m-d H', $date . ' 0')->toDateTimeString();
+            $toDate = Carbon::createFromFormat('Y-m-d H', $date . ' 24')->toDateTimeString();
+        } catch (\InvalidArgumentException $e) {
+            return Response::json([
+                'messages' => [
+                    'Required params are incorrect.'
+                ],
+                'success' => false
+            ], 403);
+        }
+
+        $posts = \Auth::user()->posts()
+            ->with('socials')
+            ->where('updated_at', '>=', $fromDate)
+            ->where('updated_at', '<=', $toDate)
+            ->get();
+
+        return Response::json([
+            'posts' => (!$posts->isEmpty()) ? $posts : null,
+            'success' => true
+        ]);
+    }
+
+    /**
      * Get the last Post of User.
      *
      * @param Request $request
