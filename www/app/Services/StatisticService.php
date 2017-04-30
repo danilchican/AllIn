@@ -27,17 +27,45 @@ class StatisticService implements SocialContract, StatisticContract
 
         $response = [];
 
+        $lastDate = null;
+
         /** @var array $posts */
         foreach ($posts as $post) {
             $temp = [
                 'likes' => $this->getLikes($post),
-                'post' => $post->toArray()
+                'post' => $post
             ];
 
-            $postWithLikes[] = $temp;
+            $curDate = $post->updated_at->hour(0)->minute(0)->second(0);
+
+            if (null === $lastDate) {
+                $lastDate = $curDate;
+            } else if ($lastDate->lt($curDate)) {
+                $lastDate = $curDate;
+            }
+
+            $Mkey = $lastDate->format('Y-m-d');
+
+            if (!array_key_exists($Mkey, $response)) {
+                $response[$Mkey] = $temp['likes'];
+            } else {
+                $oldLikes = $response[$Mkey];
+                $newLikes = $temp['likes'];
+
+                foreach ($oldLikes as $key => $like) {
+                    if (!array_key_exists($key, $newLikes)) {
+                        $newLikes[$key] = $like;
+                    } else {
+                        $m = $newLikes[$key];
+                        $newLikes[$key] = $m + $like;
+                    }
+                }
+
+                $response[$Mkey] = $newLikes;
+            }
         }
 
-        return dd($postWithLikes);
+        return $response;
     }
 
     /**
@@ -49,16 +77,23 @@ class StatisticService implements SocialContract, StatisticContract
     public function getLikes($post)
     {
         $likes = [];
+        $response = null;
 
         foreach ($post->socials as $provider) {
             $providerName = $provider->getProviderName();
 
             switch ($providerName) {
                 case 'facebook':
-                    $likes[$providerName] = $this->getLikesFromFacebook($provider);
+                    $response = $this->getLikesFromFacebook($provider);
+                    if($response['status'] !== false) {
+                        $likes[$providerName] = $response['count'];
+                    }
                     break;
                 case 'twitter':
-                    $likes[$providerName] = $this->getLikesFromTwitter($provider);
+                    $response = $this->getLikesFromTwitter($provider);
+                    if($response['status'] !== false) {
+                        $likes[$providerName] = $response['count'];
+                    }
                     break;
                 default:
                     break;
@@ -90,7 +125,7 @@ class StatisticService implements SocialContract, StatisticContract
             $answer = $this->fb->get($address, $cSocial->getToken());
         } catch (FacebookSDKException $e) {
             return [
-                'messages' => [ $e->getMessage() ],
+                'messages' => [$e->getMessage()],
                 'status' => false
             ];
         }
