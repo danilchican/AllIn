@@ -38,4 +38,7 @@ Route::get('/post/last/{planned?}', 'Account\PostController@getLastPost')
 Route::get('/posts/from/{from_date}/to/{to_date}', 'Account\PostController@getPostsByRange')
     ->name('posts.range');
 
+Route::get('/statistics/likes', 'Account\StatisticController@indexLikes')
+    ->name('statistics.likes');
+
 Route::get('/home/{account?}', 'Account\AccountController@index')->name('account.index');
