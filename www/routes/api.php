@@ -29,4 +29,7 @@ $api->version('v1', ['middleware' => 'jwt.auth'], function($api) {
     $api->post('post/store', 'App\Http\Controllers\Api\PostController@store');
     $api->get('post/last/{planned?}', 'App\Http\Controllers\Api\PostController@getLastPost');
     $api->get('posts/find/{date}', 'App\Http\Controllers\Api\PostController@getPostsByDate');
+
+    // statistics
+    $api->get('statistics/likes', 'App\Http\Controllers\Api\StatisticController@indexLikes');
 });
