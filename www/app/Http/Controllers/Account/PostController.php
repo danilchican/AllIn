@@ -27,7 +27,7 @@ class PostController extends Controller
     public function getPostByRange(Request $request, $from_date = false, $to_date = false)
     {
         $fromDate = Carbon::createFromFormat('Y-m-d H', $from_date . ' 0')->toDateTimeString();
-        $toDate = Carbon::createFromFormat('Y-m-d H', $to_date . ' 0')->toDateTimeString();
+        $toDate = Carbon::createFromFormat('Y-m-d H', $to_date . ' 24')->toDateTimeString();
 
         $posts = \Auth::user()->posts()
             ->with('socials')
