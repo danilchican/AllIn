@@ -25,21 +25,18 @@ class StatisticController extends Controller
      */
     public function indexLikes(StatisticService $service)
     {
-        $response = [];
         $user = \Auth::user();
 
         $fromDate = Carbon::today()->subWeek();
         $toDate = Carbon::tomorrow()->subSecond();
 
         $posts = $user->posts()
-            ->with('socials')
             ->where('updated_at', '>=', $fromDate)
             ->where('updated_at', '<=', $toDate)
+            ->with('socials')
             ->get();
 
-        $response = $service->getLikesForPosts($posts);
-
-        $response['status'] = true;
+        $response = $service->getLikesForPosts($posts, $user);
 
         return Response::json($response);
     }
