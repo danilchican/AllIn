@@ -24,7 +24,7 @@ class PostController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \InvalidArgumentException
      */
-    public function getPostByRange(Request $request, $from_date = false, $to_date = false)
+    public function getPostsByRange(Request $request, $from_date = false, $to_date = false)
     {
         if (!$from_date || !$to_date) {
             return Response::json([
@@ -54,7 +54,7 @@ class PostController extends Controller
             ->get();
 
         return Response::json([
-            'posts' => $posts,
+            'posts' => (!$posts->isEmpty()) ? $posts : null,
             'success' => true
         ]);
     }

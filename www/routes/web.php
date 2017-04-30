@@ -35,7 +35,7 @@ Route::post('/post/store', 'Account\PostController@store')->name('post.store');
 Route::get('/post/last/{planned?}', 'Account\PostController@getLastPost')
     ->name('post.last');
 
-Route::get('/posts/from/{from_date}/to/{to_date}', 'Account\PostController@getPostByRange')
+Route::get('/posts/from/{from_date}/to/{to_date}', 'Account\PostController@getPostsByRange')
     ->name('posts.range');
 
 Route::get('/home/{account?}', 'Account\AccountController@index')->name('account.index');
