@@ -26,8 +26,26 @@ class PostController extends Controller
      */
     public function getPostByRange(Request $request, $from_date = false, $to_date = false)
     {
-        $fromDate = Carbon::createFromFormat('Y-m-d H', $from_date . ' 0')->toDateTimeString();
-        $toDate = Carbon::createFromFormat('Y-m-d H', $to_date . ' 0')->toDateTimeString();
+        if (!$from_date || !$to_date) {
+            return Response::json([
+                'messages' => [
+                    'Request param missing.'
+                ],
+                'success' => false
+            ]);
+        }
+
+        try {
+            $fromDate = Carbon::createFromFormat('Y-m-d H', $from_date . ' 0')->toDateTimeString();
+            $toDate = Carbon::createFromFormat('Y-m-d H', $to_date . ' 24')->toDateTimeString();
+        } catch (\InvalidArgumentException $e) {
+            return Response::json([
+                'messages' => [
+                    'Required params are incorrect.'
+                ],
+                'success' => false
+            ]);
+        }
 
         $posts = \Auth::user()->posts()
             ->with('socials')
@@ -36,7 +54,8 @@ class PostController extends Controller
             ->get();
 
         return Response::json([
-            'posts' => $posts
+            'posts' => $posts,
+            'success' => true
         ]);
     }
 
