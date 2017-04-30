@@ -25,10 +25,17 @@ Route::get('/auth/{provider}/callback', 'SocialController@callback');
 Route::get('/socials/{provider}/create', 'SocialController@create')->name('socials.provider');
 Route::get('/socials/{provider}/callback', 'SocialController@appendSocialCallback');
 
-Route::get('/socials/list', 'Account\AccountController@getAttachedSocials')->name('socials.list');
+Route::get('/socials/list', 'Account\AccountController@getAttachedSocials')
+    ->name('socials.list');
+
 Route::get('/user/info', 'Account\AccountController@getUserInfo')->name('user.info');
 
 Route::post('/post/store', 'Account\PostController@store')->name('post.store');
-Route::get('/post/last/{planned?}', 'Account\PostController@getLastPost')->name('post.last');
+
+Route::get('/post/last/{planned?}', 'Account\PostController@getLastPost')
+    ->name('post.last');
+
+Route::get('/posts/from/{from_date}/to/{to_date}', 'Account\PostController@getPostByRange')
+    ->name('posts.range');
 
 Route::get('/home/{account?}', 'Account\AccountController@index')->name('account.index');

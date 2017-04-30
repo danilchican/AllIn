@@ -14,9 +14,34 @@ use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
+
+    /**
+     * Get the user's posts by date range.
+     *
+     * @param Request $request
+     * @param bool $from_date
+     * @param bool $to_date
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \InvalidArgumentException
+     */
+    public function getPostByRange(Request $request, $from_date = false, $to_date = false)
+    {
+        $fromDate = Carbon::createFromFormat('Y-m-d H', $from_date . ' 0')->toDateTimeString();
+        $toDate = Carbon::createFromFormat('Y-m-d H', $to_date . ' 0')->toDateTimeString();
+
+        $posts = \Auth::user()->posts()
+            ->with('socials')
+            ->where('updated_at', '>=', $fromDate)
+            ->where('updated_at', '<=', $toDate)
+            ->get();
+
+        return Response::json([
+            'posts' => $posts
+        ]);
+    }
+
     /**
      * Create a new controller instance.
-     *
      */
     public function __construct()
     {
