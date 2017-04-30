@@ -48,6 +48,16 @@ class SocialPost extends Model
     }
 
     /**
+     * Get the social post id.
+     *
+     * @return mixed
+     */
+    public function getSocialPostID()
+    {
+        return $this->social_post_id;
+    }
+
+    /**
      * Set the status of the SocialPost.
      *
      * @param $status

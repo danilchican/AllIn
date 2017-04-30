@@ -48,6 +48,16 @@ class UserSocialAccount extends Model
     }
 
     /**
+     * Get the provider name.
+     *
+     * @return mixed
+     */
+    public function getProviderName()
+    {
+        return $this->provider;
+    }
+
+    /**
      * Get the secret token of the user provider.
      *
      * @return mixed
