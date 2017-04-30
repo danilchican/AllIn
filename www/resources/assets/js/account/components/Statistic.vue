@@ -2,10 +2,6 @@
     <div class="panel panel-default statistic-panel">
         <div class="panel-body">
             <h3>Statistics page</h3>
-            <!--
-            <img src="/image/stat.png" alt="must be stat"/>
-            -->
-
             <canvas id="myChart" style="width: auto; max-width: 850px; height: 400px;"></canvas>
         </div>
     </div>
