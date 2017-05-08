@@ -123,6 +123,12 @@ class PostController extends Controller
         $user = \Auth::user();
         $response = $service->send($post, $providers, $user);
 
+        $status = 400;
+
+        if ($response['status'] === false) {
+            return Response::json($response, $status);
+        }
+
         $postSocialModels = [];
 
         /** @var array $providers */
@@ -134,8 +140,6 @@ class PostController extends Controller
                 'status' => $response['posts'][$social['provider']]['status']
             ]);
         }
-
-        $status = 400;
 
         if ($response['status']) {
             $user->posts()->save($post);
