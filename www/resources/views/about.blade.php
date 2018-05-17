@@ -76,8 +76,8 @@
             <div class="img-div mate">
                 <img src="/image/team/image.png" class="mate5" />
             </div>
-            <h2>Andrey Gromyko</h2>
-            <p class="lead" style="font-style: italic; font-size: 18px">Design, QA</p>
+            <h2>Dmitry Uglik</h2>
+            <p class="lead" style="font-style: italic; font-size: 18px">CEO</p>
         </div>
     </div>
 @endsection
