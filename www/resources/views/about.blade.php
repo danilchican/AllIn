@@ -62,7 +62,7 @@
         <h1>About us</h1>
         <p class="lead">Make your dreams come true with Allin<br> </p>
 
-        AllInco — это онлайн сервис для Social Media Marketing (SMM),
+        All-In — это онлайн сервис для Social Media Marketing (SMM),
         <br>который позволяет вам создавать, планировать
         <br>и размещать публикации в нескольких социальных сетях одновременно.
         <br>В данный момент AllInco имеет возможность делать публикации
@@ -72,41 +72,9 @@
     <div class="team-info">
         <h1>Our team</h1>
 
-        <div class="style-first" style="padding-top: 10px; padding-bottom: 10px">
-            <div class="img-div mate">
-                <img src="/image/team/alexandr.jpg" class="mate1" />
-            </div>
-            <h2>Alexandr Konikov</h2>
-            <p class="lead" style="font-style: italic; font-size: 18px">Scrum Master</p>
-        </div>
-
-        <div class="style-second" style="background-color: white; padding-top: 50px; padding-bottom: 10px">
-            <div class="img-div mate">
-                <img src="/image/team/ulyana.jpg" class="mate2" />
-            </div>
-            <h2>Ulyana Kiklevich</h2>
-            <p class="lead" style="font-style: italic; font-size: 18px">Muse, Android Developer, QA</p>
-        </div>
-
-        <div class="style-third" style="padding-top: 50px; padding-bottom: 10px">
-            <div class="img-div mate">
-                <img src="/image/team/vladislav.jpg" class="mate3" />
-            </div>
-            <h2>Vladislav Danilchick</h2>
-            <p class="lead" style="font-style: italic; font-size: 18px">Back-end Developer, QA</p>
-        </div>
-
-        <div class="style-fourth" style="background-color: white; padding-top: 50px; padding-bottom: 10px">
-            <div class="img-div mate">
-                <img src="/image/team/artyom.jpg" class="mate4" />
-            </div>
-            <h2>Artyom Vasilevich</h2>
-            <p class="lead" style="font-style: italic; font-size: 18px">Front-end Developer, QA</p>
-        </div>
-
         <div class="style-fifth" style="padding-top: 50px; padding-bottom: 10px">
             <div class="img-div mate">
-                <img src="/image/team/andrey.png" class="mate5" />
+                <img src="/image/team/image.png" class="mate5" />
             </div>
             <h2>Andrey Gromyko</h2>
             <p class="lead" style="font-style: italic; font-size: 18px">Design, QA</p>

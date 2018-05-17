@@ -12,6 +12,7 @@ window.$ = window.jQuery = require('jquery');
 require('../../../public/js/bootstrap-datetimepicker.js');
 
 require('bootstrap-sass');
+require('chart.js');
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces

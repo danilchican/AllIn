@@ -2,7 +2,7 @@
     <div class="container" style="font-size: 18px; color: #fff">
         <p class="text-muted credit" style="text-align: center; padding-top: 25px; color: inherit">
             <span style="text-align: left; float: left; color: inherit">
-                &copy; 2017
+                &copy; 2018
                 <a href="/" style="color: inherit">Allin</a>
             </span>
             <span class="hidden-phone" style="text-align: right; float: right">

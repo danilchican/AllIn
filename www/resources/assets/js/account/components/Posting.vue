@@ -56,19 +56,6 @@
             </div>
 
             <div class="row">
-                <div class="col-md-8 file-input">
-                    <div class='input-group file' id='file-chooser' style="width: auto;">
-                        <input type='text' class="form-control" id="file-choose" placeholder="Choose file..."/>
-                        <span class="input-group-btn">
-                            <label class="btn btn-default btn-file" style="background-color: #edeef0; width: 125px;">
-                                Browse <input type="file" style="display: none;">
-                            </label>
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
                 <div class="col-md-8 date-input">
                     <div class='input-group date' id='datetimepicker' style="width: auto;">
                         <input type='text' class="form-control" id="date-time"/>
@@ -167,10 +154,6 @@
     :checked + label img {
         transform: scale(0.9);
         z-index: -1;
-    }
-
-    .file-input {
-        margin-bottom: 15px;
     }
 </style>
 
