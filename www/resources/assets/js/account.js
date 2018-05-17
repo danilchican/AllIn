@@ -23,9 +23,7 @@ window.toastr.options = {
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import VueRouter  from 'vue-router'
 import router     from './account/router'
-import Chart      from 'chart.js'
 
 new Vue({
     router,
