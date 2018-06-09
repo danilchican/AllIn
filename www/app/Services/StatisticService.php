@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Contracts\SocialContract;
 use App\Contracts\StatisticContract;
 use App\Helpers\SocialRequest;
+use Carbon\Carbon;
 use Facebook\Exceptions\FacebookSDKException;
 
 class StatisticService implements SocialContract, StatisticContract
@@ -19,6 +20,7 @@ class StatisticService implements SocialContract, StatisticContract
      *
      * @param $posts
      * @param $user
+     *
      * @return array
      */
     public function getLikesForPosts($posts, $user)
@@ -28,13 +30,20 @@ class StatisticService implements SocialContract, StatisticContract
 
         $response = [];
 
+        $fromDate = Carbon::tomorrow()->subWeek();
+        $toDate = Carbon::now();
+
+        for (; $fromDate < $toDate; $fromDate = $fromDate->addDay()) {
+            $response[$fromDate->format('Y-m-d')] = [];
+        }
+
         $lastDate = null;
 
         /** @var array $posts */
         foreach ($posts as $post) {
             $temp = [
                 'likes' => $this->getLikes($post),
-                'post' => $post
+                'post'  => $post,
             ];
 
             $curDate = $post->updated_at->hour(0)->minute(0)->second(0);
@@ -73,6 +82,7 @@ class StatisticService implements SocialContract, StatisticContract
      * Get likes for current post.
      *
      * @param $post
+     *
      * @return array
      */
     public function getLikes($post)
@@ -86,13 +96,13 @@ class StatisticService implements SocialContract, StatisticContract
             switch ($providerName) {
                 case 'facebook':
                     $response = $this->getLikesFromFacebook($provider);
-                    if($response['status'] !== false) {
+                    if ($response['status'] !== false) {
                         $likes[$providerName] = $response['count'];
                     }
                     break;
                 case 'twitter':
                     $response = $this->getLikesFromTwitter($provider);
-                    if($response['status'] !== false) {
+                    if ($response['status'] !== false) {
                         $likes[$providerName] = $response['count'];
                     }
                     break;
@@ -108,6 +118,7 @@ class StatisticService implements SocialContract, StatisticContract
      * Get likes from facebook for a post.
      *
      * @param $provider
+     *
      * @return array
      */
     public function getLikesFromFacebook($provider)
@@ -127,15 +138,15 @@ class StatisticService implements SocialContract, StatisticContract
         } catch (FacebookSDKException $e) {
             return [
                 'messages' => [$e->getMessage()],
-                'status' => false
+                'status'   => false,
             ];
         }
 
         $answer = \GuzzleHttp\json_decode($answer->getBody());
 
         return [
-            'count' => $answer->likes->summary->total_count,
-            'status' => true
+            'count'  => $answer->likes->summary->total_count,
+            'status' => true,
         ];
     }
 
@@ -158,14 +169,14 @@ class StatisticService implements SocialContract, StatisticContract
 
         if ($this->twitter_connection->getLastHttpCode() === 200) {
             return [
-                'count' => $response->favorite_count,
-                'status' => true
+                'count'  => $response->favorite_count,
+                'status' => true,
             ];
         }
 
         return [
             'messages' => $response->errors,
-            'status' => false
+            'status'   => false,
         ];
     }
 }
