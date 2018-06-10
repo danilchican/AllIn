@@ -27,33 +27,25 @@ class PostController extends Controller
      * Get the user's posts by date range.
      *
      * @param Request $request
-     * @param bool $from_date
-     * @param bool $to_date
+     * @param bool    $from_date
+     * @param bool    $to_date
+     *
      * @return \Illuminate\Http\JsonResponse
      * @throws \InvalidArgumentException
      */
-    public function getPostsByRange(Request $request, $from_date = false, $to_date = false)
+    public function getPostsByRange($from_date = false, $to_date = false)
     {
         if (!$from_date || !$to_date) {
             return Response::json([
                 'messages' => [
-                    'Request param missing.'
+                    'Request param missing.',
                 ],
-                'success' => false
+                'success'  => false,
             ]);
         }
 
-        try {
-            $fromDate = Carbon::createFromFormat('Y-m-d H', $from_date . ' 0')->toDateTimeString();
-            $toDate = Carbon::createFromFormat('Y-m-d H', $to_date . ' 24')->toDateTimeString();
-        } catch (\InvalidArgumentException $e) {
-            return Response::json([
-                'messages' => [
-                    'Required params are incorrect.'
-                ],
-                'success' => false
-            ]);
-        }
+        $fromDate = $from_date . ' 00:00:00';
+        $toDate = $to_date . ' 23:59:59';
 
         $posts = \Auth::user()->posts()
             ->with('socials')
@@ -62,8 +54,8 @@ class PostController extends Controller
             ->get();
 
         return Response::json([
-            'posts' => (!$posts->isEmpty()) ? $posts : null,
-            'success' => true
+            'posts'   => (!$posts->isEmpty()) ? $posts : null,
+            'success' => true,
         ]);
     }
 
@@ -71,7 +63,8 @@ class PostController extends Controller
      * Get the last Post of User.
      *
      * @param Request $request
-     * @param bool $planned
+     * @param bool    $planned
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function getLastPost(Request $request, $planned = false)
@@ -83,7 +76,7 @@ class PostController extends Controller
             ->orderBy('created_at', 'desc')->first();
 
         return Response::json([
-            'post' => $lastPost
+            'post' => $lastPost,
         ]);
     }
 
@@ -91,7 +84,8 @@ class PostController extends Controller
      * Send the post to socials.
      *
      * @param StorePostRequest $request
-     * @param PostService $service
+     * @param PostService      $service
+     *
      * @return \Illuminate\Http\JsonResponse
      * @throws \InvalidArgumentException
      * @throws \Facebook\Exceptions\FacebookSDKException
@@ -112,9 +106,10 @@ class PostController extends Controller
     /**
      * Store the post in DB.
      *
-     * @param Post $post
+     * @param Post        $post
      * @param PostService $service
-     * @param $providers
+     * @param             $providers
+     *
      * @return \Illuminate\Http\JsonResponse
      * @throws \Facebook\Exceptions\FacebookSDKException
      */
@@ -134,10 +129,10 @@ class PostController extends Controller
         /** @var array $providers */
         foreach ($providers as $social) {
             $postSocialModels[] = new SocialPost([
-                'provider_id' => $social['id'],
+                'provider_id'    => $social['id'],
                 'social_post_id' => $response['posts'][$social['provider']]['id'],
-                'provider' => $social['provider'],
-                'status' => $response['posts'][$social['provider']]['status']
+                'provider'       => $social['provider'],
+                'status'         => $response['posts'][$social['provider']]['status'],
             ]);
         }
 
@@ -154,8 +149,9 @@ class PostController extends Controller
      * Plan new Post to post.
      *
      * @param Post $post
-     * @param $providers
-     * @param $date
+     * @param      $providers
+     * @param      $date
+     *
      * @return \Illuminate\Http\JsonResponse
      * @throws \InvalidArgumentException
      */
@@ -167,10 +163,10 @@ class PostController extends Controller
         /** @var array $providers */
         foreach ($providers as $social) {
             $postSocialModels[] = new SocialPost([
-                'provider_id' => $social['id'],
+                'provider_id'      => $social['id'],
                 'post_provider_id' => $social['id'],
-                'provider' => $social['provider'],
-                'status' => 0
+                'provider'         => $social['provider'],
+                'status'           => 0,
             ]);
         }
 
@@ -183,9 +179,9 @@ class PostController extends Controller
         dispatch($job);
 
         return Response::json([
-            'status' => true,
-            'code' => 200,
-            'message' => 'Tweet will be posted at ' . $date
+            'status'  => true,
+            'code'    => 200,
+            'message' => 'Tweet will be posted at ' . $date,
         ]);
     }
 }

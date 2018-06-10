@@ -13,13 +13,13 @@
 
                 <div class="col-md-5">
                     <div class="input-group date" id="datepicker-begin" data-provide="datepicker">
-                        <input data-date-format="dd/mm/yyyy" class="form-control" id="date-begin"/>
+                        <input data-date-format="yyyy-mm-dd" class="form-control" id="date-begin"/>
                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                     </div>
                 </div>
                 <div class="col-md-5">
                     <div class="input-group date" id="datepicker-end" data-provide="datepicker">
-                        <input data-date-format="dd/mm/yyyy" class="form-control" id="date-end"/>
+                        <input data-date-format="yyyy-mm-dd" class="form-control" id="date-end"/>
                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                     </div>
                 </div>
@@ -67,21 +67,48 @@
 
         mounted() {
             $("#datepicker-begin").datepicker({
-                format: 'dd/mm/yyyy',
+                format: 'yyyy-mm-dd',
                 endDate: '+0d',
                 autoclose: true
             });
+
             $("#datepicker-end").datepicker({
-                format: 'dd/mm/yyyy',
+                format: 'yyyy-mm-dd',
                 endDate: '+0d',
                 autoclose: true
             });
+
             $("#datepicker-end").datepicker('update', new Date());
         },
 
         methods: {
             handleFindButton() {
+                let beginDate = $("#datepicker-begin").datepicker('getFormattedDate');
+                let endDate = $("#datepicker-end").datepicker('getFormattedDate');
 
+                let requestURL = '/posts/from/' + beginDate + '/to/' + endDate;
+
+                this.$http.get(requestURL)
+                    .then((data) => {
+                        // success callback
+                        if (data.body.message !== undefined) {
+                            toastr.warning(data.body.message, 'Warning');
+                            return;
+                        } else {
+                            console.log(data.body);
+                        }
+
+                    }, (data) => {
+                        // error callback
+                        var errors = data.body;
+                        $.each(errors, function (key, value) {
+                            if (data.status !== 200) {
+                                toastr.error(value[0], 'Error')
+                            } else {
+                                toastr.error(value, 'Error')
+                            }
+                        });
+                    });
             }
         }
     }
