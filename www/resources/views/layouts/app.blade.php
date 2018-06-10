@@ -13,7 +13,7 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
-    {{--<link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet">--}}
+    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
     <style>
         body {
