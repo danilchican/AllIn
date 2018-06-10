@@ -25,7 +25,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $visible = ['id', 'body', 'planned', 'socials'];
+    protected $visible = ['id', 'body', 'planned', 'socials', 'updated_at'];
 
     /**
      * Getting socials for a post.
