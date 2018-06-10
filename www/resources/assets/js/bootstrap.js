@@ -9,7 +9,7 @@ window._ = require('lodash');
 
 window.$ = window.jQuery = require('jquery');
 
-require('../../../public/js/bootstrap-datetimepicker.js');
+require('bootstrap-datepicker');
 
 require('bootstrap-sass');
 require('chart.js');

@@ -12,15 +12,15 @@
                 </div>
 
                 <div class="col-md-5">
-                    <div class='input-group date' id='datetimepicker-begin'>
-                        <input type='text' class="form-control" id="date-begin"/>
-                        <span class="input-group-addon" @click="handleBeginCalendar()"><span class="fa fa-calendar"></span></span>
+                    <div class="input-group date" id="datepicker-begin" data-provide="datepicker">
+                        <input data-date-format="dd/mm/yyyy" class="form-control" id="date-begin"/>
+                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <div class='input-group date' id='datetimepicker-end'>
-                        <input type='text' class="form-control" id="date-end"/>
-                        <span class="input-group-addon" @click="handleEndCalendar()"><span class="fa fa-calendar"></span></span>
+                    <div class="input-group date" id="datepicker-end" data-provide="datepicker">
+                        <input data-date-format="dd/mm/yyyy" class="form-control" id="date-end"/>
+                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -59,37 +59,27 @@
             }
         },
 
-        data: function() {
+        data: function () {
             return {
                 isCalendarOpened: false,
             }
         },
 
         mounted() {
-            console.log("Home component mounted.")
+            $("#datepicker-begin").datepicker({
+                format: 'dd/mm/yyyy',
+                endDate: '+0d',
+                autoclose: true
+            });
+            $("#datepicker-end").datepicker({
+                format: 'dd/mm/yyyy',
+                endDate: '+0d',
+                autoclose: true
+            });
+            $("#datepicker-end").datepicker('update', new Date());
         },
 
         methods: {
-            handleBeginCalendar() {
-                if (this.isCalendarOpened == true) {
-                    $('#datetimepicker-begin').datetimepicker('hide');
-                    this.isCalendarOpened = false;
-                } else {
-                    $('#datetimepicker-begin').datetimepicker('show');
-                    this.isCalendarOpened = true;
-                }
-            },
-
-            handleEndCalendar() {
-                if (this.isCalendarOpened == true) {
-                    $('#datetimepicker-end').datetimepicker('hide');
-                    this.isCalendarOpened = false;
-                } else {
-                    $('#datetimepicker-end').datetimepicker('show');
-                    this.isCalendarOpened = true;
-                }
-            },
-
             handleFindButton() {
 
             }
