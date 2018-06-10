@@ -34,7 +34,10 @@ class StatisticService implements SocialContract, StatisticContract
         $toDate = Carbon::now();
 
         for (; $fromDate->lt($toDate); $fromDate = $fromDate->addDay()) {
-            $response['likes'][$fromDate->format('Y-m-d')] = [];
+            $response['likes'][$fromDate->format('Y-m-d')] = [
+                'twitter'  => 0,
+                'facebook' => 0,
+            ];
             $response['labels'][] = $fromDate->format('Y-m-d');
         }
 

@@ -190,10 +190,6 @@
                 return this.socials.length
             },
 
-            /**
-             *
-             *
-             */
             isSocialLinked() {
                 var s = this.socials;
 
