@@ -182,7 +182,6 @@
         mounted() {
             this.disableInput();
             this.getLinkedSocials();
-            console.log("Post component mounted.")
         },
 
         methods : {

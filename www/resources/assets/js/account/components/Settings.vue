@@ -9,18 +9,21 @@
             </div>
             <br>
             <div class="input-group">
-                <span class="input-group-addon">Password</span>
-                <input type="password" class="form-control" id="password-field" placeholder="Your password" required>
+                <span class="input-group-addon">Current Password</span>
+                <input v-model="currentPassword" type="password" class="form-control" id="password-field"
+                       placeholder="Your password" required>
             </div>
             <br>
             <div class="input-group">
                 <span class="input-group-addon">New Password</span>
-                <input type="password" class="form-control" id="new-password-field" placeholder="New password" required>
+                <input v-model="newPassword" type="password" class="form-control" id="new-password-field"
+                       placeholder="New password" required>
             </div>
             <br>
             <div class="input-group">
                 <span class="input-group-addon">Confirmation</span>
-                <input type="password" class="form-control" id="repeat-password-field" placeholder="Repeat new password" required>
+                <input v-model="newPasswordConfirmation" type="password" class="form-control"
+                       id="repeat-password-field" placeholder="Repeat new password" required>
             </div>
             <br>
             <div class="button-submit">
@@ -53,8 +56,10 @@
 
         data: function () {
             return {
-                newPassword: "",
-                email: "",
+                currentPassword: null,
+                newPassword: null,
+                newPasswordConfirmation: null,
+                email: null,
                 disable: false
             }
         },
@@ -62,7 +67,6 @@
         mounted() {
             this.disableInputs();
             this.getUserEmail();
-            console.log("Settings component mounted.")
         },
 
         methods: {
@@ -70,8 +74,8 @@
              * Disable data input fields till email isn't loaded from server.
              */
             disableInputs() {
-                $('input').attr('disabled', 'disabled');
-                $('#submit-btn').attr('disabled', 'disabled');
+                $('input').attr('disabled', true);
+                $('button').attr('disabled', true);
 
                 this.disable = true;
             },
@@ -80,8 +84,9 @@
              * Enable input fields.
              */
             enableInputs() {
-                $('input').attr('disabled', false);
-                $('#submit-btn').attr('disabled', false);
+                $("input").attr('disabled', false);
+                $("button").attr('disabled', false);
+
                 this.disable = false;
             },
 
@@ -91,7 +96,7 @@
             getUserEmail() {
                 this.$http.get('/user/info')
                     .then((data) => {
-                        if(data.body.code === 404) {
+                        if (data.body.code === 404) {
                             toastr.error("Error code: " + data.body.code, 'Error');
                             return;
                         } else {
@@ -102,8 +107,8 @@
                     }, (data) => {
                         // error callback
                         var errors = data.body;
-                        $.each( errors, function( key, value ) {
-                            if(data.status === 422) {
+                        $.each(errors, function (key, value) {
+                            if (data.status === 422) {
                                 toastr.error(value[0], 'Error')
                             } else {
                                 toastr.error(value, 'Error')
@@ -121,14 +126,38 @@
 
             /**
              * Send POST request to server to change user password.
-             *
-             * TODO
-             *
-             * @param userEmail current user email.
-             * @param userNewPassword new user password
              */
-            changeUserPassword(userEmail, userNewPassword) {
+            changeUserPassword() {
+                const data = {
+                    currentPassword: this.currentPassword,
+                    newPassword: this.newPassword,
+                    newPassword_confirmation: this.newPasswordConfirmation
+                };
 
+                this.$http.post('/account/password/change', data)
+                    .then((data) => {
+                        // success callback
+                        if (data.body.success === true) {
+                            toastr.success(data.body.message, 'Success');
+                            this.clearFields();
+                        } else {
+                            toastr.error(data.body.message, 'Error');
+                        }
+
+                        this.enableInputs();
+                    }, (data) => {
+                        // error callback
+                        var errors = data.body;
+                        this.enableInputs();
+
+                        $.each(errors, function (key, value) {
+                            if (data.status === 422) {
+                                toastr.error(value[0], 'Error')
+                            } else {
+                                toastr.error(value.message, 'Error')
+                            }
+                        });
+                    });
             },
 
             /**
@@ -137,21 +166,13 @@
              * @returns {boolean} validation result
              */
             validatePassword() {
-                var newPassword = $('input#password-field').val();
-                var newPasswordRepeat = $('input#repeat-password-field').val();
+                if (this.currentPassword.length < 1 || this.newPassword.length < 1
+                    || this.newPasswordConfirmation.length < 1) {
 
-                if (newPassword === '' || newPasswordRepeat === '') {
                     toastr.warning('Passwords fields is empty!');
                     return false;
                 } else {
-                    document.getElementById('password-field').value = "";
-                    document.getElementById('repeat-password-field').value = "";
-                    document.getElementById('password-field').placeholder = "New password";
-                    document.getElementById('repeat-password-field').placeholder = "Repeat new password";
-
-                    if (newPassword.localeCompare(newPasswordRepeat) === 0) {
-                        toastr.success('Password: ok!');
-                        this.newPassword = newPassword;
+                    if (this.newPassword.localeCompare(this.newPasswordConfirmation) === 0) {
                         return true;
                     } else {
                         toastr.warning('Entered passwords are not equal!');
@@ -161,15 +182,26 @@
             },
 
             /**
+             * Clear input fields.
+             */
+            clearFields() {
+                this.currentPassword = '';
+                this.newPassword = '';
+                this.newPasswordConfirmation = '';
+            },
+
+            /**
              * Handle submit button actions.
              */
             handleSubmit() {
-                var validPassword = this.validatePassword();
+                this.disableInputs();
 
-                if (validPassword) {
-                    this.changeUserPassword(this.email, this.newPassword);
+                if (this.validatePassword()) {
+                    this.changeUserPassword();
+                } else {
+                    this.enableInputs();
                 }
-            }
+            },
         }
     }
 </script>

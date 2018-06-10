@@ -42,3 +42,4 @@ Route::get('/statistics/likes', 'Account\StatisticController@indexLikes')
     ->name('statistics.likes');
 
 Route::get('/home/{account?}', 'Account\AccountController@index')->name('account.index');
+Route::post('/account/password/change', 'Account\AccountController@changePassword');

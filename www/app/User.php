@@ -45,9 +45,18 @@ class User extends Authenticatable
             'email' => $providerUser->getEmail(),
             'username' => $providerUser->getNickname(),
             'avatar' => $avatar,
-            'password' => Hash::make('secret'),
+            'password' => bcrypt('secret'),
             'name' => $providerUser->getName(),
         ]);
+    }
+
+    /**
+     * Set new password for the user.
+     *
+     * @param $password
+     */
+    public function setPassword($password) {
+        $this->password = bcrypt($password);
     }
 
     /**

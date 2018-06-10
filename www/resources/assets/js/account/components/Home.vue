@@ -143,7 +143,6 @@
             $("#latest").hide();
             this.getLatestPosts();
             this.getPlannedPosts();
-            console.log("Home component mounted.")
         },
 
         methods: {
