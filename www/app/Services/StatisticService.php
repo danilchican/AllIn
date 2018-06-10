@@ -33,8 +33,9 @@ class StatisticService implements SocialContract, StatisticContract
         $fromDate = Carbon::tomorrow()->subWeek();
         $toDate = Carbon::now();
 
-        for (; $fromDate < $toDate; $fromDate = $fromDate->addDay()) {
-            $response[$fromDate->format('Y-m-d')] = [];
+        for (; $fromDate->lt($toDate); $fromDate = $fromDate->addDay()) {
+            $response['likes'][$fromDate->format('Y-m-d')] = [];
+            $response['labels'][] = $fromDate->format('Y-m-d');
         }
 
         $lastDate = null;
@@ -56,10 +57,10 @@ class StatisticService implements SocialContract, StatisticContract
 
             $Mkey = $lastDate->format('Y-m-d');
 
-            if (!array_key_exists($Mkey, $response)) {
-                $response[$Mkey] = $temp['likes'];
+            if (!array_key_exists($Mkey, $response['likes'])) {
+                $response['likes'][$Mkey] = $temp['likes'];
             } else {
-                $oldLikes = $response[$Mkey];
+                $oldLikes = $response['likes'][$Mkey];
                 $newLikes = $temp['likes'];
 
                 foreach ($oldLikes as $key => $like) {
@@ -71,7 +72,7 @@ class StatisticService implements SocialContract, StatisticContract
                     }
                 }
 
-                $response[$Mkey] = $newLikes;
+                $response['likes'][$Mkey] = $newLikes;
             }
         }
 
